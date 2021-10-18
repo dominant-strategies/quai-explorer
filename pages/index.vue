@@ -1,9 +1,5 @@
 <template>
     <div style="height: 100%; overflow-y: scoll">
-        <div class="nav">
-            <LogosQuaiRound id="home" />
-            <h1 class="heading"> Quai Network Stats </h1>
-        </div>
         <HomeSection1 id="home-1" />
         <HomeSection2 id="home-2" />
     </div>
@@ -37,14 +33,4 @@ export default {
 </script>
 
 <style scoped>
-.nav {
-    display: flex;
-}
-
-.heading{
-    color: rgba(0, 218, 189, 0.582);
-    display: grid;
-    font-family: Arial, Helvetica, sans-serif;
-    align-content: center;
-}
 </style>

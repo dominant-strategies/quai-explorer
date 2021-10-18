@@ -6,7 +6,7 @@
             {{blocks}}
         </v-card-text>
     <v-sparkline
-    auto-draw-duration="5000"
+    auto-draw-duration=5000
       :value="value"
       :gradient="gradient"
       :smooth="radius || false"
@@ -26,7 +26,7 @@
             {{transactions}}
         </v-card-text>
     <v-sparkline
-    auto-draw-duration="5000"
+    auto-draw-duration=5000
       :value="value"
       :gradient="gradient"
       :smooth="radius || false"
@@ -46,7 +46,7 @@
             {{tps}}
         </v-card-text>
     <v-sparkline
-      auto-draw-duration="5000"
+      auto-draw-duration=5000
       :value="value"
       :gradient="gradient"
       :smooth="radius || false"
@@ -104,6 +104,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin: 20px;
 }
 
 .total-blocks-card {
@@ -111,39 +112,36 @@ export default {
     -moz-box-shadow: 0 0 20px #dda50a !important;
     box-shadow: 0 0 20px #dda50a !important;
     background-color: black;
-    margin-top: 2%;
-    margin-left: 2%;
-    width: 50vh;
+    width: 40vh;
     height: 30vh;
     border-radius: 25px;
     display: grid;
-    justify-content: center;
+    align-items: center;
+    margin: 20px;
 }
 .total-transactions-card {
     -webkit-box-shadow: 0 0 20px#dda50a !important;
     -moz-box-shadow: 0 0 20px #dda50a !important;
     box-shadow: 0 0 20px #dda50a !important;
     background-color: black;
-    margin-top: 2%;
-    margin-left: 2%;
-    width: 50vh;
+    width: 40vh;
     height: 30vh;
     border-radius: 25px;
     display: grid;
-    justify-content: center;
+    align-items: center;
+    margin: 20px;
 }
 .total-tps-card {
     -webkit-box-shadow: 0 0 20px#dda50a !important;
     -moz-box-shadow: 0 0 20px #dda50a !important;
     box-shadow: 0 0 20px #dda50a !important;
     background-color: black;
-    margin-top: 2%;
-    margin-left: 2%;
-    width: 50vh;
+    width: 40vh;
     height: 30vh;
     border-radius: 25px;
     display: grid;
-    justify-content: center;
+    align-items: center;
+    margin: 20px;
 }
 
 .title{
@@ -156,16 +154,39 @@ export default {
 }
 
 @media (max-width: 1000px) {
-
 .main-info {
     padding: 5px; 
-    margin: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center space-around;
     display: grid;
-    justify-content: center;
 }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+    .total-blocks-card {
+        width: 35vh;
+    }
+    .total-transactions-card{
+        width: 35vh;
+    }
+    .total-tps-card{
+        width:35vh;
+    }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+    .total-blocks-card {
+        width: 30vh;
+    }
+    .total-transactions-card{
+        width: 30vh;
+    }
+    .total-tps-card{
+        width:30vh;
+    }
 }
 
 </style>

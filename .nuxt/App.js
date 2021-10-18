@@ -10,7 +10,7 @@ import '../assets/app.scss'
 
 import '../node_modules/vuetify/dist/vuetify.css'
 
-import _6f6c098b from './layouts/default.vue'
+import _6f6c098b from '../layouts/default.vue'
 
 const layouts = { "_default": sanitizeComponent(_6f6c098b) }
 
