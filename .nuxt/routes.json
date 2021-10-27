@@ -1,5 +1,29 @@
 [
   {
+    "name": "blocks",
+    "path": "/blocks",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/blocks.vue",
+    "chunkName": "pages/blocks",
+    "url": "/blocks",
+    "_name": "_2fb6e149"
+  },
+  {
+    "name": "tokens",
+    "path": "/tokens",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/tokens.vue",
+    "chunkName": "pages/tokens",
+    "url": "/tokens",
+    "_name": "_2dd72146"
+  },
+  {
+    "name": "transactions",
+    "path": "/transactions",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/transactions.vue",
+    "chunkName": "pages/transactions",
+    "url": "/transactions",
+    "_name": "_fee7dd50"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/index.vue",

@@ -6,7 +6,7 @@
     style="background-color: rgba(0, 0, 0, 0.2); max-width: 100vw !important"
   >
     <LogosQuaiRound style="cursor: pointer" />
-    <h5 class="network-stats">Network Stats </h5>
+    <h5 class="network-stats">Quaiscan</h5>
     <div
       style="
         margin-left: 24%;
@@ -22,6 +22,7 @@
       text
       rounded
       nuxt
+      to="/blocks"
       > 
       Blocks 
     </v-btn>
@@ -31,6 +32,7 @@
       text
       rounded
       nuxt
+      to="/transactions"
       > 
       Transactions
     </v-btn>
@@ -40,6 +42,7 @@
       text
       rounded
       nuxt
+      to="/tokens"
       > 
       Tokens
     </v-btn>

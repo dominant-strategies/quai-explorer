@@ -6,7 +6,7 @@
             {{blocks}}
         </v-card-text>
     <v-sparkline
-    auto-draw-duration=5000
+      :auto-draw-duration="drawDuration" 
       :value="value"
       :gradient="gradient"
       :smooth="radius || false"
@@ -26,7 +26,7 @@
             {{transactions}}
         </v-card-text>
     <v-sparkline
-    auto-draw-duration=5000
+      :auto-draw-duration="drawDuration" 
       :value="value"
       :gradient="gradient"
       :smooth="radius || false"
@@ -46,7 +46,7 @@
             {{tps}}
         </v-card-text>
     <v-sparkline
-      auto-draw-duration=5000
+      :auto-draw-duration="drawDuration" 
       :value="value"
       :gradient="gradient"
       :smooth="radius || false"
@@ -77,6 +77,7 @@ const gradients = [
 export default {
     data() {
         return {
+            drawDuration: 5000,
             blocks: 11000,
             transactions: 20000454,
             tps: 1000,
