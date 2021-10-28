@@ -4,31 +4,27 @@
     "path": "/blocks",
     "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/blocks.vue",
     "chunkName": "pages/blocks",
-    "url": "/blocks",
-    "_name": "_2fb6e149"
+    "url": "/blocks"
   },
   {
-    "name": "tokens",
-    "path": "/tokens",
-    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/tokens.vue",
-    "chunkName": "pages/tokens",
-    "url": "/tokens",
-    "_name": "_2dd72146"
+    "name": "chains",
+    "path": "/chains",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/chains.vue",
+    "chunkName": "pages/chains",
+    "url": "/chains"
   },
   {
-    "name": "transactions",
-    "path": "/transactions",
-    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/transactions.vue",
-    "chunkName": "pages/transactions",
-    "url": "/transactions",
-    "_name": "_fee7dd50"
+    "name": "network",
+    "path": "/network",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/network.vue",
+    "chunkName": "pages/network",
+    "url": "/network"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/index.vue",
     "chunkName": "pages/index",
-    "url": "/",
-    "_name": "_52f6dcdf"
+    "url": "/"
   }
 ]

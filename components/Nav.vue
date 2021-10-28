@@ -22,9 +22,9 @@
       text
       rounded
       nuxt
-      to="/blocks"
+      to="/"
       > 
-      Blocks 
+      Home
     </v-btn>
     <v-btn 
       class="header-text" 
@@ -32,9 +32,9 @@
       text
       rounded
       nuxt
-      to="/transactions"
+      to="/chains"
       > 
-      Transactions
+      Chains
     </v-btn>
     <v-btn 
       class="header-text" 
@@ -42,9 +42,9 @@
       text
       rounded
       nuxt
-      to="/tokens"
+      to="/network"
       > 
-      Tokens
+      Network
     </v-btn>
     </div>
   </v-app-bar>
@@ -64,7 +64,6 @@ export default {
 
 .network-stats{
   font-size: 1rem;
-  color: aqua;
 }
 
 @media (max-width: 700px) {

@@ -5,8 +5,8 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _2fb6e149 = () => interopDefault(import('../pages/blocks.vue' /* webpackChunkName: "pages/blocks" */))
-const _2dd72146 = () => interopDefault(import('../pages/tokens.vue' /* webpackChunkName: "pages/tokens" */))
-const _fee7dd50 = () => interopDefault(import('../pages/transactions.vue' /* webpackChunkName: "pages/transactions" */))
+const _67220f95 = () => interopDefault(import('../pages/chains.vue' /* webpackChunkName: "pages/chains" */))
+const _282f920a = () => interopDefault(import('../pages/network.vue' /* webpackChunkName: "pages/network" */))
 const _52f6dcdf = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -25,13 +25,13 @@ export const routerOptions = {
     component: _2fb6e149,
     name: "blocks"
   }, {
-    path: "/tokens",
-    component: _2dd72146,
-    name: "tokens"
+    path: "/chains",
+    component: _67220f95,
+    name: "chains"
   }, {
-    path: "/transactions",
-    component: _fee7dd50,
-    name: "transactions"
+    path: "/network",
+    component: _282f920a,
+    name: "network"
   }, {
     path: "/",
     component: _52f6dcdf,

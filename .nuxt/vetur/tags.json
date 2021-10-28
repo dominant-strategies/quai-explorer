@@ -16,5 +16,44 @@
   },
   "FootersFloating": {
     "description": "Auto imported from components/Footers/Floating.vue"
+  },
+  "NetworkPrime": {
+    "description": "Auto imported from components/Network/Prime.vue"
+  },
+  "NetworkRegion1": {
+    "description": "Auto imported from components/Network/Region-1.vue"
+  },
+  "NetworkRegion2": {
+    "description": "Auto imported from components/Network/Region-2.vue"
+  },
+  "NetworkRegion3": {
+    "description": "Auto imported from components/Network/Region-3.vue"
+  },
+  "NetworkZone11": {
+    "description": "Auto imported from components/Network/Zone-1-1.vue"
+  },
+  "NetworkZone12": {
+    "description": "Auto imported from components/Network/Zone-1-2.vue"
+  },
+  "NetworkZone13": {
+    "description": "Auto imported from components/Network/Zone-1-3.vue"
+  },
+  "NetworkZone21": {
+    "description": "Auto imported from components/Network/Zone-2-1.vue"
+  },
+  "NetworkZone22": {
+    "description": "Auto imported from components/Network/Zone-2-2.vue"
+  },
+  "NetworkZone23": {
+    "description": "Auto imported from components/Network/Zone-2-3.vue"
+  },
+  "NetworkZone31": {
+    "description": "Auto imported from components/Network/Zone-3-1.vue"
+  },
+  "NetworkZone32": {
+    "description": "Auto imported from components/Network/Zone-3-2.vue"
+  },
+  "NetworkZone33": {
+    "description": "Auto imported from components/Network/Zone-3-3.vue"
   }
 }
