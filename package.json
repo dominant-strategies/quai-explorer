@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@nuxtjs/sitemap": "^2.4.0",
+    "apexcharts": "^3.29.0",
     "core-js": "^3.15.1",
     "nuxt": "^2.15.7",
-    "redirect-ssl": "^3.0.0"
+    "redirect-ssl": "^3.0.0",
+    "vue-apexcharts": "^1.6.2"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.12.1",

@@ -7,11 +7,11 @@ You can directly use them in pages and other components without the need to impo
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
 - `<Nav>` | `<nav>` (components/Nav.vue)
-- `<LogosQuaiRound>` | `<logos-quai-round>` (components/Logos/QuaiRound.vue)
-- `<HomeSection1>` | `<home-section1>` (components/Home/Section1.vue)
-- `<HomeSection2>` | `<home-section2>` (components/Home/Section2.vue)
 - `<FootersBottom>` | `<footers-bottom>` (components/Footers/Bottom.vue)
 - `<FootersFloating>` | `<footers-floating>` (components/Footers/Floating.vue)
+- `<HomeSection1>` | `<home-section1>` (components/Home/Section1.vue)
+- `<HomeSection2>` | `<home-section2>` (components/Home/Section2.vue)
+- `<LogosQuaiRound>` | `<logos-quai-round>` (components/Logos/QuaiRound.vue)
 - `<NetworkPrime>` | `<network-prime>` (components/Network/Prime.vue)
 - `<NetworkRegion1>` | `<network-region1>` (components/Network/Region-1.vue)
 - `<NetworkRegion2>` | `<network-region2>` (components/Network/Region-2.vue)

@@ -4,27 +4,31 @@
     "path": "/blocks",
     "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/blocks.vue",
     "chunkName": "pages/blocks",
-    "url": "/blocks"
+    "url": "/blocks",
+    "_name": "_2fb6e149"
   },
   {
     "name": "chains",
     "path": "/chains",
     "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/chains.vue",
     "chunkName": "pages/chains",
-    "url": "/chains"
+    "url": "/chains",
+    "_name": "_67220f95"
   },
   {
     "name": "network",
     "path": "/network",
     "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/network.vue",
     "chunkName": "pages/network",
-    "url": "/network"
+    "url": "/network",
+    "_name": "_282f920a"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/index.vue",
     "chunkName": "pages/index",
-    "url": "/"
+    "url": "/",
+    "_name": "_52f6dcdf"
   }
 ]

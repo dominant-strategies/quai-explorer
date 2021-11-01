@@ -2,8 +2,11 @@
   "Nav": {
     "description": "Auto imported from components/Nav.vue"
   },
-  "LogosQuaiRound": {
-    "description": "Auto imported from components/Logos/QuaiRound.vue"
+  "FootersBottom": {
+    "description": "Auto imported from components/Footers/Bottom.vue"
+  },
+  "FootersFloating": {
+    "description": "Auto imported from components/Footers/Floating.vue"
   },
   "HomeSection1": {
     "description": "Auto imported from components/Home/Section1.vue"
@@ -11,11 +14,8 @@
   "HomeSection2": {
     "description": "Auto imported from components/Home/Section2.vue"
   },
-  "FootersBottom": {
-    "description": "Auto imported from components/Footers/Bottom.vue"
-  },
-  "FootersFloating": {
-    "description": "Auto imported from components/Footers/Floating.vue"
+  "LogosQuaiRound": {
+    "description": "Auto imported from components/Logos/QuaiRound.vue"
   },
   "NetworkPrime": {
     "description": "Auto imported from components/Network/Prime.vue"
