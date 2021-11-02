@@ -15,18 +15,12 @@
         </v-tabs>
       </template>
     </v-toolbar>
-    <component :is="componentInstance" />
+    <NetworkDashboard v-bind:network="selected" />
   </div>
 </template>
 
 <script>
 export default {
-  computed: {
-    componentInstance() {
-      const selected = this.selected
-      return () => import(`../components/Network/${selected}`)
-    },
-  },
   data() {
     return {
       items: [

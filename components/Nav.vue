@@ -6,7 +6,7 @@
     style="background-color: rgba(0, 0, 0, 0.2); max-width: 100vw !important"
   >
     <LogosQuaiRound style="cursor: pointer" />
-    <h5 class="network-stats">Quaiscan</h5>
+    <h5 class="network-stats">Quai Netstats</h5>
     <div
       style="
         margin-left: 24%;
@@ -16,36 +16,15 @@
         justify-content: space-around;
       "
     >
-    <v-btn 
-      class="header-text" 
-      color="white"
-      text
-      rounded
-      nuxt
-      to="/"
-      > 
-      Home
-    </v-btn>
-    <v-btn 
-      class="header-text" 
-      color="white"
-      text
-      rounded
-      nuxt
-      to="/chains"
-      > 
-      Chains
-    </v-btn>
-    <v-btn 
-      class="header-text" 
-      color="white"
-      text
-      rounded
-      nuxt
-      to="/network"
-      > 
-      Network
-    </v-btn>
+      <v-btn class="header-text" color="white" text rounded nuxt to="/">
+        Home
+      </v-btn>
+      <v-btn class="header-text" color="white" text rounded nuxt to="/chains">
+        Chains
+      </v-btn>
+      <v-btn class="header-text" color="white" text rounded nuxt to="/network">
+        Network
+      </v-btn>
     </div>
   </v-app-bar>
 </template>
@@ -61,8 +40,7 @@ export default {
 </script>
 
 <style>
-
-.network-stats{
+.network-stats {
   font-size: 1rem;
 }
 

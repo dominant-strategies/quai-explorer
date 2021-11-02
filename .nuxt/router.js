@@ -4,10 +4,10 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _2fb6e149 = () => interopDefault(import('../pages/blocks.vue' /* webpackChunkName: "pages/blocks" */))
-const _67220f95 = () => interopDefault(import('../pages/chains.vue' /* webpackChunkName: "pages/chains" */))
-const _282f920a = () => interopDefault(import('../pages/network.vue' /* webpackChunkName: "pages/network" */))
-const _52f6dcdf = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _fc7e77de = () => interopDefault(import('../pages/blocks.vue' /* webpackChunkName: "pages/blocks" */))
+const _8da81b46 = () => interopDefault(import('../pages/chains.vue' /* webpackChunkName: "pages/chains" */))
+const _49caa59a = () => interopDefault(import('../pages/network.vue' /* webpackChunkName: "pages/network" */))
+const _2b7cfdd2 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
 
@@ -22,19 +22,19 @@ export const routerOptions = {
 
   routes: [{
     path: "/blocks",
-    component: _2fb6e149,
+    component: _fc7e77de,
     name: "blocks"
   }, {
     path: "/chains",
-    component: _67220f95,
+    component: _8da81b46,
     name: "chains"
   }, {
     path: "/network",
-    component: _282f920a,
+    component: _49caa59a,
     name: "network"
   }, {
     path: "/",
-    component: _52f6dcdf,
+    component: _2b7cfdd2,
     name: "index"
   }],
 

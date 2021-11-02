@@ -1,5 +1,6 @@
 <template>
   <div class="prime-network">
+    {{ network }}
     <div>
       <h3 style="color: #b3b6b7">Total Number of Miners</h3>
       <h2 style="color: #008ffb"># {{ totalMiners }}</h2>
@@ -115,6 +116,9 @@
 
 <script>
 export default {
+  props: {
+    network: String,
+  },
   computed: {
     apexchart() {
       return () => {
