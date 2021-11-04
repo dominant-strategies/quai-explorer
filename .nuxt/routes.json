@@ -2,33 +2,33 @@
   {
     "name": "blocks",
     "path": "/blocks",
-    "component": "/Users/alan/code/quai-networkstats/pages/blocks.vue",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/blocks.vue",
     "chunkName": "pages/blocks",
     "url": "/blocks",
-    "_name": "_fc7e77de"
+    "_name": "_2fb6e149"
   },
   {
     "name": "chains",
     "path": "/chains",
-    "component": "/Users/alan/code/quai-networkstats/pages/chains.vue",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/chains.vue",
     "chunkName": "pages/chains",
     "url": "/chains",
-    "_name": "_8da81b46"
+    "_name": "_67220f95"
   },
   {
     "name": "network",
     "path": "/network",
-    "component": "/Users/alan/code/quai-networkstats/pages/network.vue",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/network.vue",
     "chunkName": "pages/network",
     "url": "/network",
-    "_name": "_49caa59a"
+    "_name": "_282f920a"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "/Users/alan/code/quai-networkstats/pages/index.vue",
+    "component": "/Users/shreekara/Desktop/quai/quai-networkstats/pages/index.vue",
     "chunkName": "pages/index",
     "url": "/",
-    "_name": "_2b7cfdd2"
+    "_name": "_52f6dcdf"
   }
 ]
