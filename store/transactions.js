@@ -1,13 +1,13 @@
 const axios = require('axios')
 
-export const store = () => ({
-    transcations: 0,
+export const state = () => ({
+    transactions: 0,
     txData: []
 })
 
 export const mutations = {
     addTransactionsCount(state, txCount) {
-        state.transcations += txCount
+        state.transactions += txCount
     },
 }
 
@@ -32,8 +32,6 @@ export const actions = {
             console.log(err)
         }
 
-        var txs = parseInt(txNum.data.result, 16)
-        console.log(txs)
-        commit('addTransactionsCount', txs)
+        commit('addTransactionsCount', parseInt(txNum.data.result, 16))
     },
 }

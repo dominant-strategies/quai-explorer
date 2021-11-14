@@ -37,7 +37,7 @@
           <div class="stats">
             <p class="title">TPS</p>
             <p class="stats-text">
-              {{ tps }}
+              {{ transactions }}
             </p>
           </div>
           <div class="stats">
@@ -86,7 +86,6 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      tps: 1000,
       hashrate: 50,
       difficulty: 100,
       headersblock: [
