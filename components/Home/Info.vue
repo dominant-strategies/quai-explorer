@@ -4,16 +4,7 @@
       <div class="bg" style="width: 100vw"></div>
       <div style="position: absolute; width: 100%">
         <div style="margin-left: 3vw">
-          <div
-            style="
-              padding-top: 5vh;
-              color: white;
-              font-size: 2rem;
-              position: relative;
-            "
-          >
-            The Quai Network Explorer
-          </div>
+          <h1 class="explorer-title">The Quai Network Explorer</h1>
           <v-spacer style="height: 2vh"></v-spacer>
           <v-text-field
             style="width: 60%"
@@ -131,8 +122,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.explorer-title {
+  padding-top: 5vh;
+  color: white !important;
+  font-size: 2rem;
+  position: relative;
+}
+
 .search-block {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 1);
   height: 35vh;
   position: relative;
   overflow: hidden;
@@ -168,7 +166,7 @@ export default {
   margin-top: 26px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .stats-text {
