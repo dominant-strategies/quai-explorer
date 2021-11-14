@@ -9,10 +9,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.12.13",
+    "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/sitemap": "^2.4.0",
     "apexcharts": "^3.29.0",
-    "core-js": "^3.15.1",
-    "nuxt": "^2.15.7",
+    "axios": "^0.24.0",
+    "nuxt": "^2.15.3",
     "redirect-ssl": "^3.0.0",
     "vue-apexcharts": "^1.6.2",
     "web3": "^1.6.0"
@@ -20,5 +22,8 @@
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.12.1",
     "prettier": "2.4.0"
+  },
+  "browser": {
+    "ws": "./ws-fallback.js"
   }
 }

@@ -1,8 +1,7 @@
 <template>
-    <div style="height: 100%; overflow-y: scoll">
-        <HomeSection1 id="home-1" />
-        <HomeSection2 id="home-2" />
-    </div>
+  <div style="height: 100%; overflow-y: scoll">
+    <HomeInfo id="home-1" />
+  </div>
 </template>
 
 <script>
@@ -32,5 +31,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

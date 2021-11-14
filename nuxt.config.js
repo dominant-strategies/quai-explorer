@@ -87,8 +87,12 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
+  devServer: {
+    proxy: 'http://localhost:3000',
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/sitemap'],
+  modules: ['@nuxtjs/sitemap', '@nuxtjs/proxy',],
   sitemap: {
     hostname: '',
   },
@@ -122,5 +126,16 @@ export default {
     removeRedundantAttributes: true,
     trimCustomFragments: true,
     useShortDoctype: true,
-  },
+    babel: {
+      presets({isServer}) {
+        const targets = isServer ? { node: 'current' } : { ie: 11 }
+        return [
+          [ require.resolve("@babel/preset-env"), { targets }  ]
+        ]
+      },
+      plugins: [
+        "@babel/syntax-dynamic-import",
+        "@babel/transform-runtime",
+        "@babel/transform-async-to-generator"
+      ]}}
 }

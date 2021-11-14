@@ -12,10 +12,7 @@
                 rounded
                 class="my-2"
               >
-                <v-col class="footer-column"
-                  >{{ item.title }}
-                  <!-- <p style="font-size: 12px">{{ item.link }}</p> -->
-                </v-col>
+                <v-col class="footer-column">{{ item.title }} </v-col>
               </v-btn>
             </v-row>
           </v-col>

@@ -4,7 +4,6 @@
     <v-main class="background">
       <Nuxt />
     </v-main>
-    <FootersFloating />
     <FootersBottom />
   </v-app>
 </template>

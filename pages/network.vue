@@ -45,6 +45,10 @@ export default {
 </script>
 
 <style scoped>
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+}
 .network-tab {
   color: White;
 }
