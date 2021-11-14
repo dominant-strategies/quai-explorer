@@ -137,5 +137,8 @@ export default {
         "@babel/syntax-dynamic-import",
         "@babel/transform-runtime",
         "@babel/transform-async-to-generator"
-      ]}}
+      ]}},
+      server: {
+        port: 4000, //default: 3000
+      }
 }
