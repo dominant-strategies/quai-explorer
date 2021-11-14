@@ -11,6 +11,14 @@ export default {
       title: 'Network Stats',
     }
   },
+  mounted() {
+    window.addEventListener('beforeunload', function (e) {
+      var sockets = blocks.sockets
+      for (i = 0; i < sockets.length; i++) {
+        sockets[i].close()
+      }
+    })
+  },
   head() {
     return {
       title: this.title,
