@@ -1,45 +1,81 @@
 <template>
   <div>
-    <div class="main-info">
-      <div class="stats">
-        <p class="title"># Blocks</p>
-        <p class="text">
-          {{ blocks }}
-        </p>
-      </div>
-      <div class="stats">
-        <p class="title"># Transactions</p>
-        <p class="text">
-          {{ transactions }}
-        </p>
-      </div>
-      <div class="stats">
-        <p class="title"># TPS</p>
-        <p class="text">
-          {{ tps }}
-        </p>
+    <div class="search-block">
+      <div class="bg" style="width: 100vw"></div>
+      <div style="position: absolute; width: 100%">
+        <div style="margin-left: 3vw">
+          <div
+            style="
+              padding-top: 5vh;
+              color: white;
+              font-size: 2rem;
+              position: relative;
+            "
+          >
+            The Quai Network Explorer
+          </div>
+          <v-spacer style="height: 2vh"></v-spacer>
+          <v-text-field
+            style="width: 60%"
+            light
+            solo
+            placeholder="Search Txn Hash / Block"
+          >
+          </v-text-field>
+        </div>
       </div>
     </div>
-    <div class="quai-info">
-      <v-card class="blocks-card">
-        <v-card-title class="title"> Blocks </v-card-title>
-        <v-data-table
-          :headers="headersblock"
-          :items="blocksData"
-          :items-per-page="15"
-          dense
-        ></v-data-table>
+    <div class="info-page">
+      <v-card class="main-card">
+        <v-row style="min-height: 120px">
+          <div class="stats">
+            <p class="title">Blocks</p>
+            <p class="stats-text">
+              {{ blocks }}
+            </p>
+          </div>
+          <div class="stats">
+            <p class="title">TPS</p>
+            <p class="stats-text">
+              {{ tps }}
+            </p>
+          </div>
+          <div class="stats">
+            <p class="title">Hashrate</p>
+            <p class="stats-text">
+              {{ hashrate }}
+            </p>
+          </div>
+          <div class="stats">
+            <p class="title">Difficulty</p>
+            <p class="stats-text">
+              {{ difficulty }}
+            </p>
+          </div>
+        </v-row>
       </v-card>
-      <v-card class="blocks-card">
-        <v-card-title class="title"> Transactions </v-card-title>
-        <v-data-table
-          :headers="headerstx"
-          :items="transactionsData"
-          :items-per-page="15"
-          dense
-          :key="renderKey"
-        ></v-data-table>
-      </v-card>
+      <div class="quai-info">
+        <v-card class="blocks-card">
+          <v-card-title class="title"> Blocks </v-card-title>
+          <v-data-table
+            class="info-table"
+            :headers="headersblock"
+            :items="blocksData"
+            :items-per-page="15"
+            dense
+          ></v-data-table>
+        </v-card>
+        <v-card class="blocks-card">
+          <v-card-title class="title"> Transactions </v-card-title>
+          <v-data-table
+            class="info-table"
+            :headers="headerstx"
+            :items="transactionsData"
+            :items-per-page="15"
+            dense
+          ></v-data-table>
+        </v-card>
+      </div>
     </div>
   </div>
 </template>
@@ -51,6 +87,8 @@ export default {
   data() {
     return {
       tps: 1000,
+      hashrate: 50,
+      difficulty: 100,
       headersblock: [
         {
           text: 'Location (Prime, Region, Zone)',
@@ -74,51 +112,69 @@ export default {
         { text: 'Quai Burnt', value: 'burnt' },
       ],
       transactionsData: [],
-      renderKey: 0,
+      searchTerm: 'Search by Address / Txn Hash / Block',
     }
   },
   mounted() {
     console.log('mounted')
     this.fetch()
     this.createSockets()
-    this.renderKey++
   },
   computed: {
     ...mapState('blocks', ['blocks', 'blocksData']),
     ...mapState('transactions', ['transactions']),
   },
   methods: {
+    searchQuai() {},
     ...mapActions('blocks', ['fetch', 'createSockets']),
   },
 }
 </script>
 
-<style scoped>
-.main-info {
-  padding: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 20px;
+<style scoped lang="scss">
+.search-block {
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 35vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg {
+  height: 130%;
+  background: transparent;
+  background-image: url('./static/wolfram/wave.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  top: -10vh;
+  position: absolute;
+  z-index: 0;
 }
 
 .stats {
   display: flex;
   flex-direction: row;
-  width: 50vh;
+  width: 25%;
   gap: 10px;
   align-items: center;
   justify-content: center;
 }
 
-.title {
-  color: orange;
-  font-size: 6vh;
+.info-page {
+  margin-top: -3vh;
+  margin-left: 3vw;
+  margin-right: 3vw;
 }
 
-.text {
-  color: white !important;
-  font-size: 4vh;
+.quai-info {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.stats-text {
+  color: black !important;
+  font-size: 3vh;
 }
 
 @media (max-width: 1000px) {
@@ -126,30 +182,29 @@ export default {
     padding: 5px;
     display: flex;
     flex-direction: column;
-    justify-content: center space-around;
+    justify-content: center space-between;
     display: grid;
   }
 }
 
-.quai-info {
-  padding: 5px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 20px;
+.main-card {
+  width: 100%;
+  border-radius: 1rem;
+  display: grid;
+  align-items: center;
 }
 
 .blocks-card {
-  background-color: black;
-  width: 80vh;
-  border-radius: 25px;
+  background-color: rgba(236, 77, 55, 1);
+  border-radius: 1rem;
   display: grid;
   align-items: center;
-  margin: 20px;
+  height: 100%;
+  width: 48%;
 }
 
 .title {
-  color: orange;
+  color: black;
 }
 
 @media (max-width: 1000px) {
@@ -157,9 +212,21 @@ export default {
     padding: 5px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin: 20px;
+  }
+}
+
+$data-table-border-radius: none !important;
+$data-table-progress-border-radius: 0 0 0 0 !important;
+
+.info-table {
+  &:first-child {
+    border-radius: 0 0 0 0;
+  }
+  &:last-child {
+    border-radius: 0 0 0 0;
   }
 }
 </style>

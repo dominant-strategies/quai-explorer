@@ -92,7 +92,7 @@ export default {
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/sitemap', '@nuxtjs/proxy',],
+  modules: ['@nuxtjs/sitemap', '@nuxtjs/proxy'],
   sitemap: {
     hostname: '',
   },
@@ -100,7 +100,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -127,18 +127,18 @@ export default {
     trimCustomFragments: true,
     useShortDoctype: true,
     babel: {
-      presets({isServer}) {
+      presets({ isServer }) {
         const targets = isServer ? { node: 'current' } : { ie: 11 }
-        return [
-          [ require.resolve("@babel/preset-env"), { targets }  ]
-        ]
+        return [[require.resolve('@babel/preset-env'), { targets }]]
       },
       plugins: [
-        "@babel/syntax-dynamic-import",
-        "@babel/transform-runtime",
-        "@babel/transform-async-to-generator"
-      ]}},
-      server: {
-        port: 4000, //default: 3000
-      }
+        '@babel/syntax-dynamic-import',
+        '@babel/transform-runtime',
+        '@babel/transform-async-to-generator',
+      ],
+    },
+  },
+  server: {
+    port: 4000, //default: 3000
+  },
 }
