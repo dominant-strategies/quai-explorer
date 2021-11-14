@@ -1,0 +1,36 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Copy repository contents
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: "."
+        remote: quai-networkstats
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.PASSWORD }}
+
+    - name: Move files
+      uses: fifsky/ssh-action@master
+      with:
+        command: rm -rf /var/www/html/quai-networkstats && mv quai-networkstats /var/www/html
+        host: ${{ secrets.HOST }}
+        user: ${{ secrets.USER}}
+        key: ${{ secrets.KEY}}
+
+    - name: Install packages, build, and start server
+      uses: fifsky/ssh-action@master
+      with:
+        command: export VERIFY_SSL=verify && cd /var/www/html/quai-networkstats && npm install && npm run build && pm2 restart quai-networkstats
+        host: ${{ secrets.HOST }}
+        user: ${{ secrets.USER}}
+        key: ${{ secrets.KEY}}
