@@ -123,4 +123,7 @@ export default {
     trimCustomFragments: true,
     useShortDoctype: true,
   },
+  server: {
+    port: 4000, // default: 3000
+  },
 }
