@@ -3,10 +3,9 @@
     hide-on-scroll
     fixed
     app
-    style="background-color: rgba(0, 0, 0, 0.2); max-width: 100vw !important"
+    style="background-color: white; max-width: 100vw !important"
   >
     <LogosQuaiRound style="cursor: pointer" />
-    <h5 class="network-stats">Quai Netstats</h5>
     <div
       style="
         margin-left: 24%;
@@ -16,14 +15,14 @@
         justify-content: space-around;
       "
     >
-      <v-btn class="header-text" color="white" text rounded nuxt to="/">
-        Home
+      <v-btn class="header-text" color="black" text rounded nuxt to="/">
+        Explorer
       </v-btn>
-      <v-btn class="header-text" color="white" text rounded nuxt to="/chains">
+      <v-btn class="header-text" color="black" text rounded nuxt to="/network">
+        Network Stats
+      </v-btn>
+      <v-btn class="header-text" color="black" text rounded nuxt to="/chains">
         Chains
-      </v-btn>
-      <v-btn class="header-text" color="white" text rounded nuxt to="/network">
-        Network
       </v-btn>
     </div>
   </v-app-bar>
@@ -41,7 +40,10 @@ export default {
 
 <style>
 .network-stats {
-  font-size: 1rem;
+  font-size: 1.5rem;
+  width: 300px;
+  left: 10vw;
+  position: absolute;
 }
 
 @media (max-width: 700px) {
