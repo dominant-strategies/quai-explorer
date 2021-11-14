@@ -4,7 +4,7 @@
       <div class="stats">
         <p class="title"># Blocks</p>
         <p class="text">
-          {{ blocks.blocks }}
+          {{ blocks }}
         </p>
       </div>
       <div class="stats">
@@ -25,7 +25,7 @@
         <v-card-title class="title"> Blocks </v-card-title>
         <v-data-table
           :headers="headersblock"
-          :items="blocks.blocksData"
+          :items="blocksData"
           :items-per-page="15"
           dense
         ></v-data-table>
@@ -50,7 +50,6 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      transactions: 20000454,
       tps: 1000,
       headersblock: [
         {
@@ -85,7 +84,8 @@ export default {
     this.renderKey++
   },
   computed: {
-    ...mapState(['blocks']),
+    ...mapState('blocks', ['blocks', 'blocksData']),
+    ...mapState('transactions', ['transactions']),
   },
   methods: {
     ...mapActions('blocks', ['fetch', 'createSockets']),

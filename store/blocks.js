@@ -111,6 +111,7 @@ export const actions = {
 
           commit('addBlockNumber')
           dispatch('getBlockTableData', payload)
+          dispatch('transactions/fetchTx', payload, {root:true})
         }
       }
 
