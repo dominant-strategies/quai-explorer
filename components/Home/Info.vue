@@ -61,7 +61,7 @@
           <v-data-table
             class="info-table"
             :headers="headerstx"
-            :items="transactionsData"
+            :items="txData"
             :items-per-page="15"
             dense
           ></v-data-table>
@@ -86,7 +86,7 @@ export default {
           sortable: false,
           value: 'location',
         },
-        { text: 'Validator', value: 'miner' },
+        { text: 'Miner', value: 'miner' },
         { text: 'Txs', value: 'txs' },
         { text: 'Timetamp', value: 'timestamp' },
       ],
@@ -99,9 +99,7 @@ export default {
         },
         { text: 'Block number', value: 'block' },
         { text: 'Quai sent', value: 'sent' },
-        { text: 'Quai Burnt', value: 'burnt' },
       ],
-      transactionsData: [],
       searchTerm: 'Search by Address / Txn Hash / Block',
     }
   },
@@ -112,7 +110,7 @@ export default {
   },
   computed: {
     ...mapState('blocks', ['blocks', 'blocksData']),
-    ...mapState('transactions', ['transactions']),
+    ...mapState('transactions', ['transactions', 'txData']),
   },
   methods: {
     searchQuai() {},
