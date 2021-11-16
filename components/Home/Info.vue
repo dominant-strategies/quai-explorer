@@ -34,7 +34,7 @@
           <div class="stats">
             <p class="title">Hashrate</p>
             <p class="stats-text">
-              {{ hashrate }}
+              {{ hashRate }}
             </p>
           </div>
           <div class="stats">
@@ -77,8 +77,6 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      hashrate: 50,
-      difficulty: 100,
       headersblock: [
         {
           text: 'Location (Prime, Region, Zone)',
@@ -109,7 +107,7 @@ export default {
     this.createSockets()
   },
   computed: {
-    ...mapState('blocks', ['blocks', 'blocksData']),
+    ...mapState('blocks', ['blocks', 'blocksData', 'hashRate', 'difficulty']),
     ...mapState('transactions', ['transactions', 'txData']),
   },
   methods: {

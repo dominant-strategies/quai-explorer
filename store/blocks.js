@@ -21,6 +21,9 @@ export const state = () => ({
   blocks: 0,
   sockets: [],
   blocksData: [],
+  hashRate: 0,
+  difficultyArr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  difficulty: 0
 })
 
 export const mutations = {
@@ -36,9 +39,77 @@ export const mutations = {
   addBlockTableData(state, payload) {
     state.blocksData.unshift(payload)
   },
+  setHashRate(state, hashRate) {
+    state.hashRate = hashRate
+  },
+  updateDifficulty(state, diffObj) {
+    
+    const index = chainSlugs.indexOf(diffObj.chain)
+
+    state.difficultyArr[index] = diffObj.difficulty
+
+    var difficultySum = 0
+    for(var i=0; i< state.difficultyArr.length; i++) {
+      difficultySum += state.difficultyArr[i] 
+    }
+    state.difficulty = difficultySum
+  },
 }
 
 export const actions = {
+  async getDifficulty({ commit }, payload){
+      try { 
+      var difficulty = await axios.post(
+          'http://45.32.69.88/' + payload.chain + '-http',
+          {
+            jsonrpc: '2.0',
+            method: 'eth_getBlockByNumber',
+            params: ['0x' + payload.data.number[payload.position].toString(16), true],
+            id: 1,
+          },
+          {
+            headers: {
+              'content-type': 'application/json',
+            },
+          }
+        )
+      } catch(error) {
+          console.log(error)
+        }
+        
+        var difficultyArr = difficulty.data.result.difficulty
+        var diffObj = {
+          chain: payload.chain,
+          difficulty: difficultyArr[payload.position]
+        }
+        
+        commit('updateDifficulty', diffObj)
+      },
+  async hashRate({ commit }){
+    var hashR = 0
+    for (var i = 0; i < chainSlugs.length; i++) {
+      try { 
+      var hashResponse = await axios.post(
+          'http://45.32.69.88/' + chainSlugs[i] + '-http',
+          {
+            jsonrpc: '2.0',
+            method: 'eth_hashrate',
+            params: [],
+            id: 1,
+          },
+          {
+            headers: {
+              'content-type': 'application/json',
+            },
+          }
+        )
+      } catch(error) {
+          console.log(error)
+        }
+        hashR += parseInt(hashResponse.data.result, 16)
+      }
+      commit('setHashRate', hashR)
+    },
   async fetch({ commit }) {
     console.log('called')
     var count = 0
@@ -111,6 +182,8 @@ export const actions = {
 
           commit('addBlockNumber')
           dispatch('getBlockTableData', payload)
+          dispatch('hashRate')
+          dispatch('getDifficulty', payload)
           dispatch('transactions/fetchTx', payload, {root:true})
           dispatch('transactions/getTransactionsBlock', payload, {root:true})
         }
