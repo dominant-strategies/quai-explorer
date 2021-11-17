@@ -5,19 +5,23 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
       title: 'Network Stats',
     }
   },
+  computed: {
+    ...mapState('sockets', ['sockets']),
+  },
   mounted() {
-    window.addEventListener('beforeunload', function (e) {
-      var sockets = blocks.sockets
-      for (i = 0; i < sockets.length; i++) {
-        sockets[i].close()
-      }
-    })
+    if (this.sockets.length != 13) {
+      this.createSockets()
+    }
+  },
+  methods: {
+    ...mapActions('sockets', ['createSockets']),
   },
   head() {
     return {

@@ -1,5 +1,4 @@
 export const state = () => ({
 })
 
-export const mutaions = () => ({
-})
+export const mutaions = {}

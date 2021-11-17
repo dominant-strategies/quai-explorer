@@ -102,9 +102,7 @@ export default {
     }
   },
   mounted() {
-    console.log('mounted')
     this.fetch()
-    this.createSockets()
   },
   computed: {
     ...mapState('blocks', ['blocks', 'blocksData', 'hashRate', 'difficulty']),
@@ -112,7 +110,7 @@ export default {
   },
   methods: {
     searchQuai() {},
-    ...mapActions('blocks', ['fetch', 'createSockets']),
+    ...mapActions('blocks', ['fetch']),
   },
 }
 </script>

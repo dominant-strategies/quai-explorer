@@ -2,7 +2,7 @@
   <div>
     <v-toolbar>
       <template>
-        <v-tabs align-with-title>
+        <v-tabs>
           <v-tabs-slider color="orange"></v-tabs-slider>
           <v-tab
             class="network-tab"
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -41,6 +42,17 @@ export default {
       selected: 'Prime',
     }
   },
+  computed: {
+    ...mapState('sockets', ['sockets']),
+  },
+  mounted() {
+    if (this.sockets.length != 13) {
+      this.createSockets()
+    }
+  },
+  methods: {
+    ...mapActions('sockets', ['createSockets']),
+  },
 }
 </script>
 
@@ -50,6 +62,6 @@ export default {
   flex-wrap: wrap;
 }
 .network-tab {
-  color: White;
+  color: Black;
 }
 </style>

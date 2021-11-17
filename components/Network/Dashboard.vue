@@ -1,19 +1,15 @@
 <template>
-  <div class="prime-network">
-    {{ network }}
-    <div>
-      <h3 style="color: #b3b6b7">Total Number of Miners</h3>
-      <h2 style="color: #008ffb"># {{ totalMiners }}</h2>
-    </div>
+  <div class="prime-network" :network="network">
+    <div class="network-title">{{ network }}</div>
     <div class="prime">
       <div class="prime-left">
         <div>
           <h3 style="color: #b3b6b7">Difficulty</h3>
-          <h2 style="color: #ff4560">{{ currentDifficulty }} PH</h2>
+          <h2 style="color: #ff4560">{{ currentDifficulty[index] }} H</h2>
         </div>
         <div>
           <h4 style="color: #b3b6b7">Avg. Difficulty</h4>
-          <h3 style="color: #ff4560">{{ avgDifficulty }} PH</h3>
+          <h3 style="color: #ff4560">{{ avgDifficulty[index] }} H</h3>
         </div>
       </div>
       <div class="prime-right">
@@ -21,23 +17,26 @@
           <h4 style="color: #b3b6b7">Network Hashrate</h4>
           <h3 style="color: #ff4560">{{ hashRate }} TH/s</h3>
         </div>
-        <component
-          style="transform: translateY(30px)"
-          :is="apexchart"
-          height="150"
-          width="320"
-          type="bar"
-          :options="optionsDifficulty"
-          :series="series"
-        />
+        <client-only>
+          <component
+            style="transform: translateY(30px)"
+            :is="apexchart"
+            height="150"
+            width="320"
+            type="bar"
+            :key="difficultyKey"
+            :options="optionsDifficulty"
+            :series="difficultyGraphData[index]"
+          />
+        </client-only>
         <div class="prime-range">
           <div class="prime-min">
             <h5 style="color: #b3b6b7">Min.</h5>
-            <h4 style="color: #00e396">{{ minDifficulty }} PH</h4>
+            <h4 style="color: #00e396">{{ minDifficulty[index] }} H</h4>
           </div>
           <div class="prime-min">
             <h5 style="color: #b3b6b7">Max.</h5>
-            <h4 style="color: #775dd0">{{ maxDifficulty }} PH</h4>
+            <h4 style="color: #775dd0">{{ maxDifficulty[index] }} H</h4>
           </div>
         </div>
       </div>
@@ -46,80 +45,114 @@
       <div class="prime-left">
         <div>
           <h3 style="color: #b3b6b7">Block gas limit</h3>
-          <h2 style="color: #feb019">{{ blockGasLimit }}</h2>
+          <h2 style="color: #feb019">{{ currentGasLimit[index] }}</h2>
         </div>
         <div>
           <h4 style="color: #b3b6b7">Avg. gas limit</h4>
-          <h3 style="color: #feb019">{{ avgGasLimit }} gas</h3>
+          <h3 style="color: #feb019">{{ avgGasLimit[index] }} gas</h3>
         </div>
       </div>
       <div class="prime-right">
-        <div class="prime-hashrate">
-          <h4 style="color: #b3b6b7">Avg. gas price</h4>
-          <h3 style="color: #feb019">{{ avgGasPrice }} Gwei</h3>
-        </div>
-        <component
-          style="transform: translateY(30px)"
-          :is="apexchart"
-          height="150"
-          width="320"
-          type="bar"
-          :options="optionsBlock"
-          :series="series"
-        />
+        <client-only>
+          <component
+            style="transform: translateY(30px)"
+            :is="apexchart"
+            height="150"
+            width="320"
+            type="bar"
+            :key="gasLimitKey"
+            :options="optionsBlock"
+            :series="gasLimitGraphData[index]"
+          />
+        </client-only>
         <div class="prime-range">
           <div class="prime-min">
             <h5 style="color: #b3b6b7">Min.</h5>
-            <h4 style="color: #00e396">{{ minGas }} gas</h4>
+            <h4 style="color: #00e396">{{ minGasLimit[index] }} gas</h4>
           </div>
           <div class="prime-min">
             <h5 style="color: #b3b6b7">Max.</h5>
-            <h4 style="color: #775dd0">{{ maxGas }} gas</h4>
+            <h4 style="color: #775dd0">{{ maxGasLimit[index] }} gas</h4>
           </div>
         </div>
       </div>
     </div>
-    <component
-      :is="apexchart"
-      height="150"
-      width="250"
-      type="bar"
-      :options="optionsTransactions"
-      :series="series"
-    />
-    <component
-      :is="apexchart"
-      height="150"
-      width="250"
-      type="bar"
-      :options="optionsTPS"
-      :series="series"
-    />
-    <component
-      :is="apexchart"
-      height="150"
-      width="250"
-      type="bar"
-      :options="optionsGasLimit"
-      :series="series"
-    />
-    <component
-      :is="apexchart"
-      height="150"
-      width="250"
-      type="bar"
-      :options="optionsUncleCount"
-      :series="series"
-    />
+    <client-only>
+      <component
+        :is="apexchart"
+        height="150"
+        width="250"
+        type="bar"
+        :options="optionsTransactions"
+        :series="series"
+      />
+      <component
+        :is="apexchart"
+        height="150"
+        width="250"
+        type="bar"
+        :options="optionsTPS"
+        :series="series"
+      />
+      <component
+        :is="apexchart"
+        height="150"
+        width="250"
+        type="bar"
+        :options="optionsGasLimit"
+        :series="series"
+      />
+      <component
+        :is="apexchart"
+        height="150"
+        width="250"
+        type="bar"
+        :options="optionsUncleCount"
+        :series="series"
+      />
+    </client-only>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
+const chainSlugs = [
+  'prime',
+  'region-1',
+  'region-2',
+  'region-3',
+  'zone-1-1',
+  'zone-1-2',
+  'zone-1-3',
+  'zone-2-1',
+  'zone-2-2',
+  'zone-2-3',
+  'zone-3-1',
+  'zone-3-2',
+  'zone-3-3',
+]
 export default {
   props: {
     network: String,
   },
   computed: {
+    ...mapState('difficulty', [
+      'minDifficulty',
+      'maxDifficulty',
+      'avgDifficulty',
+      'currentDifficulty',
+      'difficultyKey',
+      'difficultyGraphData',
+    ]),
+    ...mapState('gaslimit', [
+      'minGasLimit',
+      'maxGasLimit',
+      'avgGasLimit',
+      'currentGasLimit',
+      'gasLimitKey',
+      'gasLimitGraphData',
+    ]),
     apexchart() {
       return () => {
         if (process.client) {
@@ -128,25 +161,31 @@ export default {
       }
     },
   },
+  watch: {
+    network: {
+      immediate: true,
+      handler(newVal) {
+        this.index = chainSlugs.indexOf(newVal.toLowerCase())
+      },
+    },
+  },
+  methods: {
+    ...mapActions('difficulty', ['getData', 'getDifficulty']),
+  },
   data() {
     return {
-      totalMiners: 135,
-      currentDifficulty: 123,
-      avgDifficulty: 121,
+      index: 0,
       hashRate: 12,
-      minDifficulty: 7.90367,
-      maxDifficulty: 9.44556,
-      blockGasLimit: '30,000,000',
-      avgGasLimit: '24,456,345',
-      avgGasPrice: '23,454,898',
-      minGas: '29,980,803',
-      maxGas: '29,980,803',
+      avgGasPrice: 10,
       optionsDifficulty: {
         chart: {
           id: 'Difficulty',
           foreColor: '#fff',
           toolbar: {
             show: false,
+          },
+          animations: {
+            enabled: false,
           },
         },
         dataLabels: {
@@ -204,6 +243,9 @@ export default {
           toolbar: {
             show: false,
           },
+          animations: {
+            enabled: false,
+          },
         },
         dataLabels: {
           enabled: false,
@@ -258,6 +300,9 @@ export default {
           foreColor: '#fff',
           toolbar: {
             show: false,
+          },
+          animations: {
+            enabled: false,
           },
         },
         title: {
@@ -328,6 +373,9 @@ export default {
           toolbar: {
             show: false,
           },
+          animations: {
+            enabled: false,
+          },
         },
         title: {
           text: 'TPS',
@@ -397,6 +445,9 @@ export default {
           toolbar: {
             show: false,
           },
+          animations: {
+            enabled: false,
+          },
         },
         title: {
           text: 'Gas Limit',
@@ -465,6 +516,9 @@ export default {
           foreColor: '#fff',
           toolbar: {
             show: false,
+          },
+          animations: {
+            enabled: false,
           },
         },
         title: {
@@ -657,6 +711,10 @@ export default {
   justify-content: space-between;
   align-items: center;
   gap: 40px;
+}
+.network-title {
+  font-size: 30px;
+  color: black;
 }
 .prime {
   display: flex;
