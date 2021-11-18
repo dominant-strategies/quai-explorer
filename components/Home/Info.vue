@@ -26,7 +26,7 @@
             </p>
           </div>
           <div class="stats">
-            <p class="title">TPS</p>
+            <p class="title">Transactions</p>
             <p class="stats-text">
               {{ transactions }}
             </p>

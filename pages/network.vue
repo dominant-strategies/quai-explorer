@@ -2,7 +2,7 @@
   <div>
     <v-toolbar>
       <template>
-        <v-tabs>
+        <v-tabs align-with-title>
           <v-tabs-slider color="orange"></v-tabs-slider>
           <v-tab
             class="network-tab"

@@ -1,8 +1,78 @@
 const axios = require('axios')
+const chainSlugs = [
+    'prime',
+    'region-1',
+    'region-2',
+    'region-3',
+    'zone-1-1',
+    'zone-1-2',
+    'zone-1-3',
+    'zone-2-1',
+    'zone-2-2',
+    'zone-2-3',
+    'zone-3-1',
+    'zone-3-2',
+    'zone-3-3',
+]
 
 export const state = () => ({
     transactions: 0,
-    txData: []
+    txData: [],
+    transactionsGraphData: [
+        [{
+           name: 'transactions',
+           data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }],
+        [{
+            name: 'transactions',
+            data: [] 
+        }]
+    ],
+    transactionsKey: 100,
 })
 
 export const mutations = {
@@ -11,11 +81,18 @@ export const mutations = {
     },
     addTransactionsData(state, txData) {
         state.txData.unshift(txData)
+    },
+    setTransactionsValues(state, data) {
+        state.transactionsKey += 1
+        if(state.transactionsGraphData[data.index][0].data.length == 20){
+            state.transactionsGraphData[data.index][0].data.shift()
+        }
+        state.transactionsGraphData[data.index][0].data.push({x: data.x, y:data.y})
     }
 }
 
 export const actions = {
-    async fetchTx({ commit }, payload) {
+    async fetchTx({ commit, dispatch }, payload) {
         var txNum
         try {
             var txNum = await axios.post(
@@ -34,7 +111,11 @@ export const actions = {
         )} catch (err) {
             console.log(err)
         }
+        payload = {
+            ...payload, txCount: parseInt(txNum.data.result, 16) 
+        }
         commit('addTransactionsCount', parseInt(txNum.data.result, 16))
+        dispatch('setTransactions', payload)
     },
     async getTransactionsBlock({ commit }, payload) {
         try {
@@ -66,4 +147,25 @@ export const actions = {
             commit('addTransactionsData', txData)
         }
     },
+    async setTransactions({ commit }, payload){
+        const index = chainSlugs.indexOf(payload.chain)
+
+        var unix_timestamp = payload.data.timestamp
+        var date = new Date(unix_timestamp * 1000)
+        var hours = date.getHours()
+        var minutes = '0' + date.getMinutes()
+        var seconds = '0' + date.getSeconds()
+        var formattedTime =
+          hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
+
+        const txCount = payload.txCount
+
+        const data = {
+            x: formattedTime,
+            y: txCount,
+            index: index
+        }
+
+        commit('setTransactionsValues', data)
+  },
 }

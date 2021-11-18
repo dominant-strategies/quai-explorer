@@ -83,32 +83,35 @@
         height="150"
         width="250"
         type="bar"
+        :key="transactionsKey"
         :options="optionsTransactions"
-        :series="series"
+        :series="transactionsGraphData[index]"
       />
-      <component
+      <!-- <component
         :is="apexchart"
         height="150"
         width="250"
         type="bar"
         :options="optionsTPS"
         :series="series"
+      /> -->
+      <component
+        :is="apexchart"
+        height="150"
+        width="250"
+        type="bar"
+        :key="gasLimitKey"
+        :options="optionsGasSpending"
+        :series="gasSpendingGraphData[index]"
       />
       <component
         :is="apexchart"
         height="150"
         width="250"
         type="bar"
-        :options="optionsGasLimit"
-        :series="series"
-      />
-      <component
-        :is="apexchart"
-        height="150"
-        width="250"
-        type="bar"
+        :key="unclesKey"
         :options="optionsUncleCount"
-        :series="series"
+        :series="unclesCountGraphData[index]"
       />
     </client-only>
   </div>
@@ -152,7 +155,10 @@ export default {
       'currentGasLimit',
       'gasLimitKey',
       'gasLimitGraphData',
+      'gasSpendingGraphData',
     ]),
+    ...mapState('transactions', ['transactionsKey', 'transactionsGraphData']),
+    ...mapState('uncles', ['unclesKey', 'unclesCountGraphData']),
     apexchart() {
       return () => {
         if (process.client) {
@@ -438,9 +444,9 @@ export default {
           },
         },
       },
-      optionsGasLimit: {
+      optionsGasSpending: {
         chart: {
-          id: 'gaslimit',
+          id: 'gasspending',
           foreColor: '#fff',
           toolbar: {
             show: false,
@@ -450,7 +456,7 @@ export default {
           },
         },
         title: {
-          text: 'Gas Limit',
+          text: 'Gas Spending',
           align: 'left',
           margin: 10,
           offsetX: 0,
@@ -582,121 +588,6 @@ export default {
           },
         },
       },
-      series: [
-        {
-          name: 'Difficulty',
-          data: [
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-            {
-              x: '2018-09-10',
-              y: 120,
-            },
-            {
-              x: '2018-09-11',
-              y: 480,
-            },
-            {
-              x: '2018-09-12',
-              y: 330,
-            },
-          ],
-        },
-      ],
     }
   },
 }

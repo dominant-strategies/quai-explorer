@@ -75,6 +75,60 @@ export const state = () => ({
             data: [] 
         }]
     ],
+    gasSpendingGraphData: [
+        [{
+           name: 'gas spending',
+           data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }],
+        [{
+            name: 'gas spending',
+            data: [] 
+        }]
+    ],
 })
 
 export const mutations = {
@@ -106,11 +160,17 @@ export const mutations = {
         state.currentGasLimit[index] = gaslimit
       }
     },
-    setGraphValues(state, data) {
+    setGraphValuesGasLimit(state, data) {
         if(state.gasLimitGraphData[data.index][0].data.length == 20){
             state.gasLimitGraphData[data.index][0].data.shift()
         }
         state.gasLimitGraphData[data.index][0].data.push({x: data.x, y:data.y})
+    },
+    setGraphValuesGasSpending(state, data) {
+        if(state.gasSpendingGraphData[data.index][0].data.length == 20){
+            state.gasSpendingGraphData[data.index][0].data.shift()
+        }
+        state.gasSpendingGraphData[data.index][0].data.push({x: data.x, y:data.y})
     }
 }
 
@@ -135,6 +195,28 @@ export const actions = {
         }
 
         commit('setGasLimitValues', payload)
-        commit('setGraphValues', data)
+        commit('setGraphValuesGasLimit', data)
+  },
+    
+    async setGasSpending({ commit }, payload){
+        const index = chainSlugs.indexOf(payload.chain)
+
+        var unix_timestamp = payload.data.timestamp
+        var date = new Date(unix_timestamp * 1000)
+        var hours = date.getHours()
+        var minutes = '0' + date.getMinutes()
+        var seconds = '0' + date.getSeconds()
+        var formattedTime =
+          hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
+
+        const gasSpending = payload.data.gasUsed[payload.position]
+
+        const data = {
+            x: formattedTime,
+            y: gasSpending,
+            index: index
+        }
+
+        commit('setGraphValuesGasSpending', data)
   },
 }

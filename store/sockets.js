@@ -76,6 +76,8 @@ export const actions = {
           // Network stats actions
           dispatch('difficulty/setDifficulty', payload, {root:true})
           dispatch('gaslimit/setGasLimit', payload, {root:true})
+          dispatch('gaslimit/setGasSpending', payload, {root:true})
+          dispatch('uncles/fetchUncles', payload, {root:true})
         }
       }
 
