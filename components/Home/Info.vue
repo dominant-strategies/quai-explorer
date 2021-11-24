@@ -54,7 +54,8 @@
             :items="blocksData"
             :items-per-page="15"
             dense
-          ></v-data-table>
+          >
+          </v-data-table>
         </v-card>
         <v-card class="blocks-card">
           <v-card-title class="title"> Transactions </v-card-title>
@@ -64,7 +65,8 @@
             :items="txData"
             :items-per-page="15"
             dense
-          ></v-data-table>
+          >
+          </v-data-table>
         </v-card>
       </div>
     </div>
@@ -84,9 +86,10 @@ export default {
           sortable: false,
           value: 'location',
         },
+        { text: 'Number', value: 'number' },
         { text: 'Miner', value: 'miner' },
         { text: 'Txs', value: 'txs' },
-        { text: 'Timetamp', value: 'timestamp' },
+        { text: 'Timestamp', value: 'timestamp' },
       ],
       headerstx: [
         {

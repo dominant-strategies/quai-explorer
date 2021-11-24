@@ -1,5 +1,8 @@
 const WebSocket = require('ws')
 const axios = require('axios')
+
+const blocks = require('../graphql/blocks.js')
+
 const chainSlugs = [
   'prime',
   'region-1',
@@ -22,12 +25,12 @@ export const state = () => ({
   blocksData: [],
   hashRate: 0,
   difficultyArr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  difficulty: 0
+  difficulty: 0,
 })
 
 export const mutations = {
   setInitialBlocks(state, initialBlocks) {
-    state.blocks = initialBlocks
+    state.blocksData = initialBlocks
   },
   addSockets(state, sockets) {
     state.sockets.push(sockets)
@@ -42,53 +45,40 @@ export const mutations = {
     state.hashRate = hashRate
   },
   updateDifficulty(state, diffObj) {
-    
     const index = chainSlugs.indexOf(diffObj.chain)
 
     state.difficultyArr[index] = diffObj.difficulty
 
     var difficultySum = 0
-    for(var i=0; i< state.difficultyArr.length; i++) {
-      difficultySum += state.difficultyArr[i] 
+    for (var i = 0; i < state.difficultyArr.length; i++) {
+      difficultySum += state.difficultyArr[i]
     }
     state.difficulty = difficultySum
   },
 }
 
 export const actions = {
-  addBlockNumber({ commit }){
+  addBlockNumber({ commit }) {
     commit('addBlockNumber')
   },
   async fetch({ commit }) {
-    var count = 0
-    var initialBlocks = 0
-    for (var i = 0; i < chainSlugs.length; i++) {
-      axios
-        .post(
-          'http://45.32.69.88/' + chainSlugs[i] + '-http',
-          {
-            jsonrpc: '2.0',
-            method: 'eth_blockNumber',
-            params: [],
-            id: 1,
-          },
-          {
-            headers: {
-              'content-type': 'application/json',
-            },
-          }
-        )
-        .then(function (response) {
-          initialBlocks += parseInt(response.data.result, 16)
-          count += 1
-          if (count == 13) {
-            commit('setInitialBlocks', initialBlocks)
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    }
+    const data = await axios.post(
+      'https://quainetworktest.hasura.app/v1/graphql',
+      {
+        query: blocks.GET_BLOCKS,
+        variables: {
+          num: 10,
+        },
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Hasura-Role': 'read',
+        },
+      }
+    )
+    console.log(data)
+    commit('setInitialBlocks', data.data.data.blocks)
   },
   async getBlockTableData({ commit }, payload) {
     var txNum
@@ -130,20 +120,20 @@ export const actions = {
     }
     commit('addBlockTableData', newRowBlocks)
   },
-  async getDifficulty({ commit }, payload){
+  async getDifficulty({ commit }, payload) {
     var difficultyArr = payload.data.difficulty
     var diffObj = {
       chain: payload.chain,
-      difficulty: difficultyArr[payload.position]
+      difficulty: difficultyArr[payload.position],
     }
-        
+
     commit('updateDifficulty', diffObj)
   },
-  async hashRate({ commit }){
+  async hashRate({ commit }) {
     var hashR = 0
     for (var i = 0; i < chainSlugs.length; i++) {
-      try { 
-      var hashResponse = await axios.post(
+      try {
+        var hashResponse = await axios.post(
           'http://45.32.69.88/' + chainSlugs[i] + '-http',
           {
             jsonrpc: '2.0',
@@ -157,11 +147,11 @@ export const actions = {
             },
           }
         )
-      } catch(error) {
-          console.log(error)
-        }
-        hashR += parseInt(hashResponse.data.result, 16)
+      } catch (error) {
+        console.log(error)
       }
-      commit('setHashRate', hashR)
-    },
+      hashR += parseInt(hashResponse.data.result, 16)
+    }
+    commit('setHashRate', hashR)
+  },
 }
