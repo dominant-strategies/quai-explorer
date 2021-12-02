@@ -15,208 +15,267 @@ const chainSlugs = [
 ]
 
 export const state = () => ({
-    minGasLimit: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    maxGasLimit: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    avgGasLimit: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    currentGasLimit: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    count: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    gasLimitKey: 0,
-    gasLimitGraphData: [
-        [{
-           name: 'gaslimit',
-           data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }],
-        [{
-            name: 'gaslimit',
-            data: [] 
-        }]
+  minGasLimit: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  maxGasLimit: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  avgGasLimit: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  currentGasLimit: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  count: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  gasLimitKey: 0,
+  gasLimitGraphData: [
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
     ],
-    gasSpendingGraphData: [
-        [{
-           name: 'gas spending',
-           data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }],
-        [{
-            name: 'gas spending',
-            data: [] 
-        }]
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
     ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gaslimit',
+        data: [],
+      },
+    ],
+  ],
+  gasSpendingGraphData: [
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+    [
+      {
+        name: 'gas spending',
+        data: [],
+      },
+    ],
+  ],
 })
 
 export const mutations = {
-    setGasLimitValues(state, payload) {
-      const index = chainSlugs.indexOf(payload.chain)
-      
-      state.gasLimitKey += 1
+  setGasLimitValues(state, payload) {
+    const index = chainSlugs.indexOf(payload.chain)
 
-      // count since the last refresh to calculate the average difficulty
-      state.count[index] += 1
-      const gaslimit = payload.data.gasLimit[payload.position]
-      
-      // initially 
-      if(state.count[index] == 1) {
-          state.minGasLimit[index] = gaslimit
-          state.maxGasLimit[index] = gaslimit
-          state.avgGasLimit[index] = gaslimit
-          state.currentGasLimit[index] = gaslimit
-      }
+    state.gasLimitKey += 1
 
-      if(state.count[index] > 1) {
-          if(gaslimit < state.minGasLimit[index]) {
-            state.minGasLimit[index] = gaslimit
-          }
-          if(gaslimit > state.minGasLimit[index]) {
-            state.maxGasLimit[index] = gaslimit
-          }
-        state.avgGasLimit[index] = Math.round((parseInt(state.avgGasLimit[index], 10) * (state.count[index] - 1) + parseInt(gaslimit, 10))/state.count[index])
-        state.currentGasLimit[index] = gaslimit
-      }
-    },
-    setGraphValuesGasLimit(state, data) {
-        if(state.gasLimitGraphData[data.index][0].data.length == 20){
-            state.gasLimitGraphData[data.index][0].data.shift()
-        }
-        state.gasLimitGraphData[data.index][0].data.push({x: data.x, y:data.y})
-    },
-    setGraphValuesGasSpending(state, data) {
-        if(state.gasSpendingGraphData[data.index][0].data.length == 20){
-            state.gasSpendingGraphData[data.index][0].data.shift()
-        }
-        state.gasSpendingGraphData[data.index][0].data.push({x: data.x, y:data.y})
+    // count since the last refresh to calculate the average difficulty
+    state.count[index] += 1
+    const gaslimit = payload.data.gasLimit[payload.position]
+
+    // initially
+    if (state.count[index] == 1) {
+      state.minGasLimit[index] = gaslimit
+      state.maxGasLimit[index] = gaslimit
+      state.avgGasLimit[index] = gaslimit
+      state.currentGasLimit[index] = gaslimit
     }
+
+    if (state.count[index] > 1) {
+      if (gaslimit < state.minGasLimit[index]) {
+        state.minGasLimit[index] = gaslimit
+      }
+      if (gaslimit > state.minGasLimit[index]) {
+        state.maxGasLimit[index] = gaslimit
+      }
+      state.avgGasLimit[index] = Math.round(
+        (parseInt(state.avgGasLimit[index], 10) * (state.count[index] - 1) +
+          parseInt(gaslimit, 10)) /
+          state.count[index]
+      )
+      state.currentGasLimit[index] = gaslimit
+    }
+  },
+  setGraphValuesGasLimit(state, data) {
+    if (state.gasLimitGraphData[data.index][0].data.length == 20) {
+      state.gasLimitGraphData[data.index][0].data.shift()
+    }
+    state.gasLimitGraphData[data.index][0].data.push({ x: data.x, y: data.y })
+  },
+  setGraphValuesGasSpending(state, data) {
+    if (state.gasSpendingGraphData[data.index][0].data.length == 20) {
+      state.gasSpendingGraphData[data.index][0].data.shift()
+    }
+    state.gasSpendingGraphData[data.index][0].data.push({
+      x: data.x,
+      y: data.y,
+    })
+  },
 }
 
 export const actions = {
-    async setGasLimit({ commit }, payload){
-        const index = chainSlugs.indexOf(payload.chain)
+  async setGasLimit({ commit }, payload) {
+    const index = chainSlugs.indexOf(payload.chain)
 
-        var unix_timestamp = payload.data.timestamp
-        var date = new Date(unix_timestamp * 1000)
-        var hours = date.getHours()
-        var minutes = '0' + date.getMinutes()
-        var seconds = '0' + date.getSeconds()
-        var formattedTime =
-          hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
+    var unix_timestamp = payload.data.timestamp
+    var date = new Date(unix_timestamp * 1000)
+    var hours = date.getHours()
+    var minutes = '0' + date.getMinutes()
+    var seconds = '0' + date.getSeconds()
+    var formattedTime =
+      hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
 
-        const gaslimit = payload.data.gasLimit[payload.position]
+    const gaslimit = payload.data.gasLimit[payload.position]
 
-        const data = {
-            x: formattedTime,
-            y: gaslimit,
-            index: index
-        }
+    const data = {
+      x: formattedTime,
+      y: gaslimit,
+      index: index,
+    }
 
-        commit('setGasLimitValues', payload)
-        commit('setGraphValuesGasLimit', data)
+    commit('setGasLimitValues', payload)
+    commit('setGraphValuesGasLimit', data)
   },
-    
-    async setGasSpending({ commit }, payload){
-        const index = chainSlugs.indexOf(payload.chain)
 
-        var unix_timestamp = payload.data.timestamp
-        var date = new Date(unix_timestamp * 1000)
-        var hours = date.getHours()
-        var minutes = '0' + date.getMinutes()
-        var seconds = '0' + date.getSeconds()
-        var formattedTime =
-          hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
+  async setGasSpending({ commit }, payload) {
+    const index = chainSlugs.indexOf(payload.chain)
 
-        const gasSpending = payload.data.gasUsed[payload.position]
+    var unix_timestamp = payload.data.timestamp
+    var date = new Date(unix_timestamp * 1000)
+    var hours = date.getHours()
+    var minutes = '0' + date.getMinutes()
+    var seconds = '0' + date.getSeconds()
+    var formattedTime =
+      hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
 
-        const data = {
-            x: formattedTime,
-            y: gasSpending,
-            index: index
-        }
+    const gasSpending = payload.data.gasUsed[payload.position]
 
-        commit('setGraphValuesGasSpending', data)
+    const data = {
+      x: formattedTime,
+      y: gasSpending,
+      index: index,
+    }
+
+    commit('setGraphValuesGasSpending', data)
   },
 }

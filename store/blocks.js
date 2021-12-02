@@ -61,9 +61,9 @@ export const actions = {
   addBlockNumber({ commit }) {
     commit('addBlockNumber')
   },
-  async fetch({ commit }) {
+  async fetch({ commit, rootState }) {
     const data = await axios.post(
-      'https://quainetworktest.hasura.app/v1/graphql',
+      rootState.api,
       {
         query: blocks.GET_BLOCKS,
         variables: {
@@ -77,7 +77,6 @@ export const actions = {
         },
       }
     )
-    console.log(data)
     commit('setInitialBlocks', data.data.data.blocks)
   },
   async getBlockTableData({ commit }, payload) {

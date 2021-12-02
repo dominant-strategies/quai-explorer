@@ -90,6 +90,15 @@ export default {
   devServer: {
     proxy: 'http://localhost:3000',
   },
+  modules: ['@nuxtjs/apollo'],
+
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'https://quainetworktest.hasura.app/v1/graphql',
+      },
+    },
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/sitemap', '@nuxtjs/proxy'],

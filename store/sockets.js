@@ -17,7 +17,7 @@ const chainSlugs = [
 const positions = [0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 
 export const state = () => ({
-    sockets: []
+  sockets: [],
 })
 
 export const mutations = {
@@ -27,7 +27,7 @@ export const mutations = {
 }
 
 export const actions = {
-  createSockets({ commit, dispatch }) {
+  createSockets({ commit, dispatch, rootState }) {
     console.log('createSockets')
 
     const handleConnection = (connection, chain, position) => {
@@ -66,18 +66,18 @@ export const actions = {
           }
 
           // Home page actions
-          dispatch('blocks/addBlockNumber', payload, {root:true})
-          dispatch('blocks/getBlockTableData', payload, {root:true})
-          dispatch('blocks/hashRate', payload, {root:true})
-          dispatch('blocks/getDifficulty', payload, {root:true})
-          dispatch('transactions/fetchTx', payload, {root:true})
-          dispatch('transactions/getTransactionsBlock', payload, {root:true})
-          
+          dispatch('blocks/addBlockNumber', payload, { root: true })
+          dispatch('blocks/getBlockTableData', payload, { root: true })
+          dispatch('blocks/hashRate', payload, { root: true })
+          dispatch('blocks/getDifficulty', payload, { root: true })
+          dispatch('transactions/fetchTx', payload, { root: true })
+          dispatch('transactions/getTransactionsBlock', payload, { root: true })
+
           // Network stats actions
-          dispatch('difficulty/setDifficulty', payload, {root:true})
-          dispatch('gaslimit/setGasLimit', payload, {root:true})
-          dispatch('gaslimit/setGasSpending', payload, {root:true})
-          dispatch('uncles/fetchUncles', payload, {root:true})
+          dispatch('difficulty/setDifficulty', payload, { root: true })
+          dispatch('gaslimit/setGasLimit', payload, { root: true })
+          dispatch('gaslimit/setGasSpending', payload, { root: true })
+          dispatch('uncles/fetchUncles', payload, { root: true })
         }
       }
 
@@ -98,5 +98,4 @@ export const actions = {
       handleConnection(connection, chainSlugs[i], positions[i])
     }
   },
-
 }
