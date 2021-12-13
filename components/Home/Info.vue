@@ -164,7 +164,7 @@ export default {
 .quai-info {
   margin-top: 26px;
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
@@ -198,7 +198,7 @@ export default {
   display: grid;
   align-items: center;
   height: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: auto;
 }
 
 .title {
@@ -207,9 +207,9 @@ export default {
 
 .quai-info {
   padding: 5px;
+  gap: 2rem;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 20px;
 }
