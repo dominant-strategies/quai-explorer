@@ -4,6 +4,7 @@
     :items="chains"
     :items-per-page="20"
     class="chains"
+    hide-default-footer
   ></v-data-table>
 </template>
 
