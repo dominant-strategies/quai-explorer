@@ -17,8 +17,8 @@
       </div>
     </div>
     <div class="info-page">
-      <v-card class="main-card">
-        <v-row style="min-height: 120px">
+      <v-card>
+        <div class="main-card">
           <div class="stats">
             <p class="title">Blocks</p>
             <p class="stats-text">
@@ -43,7 +43,7 @@
               {{ difficulty }}
             </p>
           </div>
-        </v-row>
+        </div>
       </v-card>
       <div class="quai-info">
         <v-card class="blocks-card">
@@ -147,13 +147,15 @@ export default {
 .stats {
   display: flex;
   flex-direction: row;
-  width: 25%;
+  width: 200px;
   gap: 10px;
   align-items: center;
   justify-content: center;
 }
 
 .info-page {
+  display: flex;
+  flex-direction: column;
   margin-top: -3vh;
   margin-left: 3vw;
   margin-right: 3vw;
@@ -184,8 +186,10 @@ export default {
 .main-card {
   width: 100%;
   border-radius: 1rem;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .blocks-card {
@@ -194,22 +198,20 @@ export default {
   display: grid;
   align-items: center;
   height: 100%;
-  width: 48%;
+  margin-bottom: 2rem;
 }
 
 .title {
   color: black;
 }
 
-@media (max-width: 1000px) {
-  .quai-info {
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px;
-  }
+.quai-info {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
 }
 
 $data-table-border-radius: none !important;

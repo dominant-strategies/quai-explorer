@@ -77,6 +77,7 @@ export const actions = {
         },
       }
     )
+    console.log(data.data.data.blocks)
     commit('setInitialBlocks', data.data.data.blocks)
   },
   async getBlockTableData({ commit }, payload) {
