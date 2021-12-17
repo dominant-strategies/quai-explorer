@@ -98,14 +98,15 @@ export default {
           sortable: false,
           value: 'hash',
         },
-        { text: 'Block number', value: 'block' },
-        { text: 'Quai sent', value: 'sent' },
+        { text: 'Block number', value: 'block_number' },
+        { text: 'Quai sent', value: 'value' },
       ],
       searchTerm: 'Search by Address / Txn Hash / Block',
     }
   },
   mounted() {
-    this.fetch()
+    this.fetch(),
+    this.fetchTransaction()
   },
   computed: {
     ...mapState('blocks', ['blocks', 'blocksData', 'hashRate', 'difficulty']),
@@ -114,6 +115,7 @@ export default {
   methods: {
     searchQuai() {},
     ...mapActions('blocks', ['fetch']),
+    ...mapActions('transactions', ['fetchTransaction'])
   },
 }
 </script>
