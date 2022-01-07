@@ -52,7 +52,7 @@ export default function BlockTable({ setBlocksCount }) {
                                 <thead className="bg-transparent border-b">
                                     <tr>
                                         {BLOCK_TABLE_HEADER?.map(header =>
-                                            <th scope="col" className="text-sm font-medium text-white px-6 py-4 text-left">
+                                            <th key={header} scope="col" className="text-sm font-medium text-white px-6 py-4 text-left">
                                                 {header}
                                             </th>
                                         )}
@@ -60,8 +60,8 @@ export default function BlockTable({ setBlocksCount }) {
                                 </thead>
                                 {!loading ? 
                                     <tbody>
-                                        {blocks?.map(block => (
-                                            <tr className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-500" onClick={()=>navigate(`/block/${block.hash}`)}>
+                                        {blocks?.map((block, index) => (
+                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-500" onClick={()=>navigate(`/block/${block.hash}`)}>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{block.location}</td>
                                                 <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
                                                     {block.number}
@@ -75,7 +75,7 @@ export default function BlockTable({ setBlocksCount }) {
                                                 </td>
                                             </tr>
                                         ))}
-                                    </tbody> : <div className="p-4 flex justify-center items-center">Loading ...</div>}
+                                    </tbody> : <tr className="p-4 flex justify-center items-center">Loading ...</tr>}
                             </table>
                         </div>
                     </div>

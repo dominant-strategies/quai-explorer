@@ -40,7 +40,7 @@ export default function TransactionTable({setTransactionsCount}) {
                                 <thead className="bg-transparent border-b">
                                     <tr>
                                         {TRANSACTION_TABLE_HEADER?.map(header =>
-                                            <th scope="col" className="text-sm font-medium text-white px-6 py-4 text-left">
+                                            <th key={header} scope="col" className="text-sm font-medium text-white px-6 py-4 text-left">
                                                 {header}
                                             </th>
                                         )}
@@ -48,8 +48,8 @@ export default function TransactionTable({setTransactionsCount}) {
                                 </thead>
                                 {!loading ? 
                                     <tbody>
-                                        {transactions?.map(transaction => (
-                                            <tr className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-500" onClick={()=>navigate(`/tx/${transaction.hash}`)}>
+                                        {transactions?.map((transaction, index) => (
+                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-500" onClick={()=>navigate(`/tx/${transaction.hash}`)}>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{reduceString(transaction.hash)}</td>
                                                 <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
                                                     {transaction.block_number}
@@ -59,7 +59,7 @@ export default function TransactionTable({setTransactionsCount}) {
                                                 </td>
                                             </tr>
                                         ))}
-                                    </tbody> : <div className="p-4 flex justify-center items-center">Loading ...</div>}
+                                    </tbody> : <tr className="p-4 flex justify-center items-center">Loading ...</tr>}
                             </table>
                         </div>
                     </div>

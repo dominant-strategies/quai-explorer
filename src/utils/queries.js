@@ -41,6 +41,23 @@ export const GET_BLOCK_WITH_HASH = gql`
   }
 `
 
+export const GET_BLOCK_WITH_LOCATION = gql`
+  query Block($location:String!) {
+    blocks(where: {location: {_eq: $location}}){
+      context
+      difficulty
+      gas_limit
+      gas_used
+      hash
+      header
+      location
+      network_difficulty
+      number
+      timestamp
+    }
+  }
+`
+
 export const SUBSCRIBE_BLOCKS = gql`
   subscription GetBlocks($num:Int!) {
     blocks(limit:$num, order_by: { timestamp: desc }) {
@@ -106,6 +123,38 @@ export const SUBSCRIBE_TRANSACTIONS = gql`
         full_transaction
     }
   }
+`
+
+export const GET_NODE_INFO_WITH_LOCATION = gql`
+query NodeInfo($location:String!) {
+  node_info(where: {location: {_eq: $location}}) {
+    location
+    http_port
+    ws_port
+    ip
+    name
+    enode
+    context
+    height
+    hashrate
+  }
+}
+`
+
+export const GET_PEER_INFO_WITH_LOCATION = gql`
+query PeerInfo($location:String!) {
+  peer_info(where: {location: {_eq: $location}}) {
+    location
+    http_port
+    ws_port
+    ip
+    name
+    enode
+    current_head
+    context
+    current_difficulty
+  }
+}
 `
 
 export const BlockOrTx = gql`

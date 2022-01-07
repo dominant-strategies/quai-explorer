@@ -12,7 +12,7 @@ function Header() {
             <div>
                 {MENU?.map(item => {
                     return (
-                        <Link className={`mx-8 font-semibold text-base rounded-full px-4 py-2 hover:bg-gray-200 ${pathname === item.path ? 'bg-gray-300 text-black' : ''}`} to={item.path} key={item.name}>{item.name}</Link>
+                        <Link className={`mx-8 font-semibold text-base rounded-full px-4 py-2 hover:bg-gray-200 hover:text-black ${pathname === item.path ? 'bg-gray-300 text-black' : ''}`} to={item.path} key={item.name}>{item.name}</Link>
                     )
                 })}
             </div>
