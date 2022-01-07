@@ -5,18 +5,17 @@ import LogoIcon from "../../assets/images/quai-rounded-logo.svg";
 
 function Header() {
     const { pathname } = useLocation();
-    console.log({pathname})
+    
     return (
         <div className="px-3 py-1 flex justify-between items-center">
             <img src={LogoIcon} alt="logo" width="100" />
-            <div>
+            <div className="w-full flex justify-center items-center ">
                 {MENU?.map(item => {
                     return (
-                        <Link className={`mx-8 font-semibold text-base rounded-full px-4 py-2 hover:bg-gray-200 hover:text-black ${pathname === item.path ? 'bg-gray-300 text-black' : ''}`} to={item.path} key={item.name}>{item.name}</Link>
+                        <Link className={`mx-2 text-xs md:text-base md:mx-8 font-semibold rounded-full px-4 py-2 hover:bg-gray-200 hover:text-black ${pathname === item.path ? 'bg-gray-300 text-black' : ''}`} to={item.path} key={item.name}>{item.name}</Link>
                     )
                 })}
             </div>
-            <div />
         </div>
     )
 }
