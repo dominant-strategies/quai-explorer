@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/outline'
 import GraphBox from '../../components/GraphBox'
 import InfoBox from '../../components/InfoBox'
-import { StatsInfoBox, BestBlockInfo } from '../../components/StatsInfoBox'
+import { StatsInfoBox } from '../../components/StatsInfoBox'
 import { CHAIN_SLUGS, POSITIONS } from '../../constants/'
 import { GET_LATEST_BLOCK } from '../../utils/queries'
 import { useQuery } from '@apollo/client'
@@ -45,19 +45,73 @@ function NetworkStats() {
 
 function Stats({ location }) {
     const [latestBlock, setLatestBlock] = useState('')
+    const [gasLimit, setGasLimit] = useState('')
+    const [difficulty, setDifficulty] = useState('')
+    const [uncles, setUncles] = useState('')
+
+    // Array values for the bar chart
+    const [difficultyArr, setDifficultyArr] = useState([])
+    const [uncleCountArr, setUncleCountArr] = useState([])
+    const [gasUsedArr, setGasUsedArr] = useState([])
+    const [gasLimitArr, setGasLimitArr] = useState([])
+
     const [value, setValues] = useState([
         30, 40, 45, 50, 49, 60, 70, 91, 90, 78, 12, 23, 45, 56, 67, 78, 45, 34,
         89, 29, 23,
     ])
-    const { loading, error, data } = useQuery(GET_LATEST_BLOCK, {
+    const { loading, error, data, isSuccess } = useQuery(GET_LATEST_BLOCK, {
         variables: { location },
     })
 
     useEffect(() => {
         setLatestBlock(
-            data?.blocks[0].number.split(',')[
+            data?.blocks[0]?.number.split(',')[
                 POSITIONS[CHAIN_SLUGS.indexOf(location)]
             ]
+        )
+        setGasLimit(
+            data?.blocks[0]?.gas_limit.split(',')[
+                POSITIONS[CHAIN_SLUGS.indexOf(location)]
+            ]
+        )
+        setDifficulty(
+            data?.blocks[0]?.difficulty.split(',')[
+                POSITIONS[CHAIN_SLUGS.indexOf(location)]
+            ]
+        )
+        setUncles(data?.blocks[0]?.header.uncles.length)
+
+        setDifficultyArr(
+            data?.blocks.map((block) =>
+                parseInt(
+                    block?.difficulty.split(',')[
+                        POSITIONS[CHAIN_SLUGS.indexOf(location)]
+                    ]
+                )
+            )
+        )
+        setUncleCountArr(
+            data?.blocks.map((block) => block?.header.uncles.length)
+        )
+
+        setGasUsedArr(
+            data?.blocks.map((block) =>
+                parseInt(
+                    block?.gas_used.split(',')[
+                        POSITIONS[CHAIN_SLUGS.indexOf(location)]
+                    ]
+                )
+            )
+        )
+
+        setGasLimitArr(
+            data?.blocks.map((block) =>
+                parseInt(
+                    block?.difficulty.split(',')[
+                        POSITIONS[CHAIN_SLUGS.indexOf(location)]
+                    ]
+                )
+            )
         )
     }, [data])
 
@@ -66,10 +120,10 @@ function Stats({ location }) {
             <h1 className="text-3xl mb-6">{location.toUpperCase()}</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <div>
-                    <BestBlockInfo
+                    <InfoBox
                         Icon={CubeIcon}
                         title="BEST BLOCK"
-                        value={loading ? '0' : latestBlock}
+                        value={loading ? 0 : latestBlock}
                         className="text-blue-400"
                     />
                     <InfoBox
@@ -83,7 +137,7 @@ function Stats({ location }) {
                     <InfoBox
                         Icon={ShareIcon}
                         title="UNCLES"
-                        value="0/2"
+                        value={loading ? 0 : uncles}
                         className="text-blue-400"
                     />
                     <StatsInfoBox
@@ -103,7 +157,7 @@ function Stats({ location }) {
                     <StatsInfoBox
                         Icon={CashIcon}
                         title="GAS LIMIT"
-                        value="30087972 gwei"
+                        value={loading ? 0 : gasLimit}
                         className="text-blue-400"
                     />
                 </div>
@@ -139,18 +193,18 @@ function Stats({ location }) {
                     <InfoBox
                         Icon={ChipIcon}
                         title="DIFFICULTY"
-                        value="0.00H"
+                        value={loading ? 0 : difficulty}
                         className="text-red-400"
                     />
                 </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <GraphBox title="BLOCK TIME" data={value} />
-                <GraphBox title="DIFFICULTY" data={value} />
-                <GraphBox title="UNCLE COUNT" data={value} />
+                <GraphBox title="DIFFICULTY" data={difficultyArr} />
+                <GraphBox title="UNCLE COUNT" data={uncleCountArr} />
                 <GraphBox title="TRANSACTIONS" data={value} />
-                <GraphBox title="GAS SPENDING" data={value} />
-                <GraphBox title="GAS LIMIT" data={value} />
+                <GraphBox title="GAS SPENDING" data={gasUsedArr} />
+                <GraphBox title="GAS LIMIT" data={gasLimitArr} />
             </div>
         </div>
     )

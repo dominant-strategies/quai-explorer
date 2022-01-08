@@ -188,11 +188,16 @@ export const BlockOrTx = gql`
 export const GET_LATEST_BLOCK = gql`
     query GetLatestBlock($location: String!) {
         blocks(
-            limit: 1
+            limit: 20
             where: { location: { _eq: $location } }
             order_by: { timestamp: desc }
         ) {
             number
+            network_difficulty
+            difficulty
+            gas_limit
+            gas_used
+            header
         }
     }
 `
