@@ -150,27 +150,27 @@ function Stats({ location }) {
                         className="text-blue-400"
                     />
                     
-                    {/* <StatsInfoBox
+                    <StatsInfoBox
                         Icon={CashIcon}
                         title="GAS PRICE"
                         value="149,458 gwei"
                         className="text-blue-400"
-                    /> */}
+                    />
                 </div>
-                {/* <div>
+                <div>
                     <InfoBox
                         Icon={ClockIcon}
                         title="LAST BLOCK"
                         value="22s ago"
                         className="text-green-400"
                     />
-                    <StatsInfoBox
+                    {/* <StatsInfoBox
                         Icon={CashIcon}
                         title="GAS LIMIT"
                         value={loading ? 0 : gasLimit}
                         className="text-blue-400"
-                    />
-                </div> */}
+                    /> */}
+                </div>
                 {/* <div>
                     <InfoBox
                         Icon={ChartBarIcon}
@@ -209,11 +209,11 @@ function Stats({ location }) {
                 </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {/* <GraphBox title="BLOCK TIME" data={value} /> */}
+                <GraphBox title="BLOCK TIME" data={value} />
                 <GraphBox title="DIFFICULTY" color="#ff0000" data={difficultyArr} />
-                {/* <GraphBox title="UNCLE COUNT" data={uncleCountArr} /> */}
-                {/* <GraphBox title="TRANSACTIONS" data={value} /> */}
-                {/* <GraphBox title="GAS SPENDING" data={gasUsedArr} /> */}
+                <GraphBox title="UNCLE COUNT" data={uncleCountArr} />
+                <GraphBox title="TRANSACTIONS" data={value} />
+                <GraphBox title="GAS SPENDING" data={gasUsedArr} />
                 <GraphBox title="GAS LIMIT" color="#00ff00" data={gasLimitArr} />
             </div>
         </div>
