@@ -29,7 +29,7 @@ function NetworkStats() {
             <div className="tabs flex flex-wrap justify-between">
                 {CHAIN_SLUGS.map((slug) => (
                     <a
-                        className="tab tab-bordered"
+                        className={`tab tab-bordered ${slug === chain && 'text-white font-semibold border-white'}`}
                         key={slug}
                         onClick={() => handleClick(slug)}
                     >
