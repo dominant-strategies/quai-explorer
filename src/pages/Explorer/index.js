@@ -48,10 +48,10 @@ function Explorer() {
                     </button>
                 </div>
                 <div className="bg-white w-2/3 rounded-sm px-10 shadow-md grid grid-cols-2 gap-4 md:grid-cols-4 items-center py-3 absolute -bottom-6 text-black">
-                    <div className="flex">Blocks: <p className="font-semibold ml-2">{blocksCount}</p></div>
-                    <div className="flex">Transactions: <p className="font-semibold ml-2">{transactionsCount}</p></div>
-                    <div>Hashrate: 0</div>
-                    <div>Difficulty: 0</div>
+                    <div className="flex cursor-pointer">Blocks: <p className="font-semibold ml-2">{blocksCount}</p></div>
+                    <div className="flex cursor-pointer">Transactions: <p className="font-semibold ml-2">{transactionsCount}</p></div>
+                    <div className="flex cursor-pointer">Hashrate: 0</div>
+                    <div className="flex cursor-pointer">Difficulty: 0</div>
                 </div>
             </div>
             <div className="py-20 px-20 grid lg:grid-cols-2 gap-4 items-start justify-center grid-cols-1">
