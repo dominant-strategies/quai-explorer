@@ -44,6 +44,19 @@ function GraphBox({ title, color, data }) {
         dataLabels: {
             enabled: false,
         },
+        fill: {
+            colors: color
+        },
+        tooltip: {
+            style: {
+                color: color
+            },
+            marker: {
+                show: false,
+            },
+            // fillSeriesColor: true,
+            theme: false
+        }
     })
 
     const [series, setSeries] = useState([

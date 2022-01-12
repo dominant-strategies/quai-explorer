@@ -29,7 +29,7 @@ function NetworkStats() {
             <div className="tabs flex flex-wrap justify-between">
                 {CHAIN_SLUGS.map((slug) => (
                     <a
-                        className="tab tab-bordered"
+                        className={`tab tab-bordered ${slug === chain && 'text-white font-semibold border-white'}`}
                         key={slug}
                         onClick={() => handleClick(slug)}
                     >
@@ -126,13 +126,22 @@ function Stats({ location }) {
                         value={loading ? 0 : latestBlock}
                         className="text-blue-400"
                     />
+                    <StatsInfoBox
+                        Icon={CashIcon}
+                        title="GAS LIMIT"
+                        value={loading ? 0 : gasLimit}
+                        className="text-blue-400"
+                    />
+                    
+                </div>
+                {/* <div>
                     <InfoBox
                         Icon={DesktopComputerIcon}
                         title="ACTIVE NODES"
                         value="72/72"
                         className="text-green-500"
                     />
-                </div>
+                </div> */}
                 <div>
                     <InfoBox
                         Icon={ShareIcon}
@@ -140,6 +149,7 @@ function Stats({ location }) {
                         value={loading ? 0 : uncles}
                         className="text-blue-400"
                     />
+                    
                     <StatsInfoBox
                         Icon={CashIcon}
                         title="GAS PRICE"
@@ -154,14 +164,14 @@ function Stats({ location }) {
                         value="22s ago"
                         className="text-green-400"
                     />
-                    <StatsInfoBox
+                    {/* <StatsInfoBox
                         Icon={CashIcon}
                         title="GAS LIMIT"
                         value={loading ? 0 : gasLimit}
                         className="text-blue-400"
-                    />
+                    /> */}
                 </div>
-                <div>
+                {/* <div>
                     <InfoBox
                         Icon={ChartBarIcon}
                         title="AVG BLOCK TIME"
@@ -174,8 +184,8 @@ function Stats({ location }) {
                         value="8520 ms"
                         className="text-red-400"
                     />
-                </div>
-                <div>
+                </div> */}
+                {/* <div>
                     <InfoBox
                         Icon={FireIcon}
                         title="AVG NETWORK HASHRATE"
@@ -188,7 +198,7 @@ function Stats({ location }) {
                         value="100%"
                         className="text-green-400"
                     />
-                </div>
+                </div> */}
                 <div>
                     <InfoBox
                         Icon={ChipIcon}
@@ -200,11 +210,11 @@ function Stats({ location }) {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <GraphBox title="BLOCK TIME" data={value} />
-                <GraphBox title="DIFFICULTY" data={difficultyArr} />
+                <GraphBox title="DIFFICULTY" color="#ff0000" data={difficultyArr} />
                 <GraphBox title="UNCLE COUNT" data={uncleCountArr} />
                 <GraphBox title="TRANSACTIONS" data={value} />
                 <GraphBox title="GAS SPENDING" data={gasUsedArr} />
-                <GraphBox title="GAS LIMIT" data={gasLimitArr} />
+                <GraphBox title="GAS LIMIT" color="#00ff00" data={gasLimitArr} />
             </div>
         </div>
     )
