@@ -70,6 +70,13 @@ export const SUBSCRIBE_BLOCKS = gql`
             number
             timestamp
         }
+        
+        blocks_aggregate {
+            aggregate {
+                count
+            }
+        }
+        
     }
 `
 export const GET_TRANSACTIONS = gql`
@@ -96,9 +103,13 @@ export const GET_TRANSACTIONS = gql`
     }
 `
 
-export const GET_TRANSACTION_WITH_HASH = gql`
-    query Transaction($hash: bpchar!) {
-        transactions(where: { hash: { _eq: $hash } }) {
+export const SUBSCRIBE_TRANSACTIONS = gql`
+    subscription GetTransactions($num: Int!, $offset: Int!) {
+        transactions(
+            limit: $num
+            offset: $offset
+            order_by: { timestamp: desc }
+        ) {
             block_number
             to
             from
@@ -108,17 +119,23 @@ export const GET_TRANSACTION_WITH_HASH = gql`
             contract_code
             full_transaction
         }
+
+        transactions_aggregate {
+            aggregate {
+                count
+            }
+        }
     }
 `
 
-export const SUBSCRIBE_TRANSACTIONS = gql`
-    subscription GetTransactions($num: Int!) {
-        transactions(limit: $num, order_by: { timestamp: desc }) {
+export const GET_TRANSACTION_WITH_HASH = gql`
+    query Transaction($hash: bpchar!) {
+        transactions(where: { hash: { _eq: $hash } }) {
             block_number
             to
             from
             timestamp
-            values
+            value
             hash
             contract_code
             full_transaction
