@@ -99,6 +99,7 @@ export const GET_TRANSACTIONS = gql`
             hash
             contract_code
             full_transaction
+            location
         }
     }
 `
@@ -118,6 +119,7 @@ export const SUBSCRIBE_TRANSACTIONS = gql`
             hash
             contract_code
             full_transaction
+            location
         }
 
         transactions_aggregate {
@@ -139,6 +141,7 @@ export const GET_TRANSACTION_WITH_HASH = gql`
             hash
             contract_code
             full_transaction
+            location
         }
     }
 `
@@ -218,3 +221,23 @@ export const GET_LATEST_BLOCK = gql`
         }
     }
 `
+export const GET_LATEST_TRANSACTIONS = gql`
+    query GetLatestTransactions($location: String!) {
+        transactions(
+            limit: 20
+            where: { location: { _eq: $location } }
+            order_by: { timestamp: desc }
+        ) {
+            block_number
+            to
+            from
+            timestamp
+            value
+            hash
+            contract_code
+            full_transaction
+            location
+        }
+    }
+`
+
