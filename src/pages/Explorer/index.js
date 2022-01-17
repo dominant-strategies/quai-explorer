@@ -10,9 +10,8 @@ function Explorer() {
     const [blocksCount, setBlocksCount] = useState(0);
     const [transactionsCount, setTransactionsCount] = useState(0);
     const [searchHash, setSearchHash] = useState("");
-    const { loading: loadingBlock, error: errorBlock, data: BlockData, refetch: refetchBlock } = useQuery(GET_BLOCK_WITH_HASH, { variables: { hash: searchHash } });
-    const { loading: loadingTransacion, error: errorTransaction, data: TransactionData, refetch: refetchTransaction } = useQuery(GET_TRANSACTION_WITH_HASH, { variables: { hash: searchHash } });
-
+    const { data: BlockData, refetch: refetchBlock } = useQuery(GET_BLOCK_WITH_HASH, { variables: { hash: searchHash } });
+    const { data: TransactionData, refetch: refetchTransaction } = useQuery(GET_TRANSACTION_WITH_HASH, { variables: { hash: searchHash } });
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             searchHashEvent();

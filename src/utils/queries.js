@@ -131,7 +131,7 @@ export const SUBSCRIBE_TRANSACTIONS = gql`
 `
 
 export const GET_TRANSACTION_WITH_HASH = gql`
-    query Transaction($hash: bpchar!) {
+    query Transaction($hash: String!) {
         transactions(where: { hash: { _eq: $hash } }) {
             block_number
             to
