@@ -5,6 +5,7 @@ import Pagination from "../Pagination";
 import { BLOCK_TABLE_HEADER, POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS } from "../../utils/queries";
 import { reduceString, convertTimeString } from "../../utils";
+import { Spinner } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
     const navigate = useNavigate();
@@ -41,6 +42,8 @@ export default function BlockTable({ setBlocksCount }) {
 
     return (
         <div>
+            {!loading ?
+
             <div className="flex flex-col">
                 <div className="border border-b-0 rounded-t-lg text-2xl font-semibold border-t px-6 py-4 bg-white text-black">
                     <h1>Blocks</h1>
@@ -58,7 +61,7 @@ export default function BlockTable({ setBlocksCount }) {
                                         )}
                                     </tr>
                                 </thead>
-                                {!loading ? 
+                                 
                                     <tbody>
                                         {blocks?.map((block, index) => (
                                             <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-base-300" onClick={()=>navigate(`/block/${block.hash}`)}>
@@ -75,13 +78,13 @@ export default function BlockTable({ setBlocksCount }) {
                                                 </td>
                                             </tr>
                                         ))}
-                                    </tbody> : <tr className="p-4 flex justify-center items-center">Loading ...</tr>}
+                                    </tbody>
                             </table>
                         </div>
                     </div>
                 </div> 
                 <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} limit={limit} setLimit={setLimit} totalPage={totalPage} />
-            </div>
+            </div>  : <Spinner size={"xl"} label='Loading the blocks table' />}
         </div>
     )
 }

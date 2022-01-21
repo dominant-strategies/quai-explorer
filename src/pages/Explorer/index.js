@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import BlockTable from '../../components/BlockTable'
 import TransactionTable from '../../components/TransactiontTable'
 import { GET_BLOCK_WITH_HASH, GET_TRANSACTION_WITH_HASH } from '../../utils/queries';
+import { Spinner } from '@chakra-ui/react';
 
 function Explorer() {
     const navigate = useNavigate();
@@ -48,8 +49,14 @@ function Explorer() {
                     </button>
                 </div>
                 <div className="bg-white w-2/3 rounded-sm px-10 shadow-md grid grid-cols-2 gap-4 md:grid-cols-4 items-center py-3 absolute -bottom-6 text-black">
-                    <div className="flex cursor-pointer">Blocks: <p className="font-semibold ml-2">{blocksCount}</p></div>
-                    <div className="flex cursor-pointer">Transactions: <p className="font-semibold ml-2">{transactionsCount}</p></div>
+                    <div className="flex cursor-pointer">
+                        Blocks: 
+                        {blocksCount != 0 ? <p className="font-semibold ml-2">{blocksCount}</p> : <Spinner m={'2'} size={'xs'} label='Loading block count'/> }
+                    </div>
+                    <div className="flex cursor-pointer">
+                        Transactions:   
+                        {transactionsCount != 0 ? <p className="font-semibold ml-2">{transactionsCount}</p> : <Spinner m={'2'} size={'xs'}label='Loading transactions count' /> }
+                    </div>
                     <div className="flex cursor-pointer">Hashrate: 0</div>
                     <div className="flex cursor-pointer">Difficulty: 0</div>
                 </div>
