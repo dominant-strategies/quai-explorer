@@ -7,6 +7,9 @@ module.exports = {
       backgroundImage: {
         'wave-pattern': "url('assets/images/wave.svg')",
       },
+      colors: {
+        'quai-orange': "#ec4d37"
+      },
     },
     // screens: {
     //   '2xl': {'max': '1535px'},

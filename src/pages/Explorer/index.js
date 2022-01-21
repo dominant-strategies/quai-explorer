@@ -39,9 +39,9 @@ function Explorer() {
             <div className="bg-wave-pattern bg-cover bg-gray-600 bg-no-repeat flex flex-col justify-center items-center px-10 py-20 relative">
                 <h1 className="text-4xl text-white font-semibold mb-8 text-center" >The Quai Network Explorer</h1>
                 <div className="flex relative w-full md:w-1/2 justify-center items-center">
-                    <input className="px-6 py-3 rounded-md w-full text-gray-600 placeholder:text-gray-600" placeholder="Search Txn Hash/Block" onChange={(e) => setSearchHash(e.target.value)} value={searchHash} onKeyPress={handleKeyPress} />
-                    <button className="flex justify-center items-center absolute right-0 bg-gray-300 px-3 rounded-tr-md rounded-br-md h-full" onClick={searchHashEvent}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24"
+                    <input className="input input-bordered px-6 py-3 rounded-md w-full text-gray-600 placeholder:text-gray-600 " placeholder="Search Txn Hash/Block" onChange={(e) => setSearchHash(e.target.value)} value={searchHash} onKeyPress={handleKeyPress} />
+                    <button className="flex justify-center items-center absolute right-0 bg-gray-200 px-3 rounded-tr-md rounded-br-md h-full" onClick={searchHashEvent}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-quai-orange" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
