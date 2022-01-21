@@ -40,7 +40,7 @@ export default function TransactionTable({setTransactionsCount}) {
                                 <thead className="bg-transparent border-b">
                                     <tr>
                                         {TRANSACTION_TABLE_HEADER?.map(header =>
-                                            <th key={header} scope="col" className="text-sm font-medium text-white px-6 py-4 text-left">
+                                            <th key={header} scope="col" className="text-sm font-bold px-6 py-4 text-left">
                                                 {header}
                                             </th>
                                         )}
@@ -49,12 +49,12 @@ export default function TransactionTable({setTransactionsCount}) {
                                 {!loading ? 
                                     <tbody>
                                         {transactions?.map((transaction, index) => (
-                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-500" onClick={()=>navigate(`/tx/${transaction.hash}`)}>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{reduceString(transaction.hash)}</td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-base-300" onClick={()=>navigate(`/tx/${transaction.hash}`)}>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{reduceString(transaction.hash)}</td>
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {transaction.block_number}
                                                 </td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {transaction.value}
                                                 </td>
                                             </tr>

@@ -52,7 +52,7 @@ export default function BlockTable({ setBlocksCount }) {
                                 <thead className="bg-transparent border-b">
                                     <tr>
                                         {BLOCK_TABLE_HEADER?.map(header =>
-                                            <th key={header} scope="col" className="text-sm font-medium text-white px-6 py-4 text-left">
+                                            <th key={header} scope="col" className="text-sm font-bold px-6 py-4 text-left">
                                                 {header}
                                             </th>
                                         )}
@@ -61,16 +61,16 @@ export default function BlockTable({ setBlocksCount }) {
                                 {!loading ? 
                                     <tbody>
                                         {blocks?.map((block, index) => (
-                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-500" onClick={()=>navigate(`/block/${block.hash}`)}>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{block.location}</td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-base-300" onClick={()=>navigate(`/block/${block.hash}`)}>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{block.location}</td>
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {block.number}
                                                 </td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {reduceString(block.miner)}
                                                 </td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">0</td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">0</td>
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {block.timestamp}
                                                 </td>
                                             </tr>
