@@ -5,6 +5,7 @@ import Pagination from "../Pagination";
 import { BLOCK_TABLE_HEADER, POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS } from "../../utils/queries";
 import { reduceString, convertTimeString } from "../../utils";
+import { Spinner } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
     const navigate = useNavigate();
@@ -41,6 +42,8 @@ export default function BlockTable({ setBlocksCount }) {
 
     return (
         <div>
+            {!loading ?
+
             <div className="flex flex-col">
                 <div className="border border-b-0 rounded-t-lg text-2xl font-semibold border-t px-6 py-4 bg-white text-black">
                     <h1>Blocks</h1>
@@ -52,36 +55,36 @@ export default function BlockTable({ setBlocksCount }) {
                                 <thead className="bg-transparent border-b">
                                     <tr>
                                         {BLOCK_TABLE_HEADER?.map(header =>
-                                            <th key={header} scope="col" className="text-sm font-medium text-white px-6 py-4 text-left">
+                                            <th key={header} scope="col" className="text-sm font-bold px-6 py-4 text-left">
                                                 {header}
                                             </th>
                                         )}
                                     </tr>
                                 </thead>
-                                {!loading ? 
+                                 
                                     <tbody>
                                         {blocks?.map((block, index) => (
-                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-500" onClick={()=>navigate(`/block/${block.hash}`)}>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{block.location}</td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-200 hover:text-black"  onClick={()=>navigate(`/block/${block.hash}`)}>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{block.location}</td>
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {block.number}
                                                 </td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {reduceString(block.miner)}
                                                 </td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">0</td>
-                                                <td className="text-sm text-white font-light px-6 py-4 whitespace-nowrap">
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">0</td>
+                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {block.timestamp}
                                                 </td>
                                             </tr>
                                         ))}
-                                    </tbody> : <tr className="p-4 flex justify-center items-center">Loading ...</tr>}
+                                    </tbody>
                             </table>
                         </div>
                     </div>
                 </div> 
                 <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} limit={limit} setLimit={setLimit} totalPage={totalPage} />
-            </div>
+            </div>  : <Spinner size={"xl"} label='Loading the blocks table' />}
         </div>
     )
 }
