@@ -51,7 +51,7 @@ export default function TransactionTable({setTransactionsCount}) {
                                  
                                     <tbody>
                                         {transactions?.map((transaction, index) => (
-                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-base-300" onClick={()=>navigate(`/tx/${transaction.hash}`)}>
+                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-200 hover:text-black" onClick={()=>navigate(`/tx/${transaction.hash}`)}>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{reduceString(transaction.hash)}</td>
                                                 <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {transaction.block_number}

@@ -64,7 +64,7 @@ export default function BlockTable({ setBlocksCount }) {
                                  
                                     <tbody>
                                         {blocks?.map((block, index) => (
-                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-base-300" onClick={()=>navigate(`/block/${block.hash}`)}>
+                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-200 hover:text-black"  onClick={()=>navigate(`/block/${block.hash}`)}>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{block.location}</td>
                                                 <td className="text-sm px-6 py-4 whitespace-nowrap">
                                                     {block.number}
