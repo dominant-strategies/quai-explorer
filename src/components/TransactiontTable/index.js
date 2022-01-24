@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from "react-router-dom";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import Pagination from "../Pagination";
 import { TRANSACTION_TABLE_HEADER } from "../../constants";
 import { GET_TRANSACTIONS } from "../../utils/queries";
 import { reduceString } from "../../utils";
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { Spinner } from '@chakra-ui/react';
 
 export default function TransactionTable({setTransactionsCount}) {

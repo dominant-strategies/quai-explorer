@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import Pagination from "../Pagination";
 import { BLOCK_TABLE_HEADER, POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS } from "../../utils/queries";
 import { reduceString, convertTimeString } from "../../utils";
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { Spinner } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
@@ -14,7 +16,7 @@ export default function BlockTable({ setBlocksCount }) {
     const [totalPage, setTotalPage] = useState(1);
     const [blocks, setBlocks] = useState([])
     const { loading, error, data } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
-   
+    console.log({loading})
     useEffect(() => {
         if (data) {
             const tempBlocks = data?.blocks.map(block=>{

@@ -15,7 +15,7 @@ import GraphBox from '../../components/GraphBox'
 import InfoBox from '../../components/InfoBox'
 import { StatsInfoBox } from '../../components/StatsInfoBox'
 import { CHAIN_SLUGS, POSITIONS } from '../../constants/'
-import { GET_LATEST_BLOCK } from '../../utils/queries'
+import { GET_LATEST_BLOCK, GET_LATEST_TRANSACTIONS } from '../../utils/queries'
 import { useQuery } from '@apollo/client'
 
 function NetworkStats() {
@@ -59,30 +59,36 @@ function Stats({ location }) {
         30, 40, 45, 50, 49, 60, 70, 91, 90, 78, 12, 23, 45, 56, 67, 78, 45, 34,
         89, 29, 23,
     ])
-    const { loading, error, data, isSuccess } = useQuery(GET_LATEST_BLOCK, {
+    const { loadingBlock, error : errorBlock, data : blockData, isSuccess: isSuccessBlock } = useQuery(GET_LATEST_BLOCK, {
         variables: { location },
     })
 
+    const { loadingTransaction, error: errorTransaction, data : transactionData, isSuccessTransaction } = useQuery(GET_LATEST_TRANSACTIONS, {
+        variables: { location },
+    })
+
+    console.log({transactionData})
+
     useEffect(() => {
         setLatestBlock(
-            data?.blocks[0]?.number.split(',')[
+            blockData?.blocks[0]?.number.split(',')[
                 POSITIONS[CHAIN_SLUGS.indexOf(location)]
             ]
         )
         setGasLimit(
-            data?.blocks[0]?.gas_limit.split(',')[
+            blockData?.blocks[0]?.gas_limit.split(',')[
                 POSITIONS[CHAIN_SLUGS.indexOf(location)]
             ]
         )
         setDifficulty(
-            data?.blocks[0]?.difficulty.split(',')[
+            blockData?.blocks[0]?.difficulty.split(',')[
                 POSITIONS[CHAIN_SLUGS.indexOf(location)]
             ]
         )
-        setUncles(data?.blocks[0]?.header.uncles.length)
+        setUncles(blockData?.blocks[0]?.header.uncles.length)
 
         setDifficultyArr(
-            data?.blocks.map((block) =>
+            blockData?.blocks.map((block) =>
                 parseInt(
                     block?.difficulty.split(',')[
                         POSITIONS[CHAIN_SLUGS.indexOf(location)]
@@ -91,11 +97,11 @@ function Stats({ location }) {
             )
         )
         setUncleCountArr(
-            data?.blocks.map((block) => block?.header.uncles.length)
+            blockData?.blocks.map((block) => block?.header.uncles.length)
         )
 
         setGasUsedArr(
-            data?.blocks.map((block) =>
+            blockData?.blocks.map((block) =>
                 parseInt(
                     block?.gas_used.split(',')[
                         POSITIONS[CHAIN_SLUGS.indexOf(location)]
@@ -105,7 +111,7 @@ function Stats({ location }) {
         )
 
         setGasLimitArr(
-            data?.blocks.map((block) =>
+            blockData?.blocks.map((block) =>
                 parseInt(
                     block?.difficulty.split(',')[
                         POSITIONS[CHAIN_SLUGS.indexOf(location)]
@@ -113,7 +119,7 @@ function Stats({ location }) {
                 )
             )
         )
-    }, [data])
+    }, [blockData])
 
     return (
         <div className="p-8">
@@ -123,13 +129,13 @@ function Stats({ location }) {
                     <InfoBox
                         Icon={CubeIcon}
                         title="BEST BLOCK"
-                        value={loading ? 0 : latestBlock}
+                        value={loadingBlock ? 0 : latestBlock}
                         className="text-blue-400"
                     />
                     <StatsInfoBox
                         Icon={CashIcon}
                         title="GAS LIMIT"
-                        value={loading ? 0 : gasLimit}
+                        value={loadingBlock ? 0 : gasLimit}
                         className="text-blue-400"
                     />
                     
@@ -146,7 +152,7 @@ function Stats({ location }) {
                     <InfoBox
                         Icon={ShareIcon}
                         title="UNCLES"
-                        value={loading ? 0 : uncles}
+                        value={loadingBlock ? 0 : uncles}
                         className="text-blue-400"
                     />
                     
@@ -167,7 +173,7 @@ function Stats({ location }) {
                     {/* <StatsInfoBox
                         Icon={CashIcon}
                         title="GAS LIMIT"
-                        value={loading ? 0 : gasLimit}
+                        value={loadingBlock ? 0 : gasLimit}
                         className="text-blue-400"
                     /> */}
                 </div>
@@ -203,7 +209,7 @@ function Stats({ location }) {
                     <InfoBox
                         Icon={ChipIcon}
                         title="DIFFICULTY"
-                        value={loading ? 0 : difficulty}
+                        value={loadingBlock ? 0 : difficulty}
                         className="text-red-400"
                     />
                 </div>
