@@ -61,7 +61,7 @@ function Explorer() {
                 {/* Header */}
                 <h1 className="text-4xl text-white font-semibold mb-8 text-center" >The Quai Network Explorer</h1>
                 
-                {/* Input to search by transaction hash or block */}
+                {/* Input to search by hash of transaction or block */}
                 <div className="flex relative w-full md:w-1/2 justify-center items-center">
                     <input className="px-6 py-3 rounded-md w-full text-gray-600 placeholder:text-gray-600" placeholder="Search by Txn Hash/Block" onChange={(e) => setSearchHash(e.target.value)} value={searchHash} onKeyPress={handleKeyPress} />
                     <button className="flex justify-center items-center absolute right-0 bg-gray-300 px-3 rounded-tr-md rounded-br-md h-full" onClick={searchHashEvent}>
@@ -73,7 +73,7 @@ function Explorer() {
                     </button>
                 </div>
 
-                {/* Spacing between input and stats card */}
+                {/* Spacing between the input and stats card components */}
                 <Box p={8}></Box>
 
                 {/* Stats card */}
@@ -86,10 +86,12 @@ function Explorer() {
                         <StatLabel>Transactions</StatLabel>
                         <StatNumber>{transactionsCount != 0 ? transactionsCount : <Spinner m={'2'} size={'sm'} label='Loading transactions count' />}</StatNumber>
                     </Stat>
+                    {/* TODO: update actual values here; currently set to 0 */}
                     <Stat>
                         <StatLabel>Hashrate</StatLabel>
                         <StatNumber>{hashrateValue}</StatNumber>
                     </Stat>
+                    {/* TODO: update actual values here; currently set to 0 */}
                     <Stat>
                         <StatLabel>Difficulty</StatLabel>
                         <StatNumber>{difficultyValue}</StatNumber>
