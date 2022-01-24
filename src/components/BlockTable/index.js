@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { Spinner } from '@chakra-ui/react';
 import Pagination from "../Pagination";
 import { BLOCK_TABLE_HEADER, POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS } from "../../utils/queries";
 import { reduceString, convertTimeString } from "../../utils";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-import { Spinner } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
     const navigate = useNavigate();
@@ -44,49 +44,41 @@ export default function BlockTable({ setBlocksCount }) {
 
     return (
         <div>
-            {!loading ?
-
+            {!loading ? 
             <div className="flex flex-col">
-                <div className="border border-b-0 rounded-t-lg text-2xl font-semibold border-t px-6 py-4 bg-white text-black">
+                <div className="border border-b-0 rounded-t-lg text-2xl font-bold border-t px-6 py-4 bg-white text-black">
                     <h1>Blocks</h1>
                 </div>
-                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full sm:px-6 lg:px-8">
-                        <div className="overflow-hidden">
-                            <table className="min-w-full border shadow-lg">
-                                <thead className="bg-transparent border-b">
-                                    <tr>
-                                        {BLOCK_TABLE_HEADER?.map(header =>
-                                            <th key={header} scope="col" className="text-sm font-bold px-6 py-4 text-left">
-                                                {header}
-                                            </th>
-                                        )}
-                                    </tr>
-                                </thead>
-                                 
-                                    <tbody>
-                                        {blocks?.map((block, index) => (
-                                            <tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-200 hover:text-black"  onClick={()=>navigate(`/block/${block.hash}`)}>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{block.location}</td>
-                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
-                                                    {block.number}
-                                                </td>
-                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
-                                                    {reduceString(block.miner)}
-                                                </td>
-                                                <td className="text-sm px-6 py-4 whitespace-nowrap">0</td>
-                                                <td className="text-sm px-6 py-4 whitespace-nowrap">
-                                                    {block.timestamp}
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> 
+                <Table className="border">
+                    <Thead className="border-b">
+                        <Tr>
+                            {BLOCK_TABLE_HEADER?.map(header =>
+                                <Th key={header} scope="col" className="text-sm font-semibold px-6 py-4 text-left">
+                                    {header}
+                                </Th>
+                            )}
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {blocks?.map((block, index) => (
+                            <Tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-300" onClick={()=>navigate(`/block/${block.hash}`)}>
+                                <Td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{block.location}</Td>
+                                <Td className="text-sm font-light px-6 py-4 whitespace-nowrap">
+                                    {block.number}
+                                </Td>
+                                <Td className="text-sm font-light px-6 py-4 whitespace-nowrap">
+                                    {reduceString(block.miner)}
+                                </Td>
+                                <Td className="text-sm font-light px-6 py-4 whitespace-nowrap">0</Td>
+                                <Td className="text-sm font-light px-6 py-4 whitespace-nowrap">
+                                    {block.timestamp}
+                                </Td>
+                            </Tr>
+                        ))}
+                    </Tbody> 
+                </Table>
                 <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} limit={limit} setLimit={setLimit} totalPage={totalPage} />
-            </div>  : <Spinner size={"xl"} label='Loading the blocks table' />}
+            </div> : <Spinner size={"xl"} label='Loading the blocks table' /> }
         </div>
     )
 }
