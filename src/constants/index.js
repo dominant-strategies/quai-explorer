@@ -14,7 +14,7 @@ export const MENU = [
 ]
 
 export const BLOCK_TABLE_HEADER = ["Location", "Number", "Miner", "Txs", "Timestamp"]
-export const TRANSACTION_TABLE_HEADER = ["TX Hash", "Block Number", "Quai sent"]
+export const TRANSACTION_TABLE_HEADER = ["TX Hash", "Block Number", "Quai Sent"]
 
 export const CHAIN_SLUGS = [
     'prime',
