@@ -74,7 +74,7 @@ function Explorer() {
                 </div>
 
                 {/* Spacing between the input and stats card components */}
-                <Box p={8}></Box>
+                <Box p={14}></Box>
 
                 {/* Stats card */}
                 <div className="bg-white w-2/3 rounded-sm px-10 shadow-md grid grid-cols-2 gap-4 md:grid-cols-4 items-center py-3 absolute -bottom-6 text-black">
