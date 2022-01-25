@@ -16,7 +16,7 @@ export default function BlockTable({ setBlocksCount }) {
     const [totalPage, setTotalPage] = useState(1);
     const [blocks, setBlocks] = useState([])
     const { loading, error, data } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
-    console.log({loading})
+    
     useEffect(() => {
         if (data) {
             const tempBlocks = data?.blocks.map(block=>{
@@ -63,14 +63,14 @@ export default function BlockTable({ setBlocksCount }) {
                         {blocks?.map((block, index) => (
                             <Tr key={index} className="bg-transparent cursor-pointer border-b transition duration-300 ease-in-out hover:bg-gray-300" onClick={()=>navigate(`/block/${block.hash}`)}>
                                 <Td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{block.location}</Td>
-                                <Td className="text-sm font-light px-6 py-4 whitespace-nowrap">
+                                <Td className="text-sm font-medium px-6 py-4 whitespace-nowrap">
                                     {block.number}
                                 </Td>
-                                <Td className="text-sm font-light px-6 py-4 whitespace-nowrap">
+                                <Td className="text-sm font-medium px-6 py-4 whitespace-nowrap">
                                     {reduceString(block.miner)}
                                 </Td>
-                                <Td className="text-sm font-light px-6 py-4 whitespace-nowrap">0</Td>
-                                <Td className="text-sm font-light px-6 py-4 whitespace-nowrap">
+                                <Td className="text-sm font-medium px-6 py-4 whitespace-nowrap">0</Td>
+                                <Td className="text-sm font-medium px-6 py-4 whitespace-nowrap">
                                     {block.timestamp}
                                 </Td>
                             </Tr>

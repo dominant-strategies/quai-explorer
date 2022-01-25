@@ -9,22 +9,24 @@ import {
     Stat,
     StatLabel,
     StatNumber,
-    Box
+    Box,
+    Heading,
 } from '@chakra-ui/react';
 
 function Explorer() {
-    const navigateTo = useNavigate();
-    
+    // Component state
     const [blocksCount, setBlocksCount] = useState(0);
     const [transactionsCount, setTransactionsCount] = useState(0);
     const [hashrateValue, setHashrateValue] = useState(0);
     const [difficultyValue, setDifficultyValue] = useState(0);
-    
     const [searchHash, setSearchHash] = useState("");
     
     // GraphQL queries
     const { data: BlockData, refetch: refetchBlockData } = useQuery(GET_BLOCK_WITH_HASH, { variables: { hash: searchHash } });
     const { data: TransactionData, refetch: refetchTransactionData } = useQuery(GET_TRANSACTION_WITH_HASH, { variables: { hash: searchHash } });
+
+    // Other hooks
+    const navigateTo = useNavigate();
 
     /**
      * Given a block/transaction hash, this handles navigating to the deatils page of the hash
@@ -59,7 +61,10 @@ function Explorer() {
             <div className="bg-wave-pattern bg-cover bg-gray-600 bg-no-repeat flex flex-col justify-center items-center px-10 py-20 relative">
 
                 {/* Header */}
-                <h1 className="text-4xl text-white font-semibold mb-8 text-center" >The Quai Network Explorer</h1>
+                <Heading color={'white'}> The Quai Network Explorer </Heading>
+
+                {/* Spacing */}
+                <Box p={4}></Box>
                 
                 {/* Input to search by hash of transaction or block */}
                 <div className="flex relative w-full md:w-1/2 justify-center items-center">
@@ -73,13 +78,13 @@ function Explorer() {
                     </button>
                 </div>
 
-                {/* Spacing between the input and stats card components */}
+                {/* Spacing */}
                 <Box p={14}></Box>
 
                 {/* Stats card */}
-                <div className="bg-white w-2/3 rounded-sm px-10 shadow-md grid grid-cols-2 gap-4 md:grid-cols-4 items-center py-3 absolute -bottom-6 text-black">
+                <div className="bg-white w-3/4 rounded-sm px-10 shadow-md grid grid-cols-2 gap-4 md:grid-cols-4 items-center py-3 absolute -bottom-6">
                     <Stat>
-                        <StatLabel>Blocks</StatLabel>
+                        <StatLabel fontSize={'sm'}>Blocks</StatLabel>
                         <StatNumber>{blocksCount != 0 ? blocksCount : <Spinner m={'2'} size={'sm'} label='Loading block count' />}</StatNumber>
                     </Stat>
                     <Stat>
