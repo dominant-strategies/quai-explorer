@@ -85,11 +85,11 @@ function Explorer() {
                 <div className="bg-white w-3/4 rounded-sm px-10 shadow-md grid grid-cols-2 gap-4 md:grid-cols-4 items-center py-3 absolute -bottom-6">
                     <Stat>
                         <StatLabel fontSize={'sm'}>Blocks</StatLabel>
-                        <StatNumber>{blocksCount != 0 ? blocksCount : <Spinner m={'2'} size={'sm'} label='Loading block count' />}</StatNumber>
+                        <StatNumber>{blocksCount !== 0 ? blocksCount : <Spinner m={'2'} size={'sm'} label='Loading block count' />}</StatNumber>
                     </Stat>
                     <Stat>
                         <StatLabel>Transactions</StatLabel>
-                        <StatNumber>{transactionsCount != 0 ? transactionsCount : <Spinner m={'2'} size={'sm'} label='Loading transactions count' />}</StatNumber>
+                        <StatNumber>{transactionsCount !== 0 ? transactionsCount : <Spinner m={'2'} size={'sm'} label='Loading transactions count' />}</StatNumber>
                     </Stat>
                     {/* TODO: update actual values here; currently set to 0 */}
                     <Stat>
