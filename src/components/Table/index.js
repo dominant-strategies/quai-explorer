@@ -24,16 +24,16 @@ const Table = ({ headers, contents}) => {
                                     {contents?.map(content => (
                                         <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{content.location}</td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
                                                 {content.number}
                                             </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
 
                                             </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
 
                                             </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
                                                 {content.timestamp}
                                             </td>
                                         </tr>
