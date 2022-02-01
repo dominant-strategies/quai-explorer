@@ -4,15 +4,22 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "../Pagination";
 import { TRANSACTION_TABLE_HEADER } from "../../constants";
 import { GET_TRANSACTIONS } from "../../utils/queries";
-import { reduceString } from "../../utils";
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import { convertTimeString } from "../../utils";
+import TransactionTableRow from "../Tables/TransactionTableRow";
+
 import {
     Alert,
     AlertIcon,
     AlertTitle,
     AlertDescription,
-    Spinner
+    Spinner,
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Td,
+    useColorModeValue
 } from '@chakra-ui/react';
 
 export default function TransactionTable({ setTransactionsCount }) {
@@ -27,6 +34,8 @@ export default function TransactionTable({ setTransactionsCount }) {
 
     // Other hooks
     // const navigateTo = useNavigate();
+
+    const textColor = useColorModeValue("gray.700", "white");
 
     // When this component mounts, grab a reference to all transactions, set the transaction count, and set the totalPageCount to allow for pagination
     useEffect(() => {
@@ -65,13 +74,42 @@ export default function TransactionTable({ setTransactionsCount }) {
         )
     }
 
-    // empty table
-    // new table will be written using chakra ui
     return (
-        <div>
+        <>
+        {!loading ?
+        <Table variant="simple" color={textColor}>
+           
+            <Thead>
+              
+              <Tr my=".8rem" ps="0px">
+                <Th color="gray.400">Tx Hash</Th>
+                <Th color="gray.400">To</Th>
+                <Th color="gray.400">From</Th>
+                <Th color="gray.400" isNumeric>Block</Th>
+                <Th color="gray.400" isNumeric>$QUAI Sent</Th>
+                
+              </Tr>
 
+            </Thead>
             
-        </div>
+            
+            <Tbody>
+              {transactions?.map((transaction) => {
+                return (
+                  <TransactionTableRow
+                    transactionHash={transaction.hash}
+                    toThisMiner={transaction.to}
+                    fromThisMiner={transaction.from}
+                    blockNumber={transaction.block_number}
+                    quaiSent={transaction.value}
+                    timestamp={transaction.timestamp}
+                  />
+                );
+              })}
+            </Tbody>
+          </Table>
+          : <Spinner size={"sm"} label='Loading the transactions table' /> }
+        </>
     )
 }
 

@@ -46,9 +46,6 @@ export default function Dashboard() {
   const textColor = useColorModeValue("gray.700", "white");
   const overlayRef = React.useRef();
 
-  // Build UI
-
-  // Blocks Card Assets 
   const blocksCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Blocks </StatLabel> );
   const blocksIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={BsBox} w="24px" h="24px" color="white"/> </IconBox>);
   const loadingBlockCountA11yLabel = 'Loading block count';
@@ -60,7 +57,6 @@ export default function Dashboard() {
     </Flex> 
   );
 
-  // Transactions Card Assets
   const transactionsCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Transactions </StatLabel> );
   const transactionsIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={GiMoneyStack} w="24px" h="24px" color="white"/> </IconBox>);
   const loadingTransactionsCountA11yLabel = 'Loading transactions count';
@@ -146,141 +142,36 @@ export default function Dashboard() {
       {/* Space between Stats Grid Row and Table Grid Row */}
       <Box p={15}></Box>
 
+
       {/* Tables Grid */}
-      <Grid
-        templateColumns={{ sm: "1fr", lg: "1.3fr 1.7fr" }}
-        templateRows={{ sm: "repeat(2, 1fr)", lg: "1fr" }}
-        gap="24px"
-        mb={{ lg: "26px" }}
-      >
-        
-        {/* Blocks Table */}
-        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}>
+      <SimpleGrid columns={{ xl: 2 }} spacing="12px">
+
+      <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
           <CardHeader mb="20px" pl="22px">
             <Flex direction="column" alignSelf="flex-start">
-              <Text fontSize="lg" color={textColor} fontWeight="bold" mb="6px">
-                Table can go here
-              </Text>
-              <Text fontSize="md" fontWeight="medium" color="gray.400">
-                This can be the place for the blocks table
+              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
+                Blocks
               </Text>
               <BlockTable setBlocksCount={setBlocksCount} />
             </Flex>
           </CardHeader>
-          <Box w="100%" h={{ sm: "300px" }} ps="8px">
-
-          </Box>
         </Card>
 
-        {/* Transactions Table */}
-        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}>
+      <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
           <CardHeader mb="20px" pl="22px">
             <Flex direction="column" alignSelf="flex-start">
-              <Text fontSize="lg" color={textColor} fontWeight="bold" mb="6px">
-                Table can go here
-              </Text>
-              <Text fontSize="md" fontWeight="medium" color="gray.400">
-                This can be the place for the transactions table
+              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
+                Transactions
               </Text>
               <TransactionTable setTransactionsCount={setTransactionsCount} />
             </Flex>
           </CardHeader>
-          <Box w="100%" h={{ sm: "300px" }} ps="8px">
-
-          </Box>
         </Card>
+      
+      { /* END OF Tables Grid */}
+    </SimpleGrid>
 
-      {/* END OF Tables Grid */}
-      </Grid>
-
-      {/* Next Row Grid with Dummy Cards */}
-      <Grid
-        templateColumns={{ md: "1fr", lg: "1.8fr 1.2fr" }}
-        templateRows={{ md: "1fr auto", lg: "1fr" }}
-        my="26px"
-        gap="24px"
-      >
-        <Card minHeight="290.5px" p="1.2rem">
-          <CardBody w="100%">
-            <Flex flexDirection={{ sm: "column", lg: "row" }} w="100%">
-              <Flex
-                flexDirection="column"
-                h="100%"
-                lineHeight="1.6"
-                width={{ lg: "45%" }}
-              >
-                <Text fontSize="sm" color="gray.400" fontWeight="bold">
-                  Built for Quai Network
-                </Text>
-                <Text
-                  fontSize="lg"
-                  color={textColor}
-                  fontWeight="bold"
-                  pb=".5rem"
-                >
-                  Explorer Dashboard
-                </Text>
-                <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                  This explorer dashboard interface will provide network details.
-                </Text>
-                <Spacer />
-                
-              </Flex>
-              <Spacer />
-              <Flex
-                bg="orange.300"
-                align="center"
-                justify="center"
-                borderRadius="15px"
-                width={{ lg: "40%" }}
-                minHeight={{ sm: "250px" }}
-              >
-              </Flex>
-            </Flex>
-          </CardBody>
-        </Card>
-        <Card maxHeight="290.5px" p="1rem">
-          <CardBody
-            p="0px"
-            backgroundImage={leavesImage}
-            bgPosition="center"
-            bgRepeat="no-repeat"
-            w="100%"
-            h={{ sm: "200px", lg: "100%" }}
-            bgSize="cover"
-            position="relative"
-            borderRadius="15px"
-          >
-            <Box
-              bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"
-              w="100%"
-              position="absolute"
-              h="inherit"
-              borderRadius="inherit"
-              ref={overlayRef}
-            ></Box>
-            <Portal containerRef={overlayRef}>
-              <Flex
-                flexDirection="column"
-                color="white"
-                p="1.5rem 1.2rem 0.3rem 1.2rem"
-                lineHeight="1.6"
-              >
-                <Text fontSize="xl" fontWeight="bold" pb=".3rem">
-                  Card Info
-                </Text>
-                <Text fontSize="sm" fontWeight="normal" w={{ lg: "92%" }}>
-                  This card can be used to display some information for the Quai Explorer.
-                </Text>
-                <Spacer />
-                
-              </Flex>
-            </Portal>
-          </CardBody>
-        </Card>
-
-        {/* END OF Dummy Row Card Grid */}
-      </Grid>
+ 
 
       {/* END OF Container */}
     </Flex>

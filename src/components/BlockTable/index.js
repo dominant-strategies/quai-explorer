@@ -5,14 +5,21 @@ import Pagination from "../Pagination";
 import { BLOCK_TABLE_HEADER, POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS } from "../../utils/queries";
 import { reduceString, convertTimeString } from "../../utils";
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import BlockTableRow from "../Tables/BlockTableRow"
+
 import {
     Alert,
     AlertIcon,
     AlertTitle,
     AlertDescription,
-    Spinner
+    Spinner,
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Td,
+    useColorModeValue
 } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
@@ -27,6 +34,8 @@ export default function BlockTable({ setBlocksCount }) {
 
     // Other hooks
     // const navigateTo = useNavigate();
+
+    const textColor = useColorModeValue("gray.700", "white");
 
     // When this component mounts, grab a reference to all blocks, reformat the object, and set blocks in state
     useEffect(() => {
@@ -78,11 +87,41 @@ export default function BlockTable({ setBlocksCount }) {
         )
     }
 
-    // empty table
-    // new table will be written using chakra ui
     return (
-        <div>
+        <>
+        {!loading ?
+        <Table variant="simple" color={textColor}>
+           
+            <Thead>
+              
+              <Tr my=".8rem" ps="0px">
+                <Th color="gray.400">Location</Th>
+                <Th color="gray.400" isNumeric>Number</Th>
+                <Th color="gray.400">Miner Address</Th>
+                <Th color="gray.400">Transactions</Th>
+                <Th color="gray.400">Timestamp</Th>
+              </Tr>
+
+            </Thead>
             
-        </div>
+            
+            <Tbody>
+              {blocks?.map((block) => {
+                return (
+                  <BlockTableRow
+                    location={block.location}
+                    blockNumber={block.number}
+                    minerAddress={block.miner}
+                    transactionCount={0}
+                    timestamp={block.timestamp}
+                  />
+                );
+              })}
+            </Tbody>
+          </Table>
+          : <Spinner size={"sm"} label='Loading the blocks table' /> }
+        </>
     )
 }
+
+
