@@ -18,5 +18,5 @@ This the network explorer for the [Quai Network](https://quai.network/). It stri
 ### `Mobile`
 https://user-images.githubusercontent.com/12708726/152059125-4b2fecb7-f6b6-48f8-a8a5-c19d4d131b5b.mov
 
-### `Settings (Toggle Dark/Light Mode)`
-![toggle dark and light mode settings pop out](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/55437390-96cd-464f-9361-b72f3d52df43/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220201T175440Z&X-Amz-Expires=86400&X-Amz-Signature=a3a0f94a031ff769f02ce52fbac2bc565bbc7b3f37ced6e5f48e78a8d0759f49&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+### `Tablet`
+![explorer on tablet](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f93a41c1-1561-4de8-af40-a319c40c80aa/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220201T220631Z&X-Amz-Expires=86400&X-Amz-Signature=485254a9772539830f8adacfa19f693edc49f3d0f4318a54f855ae1e9afca403&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
