@@ -12,7 +12,7 @@ import PanelContainer from "../../components/Layout/PanelContainer";
 import PanelContent from "../../components/Layout/PanelContent";
 
 export default function App(props) {
-  const { ...rest } = props;
+  const { ...otherProps } = props;
   const mainPanel = React.createRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
 

@@ -3,7 +3,7 @@ import { Button, useColorModeValue } from "@chakra-ui/react";
 import { HamburgerIcon } from '@chakra-ui/icons'
 
 export default function FloatingButton(props) {
-  const { secondary, onChange, onSwitch, fixed, ...rest } = props;
+  const { secondary, onChange, onSwitch, fixed, ...otherProps } = props;
   
   let settingsIconColor = useColorModeValue("gray.500", "gray.200");
   let buttonBackgroundColor = useColorModeValue("white", "gray.600");

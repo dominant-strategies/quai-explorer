@@ -13,7 +13,7 @@ import {
 import { Divider } from "../Divider/Divider";
 
 export default function PopOutMenu(props) {
-  const { secondary, isOpen, onClose, fixed, ...rest } = props;
+  const { secondary, isOpen, onClose, fixed, ...otherProps } = props;
   const { colorMode, toggleColorMode } = useColorMode();
   const settingsRef = React.useRef();
   
