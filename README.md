@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# Quai Network Explorer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This the BlockChain Explorer for the [Quai Network](https://quai.network/). The efforts around this explorer started in 2021 and it is currently being worked on. This explorer strives to provide equitable access to blockchain data across the [Quai Network](https://quai.network/).
 
-## Available Scripts
 
-In the project directory, you can run:
+## To Get It Running Locally
 
-### `npm start`
+### `1. npm install`
+### `2. npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## UI
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `Desktop`
 
-### `npm test`
+![explorer dark mode](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c54b90ed-0d9b-4918-b8ee-67ee89090b16/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220201T175125Z&X-Amz-Expires=86400&X-Amz-Signature=530cafcb9fe1c21ccdedcf0279014165b7f627bcfd9b74b8e0cff5d8162a2f5e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![explorer light mode](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/80332bee-2bcf-438b-8de0-3a75d2ebc085/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220201T175419Z&X-Amz-Expires=86400&X-Amz-Signature=12f022c9ffaed6be68a6098ed1b0da4b57b6d836fa4b1e039219dd38525e84a4&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-### `npm run build`
+### `Mobile`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![explorer mobile dark mode](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/71dd6310-ea4d-4186-9760-fb74bbe57154/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220201T175216Z&X-Amz-Expires=86400&X-Amz-Signature=bd06e796904fed0c9c7d11bd1e4dc7833921446affd84da027de848c9dff7250&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `Tablet`
+![explorer tablet dark mode](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fabb1342-4975-4581-9f93-94464aa40471/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220201T175323Z&X-Amz-Expires=86400&X-Amz-Signature=5b184e2ecb9f0a296650e80b07b3eaa4fc0557827a49847906b9385737ae9c68&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### `Settings (Toggle Dark/Light Mode)`
+![toggle dark and light mode settings pop out](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/55437390-96cd-464f-9361-b72f3d52df43/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220201T175440Z&X-Amz-Expires=86400&X-Amz-Signature=a3a0f94a031ff769f02ce52fbac2bc565bbc7b3f37ced6e5f48e78a8d0759f49&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
