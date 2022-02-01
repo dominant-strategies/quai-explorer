@@ -1,7 +1,6 @@
 # Quai Network Explorer
 
-This the network explorer for the [Quai Network](https://quai.network/). The efforts around this explorer started in 2021 and it is currently being worked on. This explorer strives to provide equitable access to blockchain data across the [Quai Network](https://quai.network/).
-
+This the network explorer for the [Quai Network](https://quai.network/). It strives to provide equitable access to blockchain data across the [Quai Network](https://quai.network/). The efforts around this explorer started in 2021 and is a WIP.
 
 ## To Get It Running Locally
 
