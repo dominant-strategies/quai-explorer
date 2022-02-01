@@ -11,7 +11,6 @@ import {
 import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
-import './index.css';
 import App from './pages/App';
 
 const httpLink = new HttpLink({
