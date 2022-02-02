@@ -2,25 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import Pagination from "../Pagination";
-import { BLOCK_TABLE_HEADER, POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
+import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS } from "../../utils/queries";
-import { reduceString, convertTimeString } from "../../utils";
+import { convertTimeString } from "../../utils";
 import BlockTableRow from "../Tables/BlockTableRow"
 
 import {
     Alert,
     AlertIcon,
-    AlertTitle,
-    AlertDescription,
     Spinner,
     Table,
+    Text,
     Thead,
     Tbody,
     Tr,
     Th,
-    Td,
     useColorModeValue
-} from '@chakra-ui/react';
+  } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
     // Component state
@@ -36,6 +34,7 @@ export default function BlockTable({ setBlocksCount }) {
     // const navigateTo = useNavigate();
 
     const textColor = useColorModeValue("gray.700", "white");
+    const spinnerLabel = "Loading the blocks table";
 
     // When this component mounts, grab a reference to all blocks, reformat the object, and set blocks in state
     useEffect(() => {
@@ -58,34 +57,21 @@ export default function BlockTable({ setBlocksCount }) {
             setTotalPage(parseInt(blocksCount / limit) + 1);
         }
     }, [data])
-
-    /**
-     * Error handling in the event the GQL query fails
-     * Shows an alert
-     */
-
-    if (error) {
-        console.log(error)
-        return (
-            <Alert
-                status='error'
-                variant='subtle'
-                flexDirection='column'
-                alignItems='center'
-                justifyContent='center'
-                textAlign='center'
-                height='400px'
-            >
-                <AlertIcon boxSize='40px' mr={0} />
-                <AlertTitle mt={4} mb={1} fontSize='lg'>
-                    Unexpected Error
-                </AlertTitle>
-                <AlertDescription maxWidth='sm'>
-                    We sincerely apologize for any inconvenience this may cause
-                </AlertDescription>
-            </Alert>
-        )
-    }
+/**
+   * Error handling in the event the GQL query fails
+   * Shows an alert
+   */
+ if (error) {
+    console.log(error)
+    return (
+      <>
+        <Alert status='error' mt={5} > 
+          <AlertIcon /> 
+          <Text fontSize='sm'>There was a problem loading this table. We sincerely apologize for any inconvenience this may cause.</Text>
+        </Alert>
+      </>
+    )
+  }
 
     return (
         <>
@@ -119,7 +105,7 @@ export default function BlockTable({ setBlocksCount }) {
               })}
             </Tbody>
           </Table>
-          : <Spinner size={"sm"} label='Loading the blocks table' /> }
+          : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='orange.300' size='md'ml={4} label={spinnerLabel} /> }
         </>
     )
 }

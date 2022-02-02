@@ -23,11 +23,10 @@ import IconBox from "../Icons/IconBox";
 import BlockTable from "../BlockTable";
 import TransactionTable from "../TransactiontTable";
 
-import { BsArrowRight, BsBox } from "react-icons/bs";
+import { BsBox } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
 import { VscGraph } from "react-icons/vsc";
 import { FaHardHat } from "react-icons/fa";
-import leavesImage from "../../assets/images/leaves.png";
 
 import { useQuery } from '@apollo/client';
 import { GET_BLOCK_WITH_HASH, GET_TRANSACTION_WITH_HASH } from "../../utils/queries";
@@ -48,22 +47,22 @@ export default function Dashboard() {
 
   const blocksCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Blocks </StatLabel> );
   const blocksIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={BsBox} w="24px" h="24px" color="white"/> </IconBox>);
-  const loadingBlockCountA11yLabel = 'Loading block count';
+  const blocksCountSpinner = ( <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='orange.300' size='xs' label='Loading block count' /> );
   const blocksCountDisplay = ( 
     <Flex> 
       <StatNumber fontSize="lg" color={textColor}> 
-        {blocksCount !== 0 ? blocksCount : <Spinner m={'2'} size={'xs'} label={loadingBlockCountA11yLabel} />} 
+        {blocksCount !== 0 ? blocksCount : blocksCountSpinner } 
       </StatNumber> 
     </Flex> 
   );
 
   const transactionsCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Transactions </StatLabel> );
   const transactionsIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={GiMoneyStack} w="24px" h="24px" color="white"/> </IconBox>);
-  const loadingTransactionsCountA11yLabel = 'Loading transactions count';
+  const transactionsCountSpinner = ( <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='orange.300' size='xs' label='Loading transactions count' /> );
   const transactionsCountDisplay = ( 
     <Flex> 
       <StatNumber fontSize="lg" color={textColor}> 
-        {transactionsCount !== 0 ? transactionsCount : <Spinner m={'2'} size={'xs'} label={loadingTransactionsCountA11yLabel} />} 
+        {transactionsCount !== 0 ? transactionsCount : transactionsCountSpinner } 
       </StatNumber> 
     </Flex> 
   );
@@ -152,6 +151,7 @@ export default function Dashboard() {
               <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
                 Blocks
               </Text>
+              
               <BlockTable setBlocksCount={setBlocksCount} />
             </Flex>
           </CardHeader>
@@ -177,3 +177,4 @@ export default function Dashboard() {
     </Flex>
   );
 }
+ 
