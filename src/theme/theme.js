@@ -21,6 +21,13 @@ export default extendTheme(
   globalStyles,
   font,
   { breakpoints },
+  {
+    colors: {
+      brand: {
+        300: "#ec4d37"
+      }
+    }
+  },
 
   buttonStyles,
   badgeStyles,

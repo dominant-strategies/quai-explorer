@@ -41,13 +41,13 @@ export default function Dashboard() {
   const { data: BlockData, refetch: refetchBlockData } = useQuery(GET_BLOCK_WITH_HASH, { variables: { hash: searchHash } });
   const { data: TransactionData, refetch: refetchTransactionData } = useQuery(GET_TRANSACTION_WITH_HASH, { variables: { hash: searchHash } });
 
-  const quaiOrangeColor = useColorModeValue("orange.300", "orange.300");
+  const quaiOrangeColor = useColorModeValue("brand.300", "brand.300");
   const textColor = useColorModeValue("gray.700", "white");
   const overlayRef = React.useRef();
 
   const blocksCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Blocks </StatLabel> );
   const blocksIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={BsBox} w="24px" h="24px" color="white"/> </IconBox>);
-  const blocksCountSpinner = ( <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='orange.300' size='xs' label='Loading block count' /> );
+  const blocksCountSpinner = ( <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xs' label='Loading block count' /> );
   const blocksCountDisplay = ( 
     <Flex> 
       <StatNumber fontSize="lg" color={textColor}> 
@@ -58,7 +58,7 @@ export default function Dashboard() {
 
   const transactionsCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Transactions </StatLabel> );
   const transactionsIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={GiMoneyStack} w="24px" h="24px" color="white"/> </IconBox>);
-  const transactionsCountSpinner = ( <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='orange.300' size='xs' label='Loading transactions count' /> );
+  const transactionsCountSpinner = ( <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xs' label='Loading transactions count' /> );
   const transactionsCountDisplay = ( 
     <Flex> 
       <StatNumber fontSize="lg" color={textColor}> 
@@ -78,7 +78,7 @@ export default function Dashboard() {
   
   return (
     // Container
-    <Flex flexDirection="column" pt={{ base: "120px", md: "5px" }}>
+    <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
       
       {/* Stat Cards Grid */}
       <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing="24px">

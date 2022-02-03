@@ -9,7 +9,9 @@ import {
   Flex,
   Text,
   useColorMode,
+  HStack
 } from "@chakra-ui/react";
+import { SunIcon, MoonIcon } from '@chakra-ui/icons'
 import { Divider } from "../Divider/Divider";
 
 export default function PopOutMenu(props) {
@@ -30,15 +32,19 @@ export default function PopOutMenu(props) {
           <DrawerHeader pt="24px" px="24px">
             <DrawerCloseButton />
             <Text fontSize="xl" fontWeight="bold" mt="16px">
-              Settings
+              Menu
             </Text>
             <Divider />
           </DrawerHeader>
           <DrawerBody w="340px" ps="24px" pe="40px">
             <Flex flexDirection="column">
-            <Button onClick={toggleColorMode}>
-                  Toggle {colorMode === "light" ? "Dark" : "Light"} Mode
-                </Button>
+              <Button onClick={toggleColorMode}>
+                <HStack>   
+                  {colorMode === "light" ? < MoonIcon /> : <SunIcon /> } 
+                  <Text>Toggle</Text>
+                  {colorMode === "light" ? <Text> Dark </Text> : <Text>Light</Text> }
+                </HStack>
+              </Button>
             </Flex>
           </DrawerBody>
         </DrawerContent>

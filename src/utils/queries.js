@@ -99,7 +99,8 @@ export const GET_TRANSACTIONS = gql`
             hash
             contract_code
             full_transaction
-            location
+            to_location
+            from_location
         }
     }
 `

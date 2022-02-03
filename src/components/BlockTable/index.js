@@ -105,7 +105,7 @@ export default function BlockTable({ setBlocksCount }) {
               })}
             </Tbody>
           </Table>
-          : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='orange.300' size='md'ml={4} label={spinnerLabel} /> }
+          : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md'ml={4} mt={2} label={spinnerLabel} /> }
         </>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { ChakraProvider, Portal, useDisclosure } from "@chakra-ui/react";
+import { ChakraProvider, Portal, useDisclosure, Box } from "@chakra-ui/react";
 import PopOutMenu from "../../components/PopOutMenu/PopOutMenu";
 
 import theme from "../../theme/theme";
@@ -10,6 +10,8 @@ import Dashboard from "../../components/Dashboard/Dashboard"
 import MainPanel from "../../components/Layout/MainPanel";
 import PanelContainer from "../../components/Layout/PanelContainer";
 import PanelContent from "../../components/Layout/PanelContent";
+
+import NavBar from "../../components/NavBar/NavBar";
 
 export default function App(props) {
   const { ...otherProps } = props;
@@ -28,30 +30,15 @@ export default function App(props) {
           xl: "calc(100% - 50px)",
         }}
       >
+        <Portal>
+          <NavBar></NavBar>
+        </Portal>
 
         <PanelContent>
           <PanelContainer>
             <Dashboard></Dashboard>
           </PanelContainer>
         </PanelContent>
-
-        <Portal>
-          <FloatingButton
-            fixed={fixed}
-            onOpen={onOpen}
-          />
-        </Portal>
-
-        <PopOutMenu
-          isOpen={isOpen}
-          onClose={onClose}
-          isChecked={fixed}
-          onSwitch={(value) => {
-            setFixed(value);
-          }}
-          onOpaque={() => setSidebarVariant("opaque")}
-          onTransparent={() => setSidebarVariant("transparent")}
-        />
 
       </MainPanel>
     </ChakraProvider>

@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql
+  ApolloProvider
 } from "@apollo/client";
 
 import { split, HttpLink } from '@apollo/client';
