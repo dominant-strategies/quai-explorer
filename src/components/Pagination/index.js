@@ -1,32 +1,65 @@
 import React from 'react'
 import DropDown from '../DropDown'
 
-function Pagination({currentPage, setCurrentPage, limit, setLimit, totalPage}) {
+import { 
+    Flex,
+    IconButton,
+    Spacer,
+    Text,
+    Input,
+    Box,
+    calc
+
+
+} from "@chakra-ui/react";
+import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+
+function Pagination({currentPage, setCurrentPage, limit, setLimit, totalPage, dimensions}) {
     return (
-        <nav aria-label="Page navigation" className="flex justify-end items-center px-3">
-            <ul className="inline-flex space-x-2 justify-center items-center">
-                <li>
-                    <button className="flex items-center justify-center w-10 h-10 text-red-600 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100" onClick={()=> currentPage > 1 && setCurrentPage(currentPage - 1)}>
-                        <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" fillRule="evenodd"></path></svg>
-                    </button>
-                </li>
-                <div className="flex items-center justify-center">
-                    <p>Page</p>
-                    <input className="w-6 h-6 mx-2 bg-gray-200 text-black rounded-md flex justify-center items-center text-center" value={currentPage} onChange={(e)=>setCurrentPage(parseInt(e.target.value))} />
-                    <p>of {totalPage}</p>
-                </div>
-                <li>
-                    <button className="flex items-center justify-center w-10 h-10 text-red-600 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100" onClick={()=>currentPage < totalPage && setCurrentPage(currentPage+1)}>
-                        <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" fillRule="evenodd"></path></svg>
-                    </button>
-                </li>
-                <div className="flex items-center justify-center">
-                    <DropDown value={limit} setValue={setLimit} items={[5, 10, 20, 30, 40, 50]} />
-                    <p>per page</p>
-                </div>
-            </ul>
+        <Flex w={dimensions} alignItems="center" 
+          ml={6} 
+          mt={10} 
+        borderColor="brand.300"
+        borderRadius="16px"
+        boxShadow="0px 7px 23px rgba(0, 0, 0, 0.05)"
+        
+        
+        >
+            <IconButton 
+                onClick={()=> currentPage > 1 && setCurrentPage(currentPage - 1)} 
+                cursor="pointer" 
+                icon={ <ArrowBackIcon /> } 
+            />
+           
+            <Spacer />
+            <Text fontSize="sm"> Page  </Text> 
+            <Spacer />
+            <Input
+                value={currentPage} 
+                onChange={(e)=>setCurrentPage(parseInt(e.target.value))} 
+                borderRadius="inherit"
+                w={{
+                    sm: "20%",
+                    md: "25%",
+                    lg: "20%",
+                    xl: "15%"
+                  }}
+                focusBorderColor="brand.300"
+            /> 
+
+            <Spacer />
+            <Text fontSize="sm"> of {totalPage}  </Text>
+
+            <Spacer />
             
-        </nav>
+            <IconButton 
+                onClick={()=>currentPage < totalPage && setCurrentPage(currentPage+1)}
+                cursor="pointer" 
+                icon={ <ArrowForwardIcon /> } 
+            />
+        </Flex>
+
+        
     )
 }
 

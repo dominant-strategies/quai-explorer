@@ -143,7 +143,7 @@ export default function Dashboard() {
 
 
       {/* Tables Grid */}
-      <SimpleGrid columns={{ xl: 2 }} spacing="12px">
+      <SimpleGrid columns={{ xl: 2 }} spacing="12px" templateColumns="1.1fr 1fr">
 
       <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
           <CardHeader mb="20px" pl="22px">

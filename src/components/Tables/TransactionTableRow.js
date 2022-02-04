@@ -9,36 +9,28 @@ import {
   Text,
   Tr,
   useColorModeValue,
+  IconButton,
+  Spacer,
+  useClipboard
 } from "@chakra-ui/react";
-import { reduceString} from "../../utils";
+import { CopyIcon } from "@chakra-ui/icons"
+import { reduceStringShowMore} from "../../utils";
+import TransactionDetailsModal from "../TransactionDetailsModal/TransactionDetailsModal";
 
 export default function TransactionTableRow(props) {
-  const { transactionHash, toThisMiner, fromThisMiner, blockNumber, quaiSent, timestamp } = props;
+  const { transactionHash, blockNumber, quaiSent } = props;
   const textColor = useColorModeValue("gray.700", "white");
-
-
+  
 
   return (
-    <Tr >
+    <Tr>
+      <Td><TransactionDetailsModal hash={transactionHash} /></Td>
 
       <Td>
         <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
-        {reduceString(transactionHash)}
+          {reduceStringShowMore(transactionHash)}
         </Text>
       </Td>
-
-      <Td>
-        <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
-        {reduceString(toThisMiner)}
-        </Text>
-      </Td>
-
-      <Td>
-        <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
-        {reduceString(fromThisMiner)}
-        </Text>
-      </Td>
-
       
       <Td>
         <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">

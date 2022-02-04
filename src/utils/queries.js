@@ -142,7 +142,8 @@ export const GET_TRANSACTION_WITH_HASH = gql`
             hash
             contract_code
             full_transaction
-            location
+            to_location
+            from_location
         }
     }
 `
@@ -237,7 +238,8 @@ export const GET_LATEST_TRANSACTIONS = gql`
             hash
             contract_code
             full_transaction
-            location
+            to_location
+            from_location
         }
     }
 `

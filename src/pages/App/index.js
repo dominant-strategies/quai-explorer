@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-
-import { ChakraProvider, Portal, useDisclosure, Box } from "@chakra-ui/react";
-import PopOutMenu from "../../components/PopOutMenu/PopOutMenu";
+import React from "react";
+import { ChakraProvider, Portal } from "@chakra-ui/react";
 
 import theme from "../../theme/theme";
-import FloatingButton from "../../components/FloatingButton/FloatingButton";
 import Dashboard from "../../components/Dashboard/Dashboard"
 
 import MainPanel from "../../components/Layout/MainPanel";
@@ -14,12 +11,7 @@ import PanelContent from "../../components/Layout/PanelContent";
 import NavBar from "../../components/NavBar/NavBar";
 
 export default function App(props) {
-  const { ...otherProps } = props;
   const mainPanel = React.createRef();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [sidebarVariant, setSidebarVariant] = useState("transparent");
-  const [fixed, setFixed] = useState(false);
 
   return (
     <ChakraProvider theme={theme} resetCss={false}>

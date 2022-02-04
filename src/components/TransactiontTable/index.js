@@ -52,8 +52,8 @@ export default function TransactionTable({ setTransactionsCount }) {
     console.log(error)
     return (
       <>
-        <Alert status='error' mt={5} > 
-          <AlertIcon /> 
+        <Alert status='error' mt={5} >
+          <AlertIcon />
           <Text fontSize='sm'>There was a problem loading this table. We sincerely apologize for any inconvenience this may cause.</Text>
         </Alert>
       </>
@@ -63,36 +63,49 @@ export default function TransactionTable({ setTransactionsCount }) {
   return (
     <>
       {!loading ?
-        <Table variant="simple" color={textColor}>
+        <>
+          <Table variant="simple" color={textColor}>
 
-          <Thead>
-            <Tr my=".8rem" ps="0px">
-              <Th color="gray.400">Tx Hash</Th>
-              <Th color="gray.400">To</Th>
-              <Th color="gray.400">From</Th>
-              <Th color="gray.400" isNumeric>Block</Th>
-              <Th color="gray.400" isNumeric>$QUAI Sent</Th>
-            </Tr>
-          </Thead>
+            <Thead>
+              <Tr my=".8rem" ps="0px">
+                <Th color="gray.400"></Th>
+                <Th color="gray.400">Transaction Hash</Th>
+                <Th color="gray.400" isNumeric>Block</Th>
+                <Th color="gray.400" isNumeric> Value</Th>
+              </Tr>
+            </Thead>
 
 
-          <Tbody>
-            {transactions?.map((transaction) => {
-              return (
-                <TransactionTableRow
-                  transactionHash={transaction.hash}
-                  toThisMiner={transaction.to}
-                  fromThisMiner={transaction.from}
-                  blockNumber={transaction.block_number}
-                  quaiSent={transaction.value}
-                  timestamp={transaction.timestamp}
-                />
-              );
-            })}
-          </Tbody>
+            <Tbody>
+              {transactions?.map((transaction) => {
+                console.log(transaction)
+                return (
+                  <TransactionTableRow
+                    transactionHash={transaction.hash}
+                    toThisMiner={transaction.to}
+                    fromThisMiner={transaction.from}
+                    blockNumber={transaction.block_number}
+                    quaiSent={transaction.value}
+                    timestamp={transaction.timestamp}
+                  />
+                );
+              })}
+            </Tbody>
 
-        </Table>
-        : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md'ml={4} mt={2} label={spinnerLabel} /> }
+          </Table>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            limit={limit} setLimit={setLimit}
+            totalPage={totalPage}
+            dimensions={{
+              sm: "59%",
+              md: "59%",
+              lg: "59%",
+              xl: "97%"
+            }} />
+        </>
+        : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
   )
 }
