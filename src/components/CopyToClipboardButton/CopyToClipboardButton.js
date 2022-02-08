@@ -9,9 +9,9 @@ export default function CopyToClipboardButton(props) {
       _active={{
         bg: 'green.300',
         transform: 'scale(0.9)',
-        borderColor: 'green.300',
+        borderColor: 'green.500',
       }}
-      _hover={{ bg: 'green.700' }}
+      _hover={{ bg: 'red.400' }}
     >
       {innerText}
     </Button>
