@@ -1,26 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { GET_BLOCK_WITH_HASH } from "../../utils/queries";
 import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
-import { convertTimeString, numberWithCommas } from '../../utils';
+import { convertTimeString, numberWithCommas, reduceStringShowMediumLength } from '../../utils';
 import {
     Box,
-    Heading,
-    Text,
+    Spacer,
     Spinner,
-    Grid,
-    GridItem,
-    HStack
+    Text,
+    VStack,
+    IconButton,
+    Heading,
+    Button
 } from '@chakra-ui/react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
+import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton';
 
-function Block() {
+
+import Card from '../../components/Card/Card';
+import CardBody from '../../components/Card/CardBody';
+
+export default function Block() {
     // Component state
     const [block, setBlock] = useState();
     const [position, setPosition] = useState();
 
     // GraphQL queries
     const { hash } = useParams();
+    const navigateTo = useNavigate();
     const { loading, error, data } = useQuery(GET_BLOCK_WITH_HASH, { variables: { hash } });
 
     // When this component mounts, grab a reference to the block 
@@ -31,98 +39,49 @@ function Block() {
 
     // Block details to display
     const blockHeight = block?.header.number[position];
-    const location = block?.header.number[position];
-    const blockHash = block?.hash;
     const timestamp = convertTimeString(block?.timestamp);
     const gasUsed = block?.header?.gasUsed[position];
     const gasLimit = block?.header?.gasLimit[position];
     const difficulty = numberWithCommas(block?.header?.difficulty[position]);
     const networkDifficulty = numberWithCommas(block?.header?.networkDifficulty[position]);
-    
+
+    let blockHash = block?.hash;
+    let blockHashReduced
+    if ( blockHash ) { blockHashReduced = reduceStringShowMediumLength(blockHash); }
+
+    let location = block?.location;
+    if ( location ) { location = SHARDED_ADDRESS[location]; }
+
     return (
-        <Box p={12}>
+        <>
+        {loading ?  
+        <>
+            <Box p={5}></Box> 
+            <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xl' ml={5} mt={20} label="Loading details for this block" /> 
+        </>
+        :
+        <Card pt={{ base: "120px", md: "100px" }}>
+            <CardBody>
+                <VStack spacing="12px" align="left">
+                    <IconButton onClick={() => navigateTo('/')} icon={ <ArrowBackIcon />} aria-label="Back to the Explorer home page" w="24px"/> 
+                    <Spacer />
+                    <Heading as='h2' size='md'> Block Height: </Heading> <Text fontSize="lg"> {blockHeight} </Text>
+                    <Heading as='h2' size='md'> Location: </Heading> <Text fontSize="lg"> {location} </Text>
+                    
+                    <Heading as='h2' size='md'> Hash: </Heading> 
+                    <CopyToClipboardButton innerText={blockHashReduced} copyThisToClipboard={blockHash} />
 
-            {/* Heading */}
-            <Heading>Block Details</Heading>
-
-            {/* Spacing */}
-            <Box p={4}></Box>
-
-            {/* Details */}
-            <Box>
-                {loading ? <Spinner size={"xl"} label='Loading the block details' /> :
-                    <Grid
-                        h='100px'
-                        templateRows='repeat(2, 1fr)'
-                        templateColumns='repeat(5, 1fr)'
-                        gap={4}
-                    >
-
-                        <GridItem colSpan={4}>
-                            <HStack>
-                                <Text fontSize={'xl'} fontWeight={'600'}>Block Height: </Text> 
-                                <Text fontSize={'xl'}>{blockHeight}</Text>
-                            </HStack>
-                        </GridItem>
-
-                        <GridItem colSpan={4}>
-                            <HStack>
-                                <Text fontSize={'xl'} fontWeight={'600'}>Location: </Text> 
-                                <Text fontSize={'xl'}>{location}</Text>
-                            </HStack>
-                        </GridItem>
-
-                        <GridItem colSpan={4}>
-                            <HStack>
-                                <Text fontSize={'xl'} fontWeight={'600'}>Hash: </Text> 
-                                 {/*
-                                    This value is truncated on smaller screens for now.
-                                    In the future this will become a link which will take users to the page of 
-                                    that address similar to etherscan.io/address/{hash} 
-                                 */}
-                                <Text fontSize={'xl'} isTruncated>{blockHash}</Text>
-                            </HStack>
-                        </GridItem>
-
-                        <GridItem colSpan={4}>
-                            <HStack>
-                                <Text fontSize={'xl'} fontWeight={'600'}>Timestamp: </Text> 
-                                <Text fontSize={'xl'}>{timestamp}</Text>
-                            </HStack>
-                        </GridItem>
-                        
-                        <GridItem colSpan={4}>
-                            <HStack>
-                                <Text fontSize={'xl'} fontWeight={'600'}>Gas Used: </Text> 
-                                <Text fontSize={'xl'}>{gasUsed}</Text>
-                            </HStack>
-                        </GridItem>
-
-                        <GridItem colSpan={4}>
-                            <HStack>
-                                <Text fontSize={'xl'} fontWeight={'600'}>Gas Limit: </Text> 
-                                <Text fontSize={'xl'}>{gasLimit}</Text>
-                            </HStack>
-                        </GridItem>
-
-                        <GridItem colSpan={4}>
-                            <HStack>
-                                <Text fontSize={'xl'} fontWeight={'600'}>Difficulty: </Text> 
-                                <Text fontSize={'xl'}>{difficulty}</Text>
-                            </HStack>
-                        </GridItem>
-
-                        <GridItem colSpan={4}>
-                            <HStack>
-                                <Text fontSize={'xl'} fontWeight={'600'}>Network Difficulty: </Text> 
-                                <Text fontSize={'xl'}>{networkDifficulty}</Text>
-                            </HStack>
-                        </GridItem>
-                    </Grid>
-                }
-            </Box>
-        </Box>
+                    <Heading as='h2' size='md'> Timestamp: </Heading> <Text fontSize="lg"> {timestamp}</Text>
+                    <Heading as='h2' size='md'> Gas Used: </Heading> <Text fontSize="lg"> {gasUsed} </Text>
+                    <Heading as='h2' size='md'> Gas Limit: </Heading> <Text fontSize="lg"> {gasLimit} </Text>
+                    <Heading as='h2' size='md'> Difficulty: </Heading> <Text fontSize="lg"> {difficulty} </Text>
+                    <Heading as='h2' size='md'> Network Difficulty: </Heading> <Text fontSize="lg"> {networkDifficulty} </Text>
+                </VStack>
+            </CardBody>
+        </Card>
+        }
+        </>
     )
 }
 
-export default Block
+

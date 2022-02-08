@@ -2,6 +2,10 @@ export const reduceString = (string) => {
     return string.slice(0, 6) + "..." + string.slice(-5)
 }
 
+export const reduceStringShowMediumLength = (string) => {
+    return string.slice(0, 10) + "..." + string.slice(-9)
+}
+
 export const reduceStringShowMore = (string) => {
     return string.slice(0, 14) + "..." + string.slice(-14)
 }

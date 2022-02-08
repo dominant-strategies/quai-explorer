@@ -76,49 +76,65 @@ export default function BlockTable({ setBlocksCount }) {
     <>
       {!loading ?
         <>
-        <Table variant="simple" color={textColor}>
+          <Table variant="simple" color={textColor}>
 
-          <Thead>
+            <Thead>
 
-            <Tr my=".8rem" ps="0px">
-              <Th color="gray.400"></Th>
-              <Th color="gray.400">Location</Th>
-              <Th color="gray.400" isNumeric>Block</Th>
-              <Th color="gray.400">Miner</Th>
-              <Th color="gray.400">Txs</Th>
-              <Th color="gray.400">Timestamp</Th>
-            </Tr>
+              {/* if its a mobile screen, the icon to show more details is on the left in each row */}
+              {window.innerWidth > 768 ?
 
-          </Thead>
+                <Tr my=".8rem" ps="0px">
+                  <Th color="gray.400">Location</Th>
+                  <Th color="gray.400" isNumeric>Block</Th>
+                  <Th color="gray.400">Miner</Th>
+                  <Th color="gray.400">TX Count</Th>
+                  <Th color="gray.400">Timestamp</Th>
+                  <Th color="gray.400"></Th>
+                </Tr>
+
+                :
+
+                <Tr my=".8rem" ps="0px">
+                  <Th color="gray.400"></Th>
+                  <Th color="gray.400">Location</Th>
+                  <Th color="gray.400" isNumeric>Block</Th>
+                  <Th color="gray.400">Miner</Th>
+                  <Th color="gray.400">TX Count</Th>
+                  <Th color="gray.400">Timestamp</Th>
+
+                </Tr>
+              }
+
+            </Thead>
 
 
-          <Tbody>
-            {blocks?.map((block) => {
-              return (
-                <BlockTableRow
-                  location={block.location}
-                  blockNumber={block.number}
-                  minerAddress={block.miner}
-                  transactionCount={0}
-                  timestamp={block.timestamp}
-                  hash={block.hash}
-                />
-              );
-            })}
-          </Tbody>
-        </Table>
-         <Pagination 
-         currentPage={currentPage} 
-         setCurrentPage={setCurrentPage} 
-         limit={limit} setLimit={setLimit}
-         totalPage={totalPage} 
-         dimensions={{
-            sm: "40%",
-            md: "55%",
-            lg: "75%",
-            xl: "90%"
-          }}/> 
-        </>: <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
+            <Tbody>
+              {blocks?.map((block) => {
+                return (
+                  <BlockTableRow
+                    location={block.location}
+                    blockNumber={block.number}
+                    minerAddress={block.miner}
+                    transactionCount={0}
+                    timestamp={block.timestamp}
+                    hash={block.hash}
+                  />
+                );
+              })}
+            </Tbody>
+          </Table>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            limit={limit} setLimit={setLimit}
+            totalPage={totalPage}
+            dimensions={{
+              sm: "40%",
+              md: "55%",
+              lg: "75%",
+              xl: "93%"
+            }} />
+        </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
   )
 }

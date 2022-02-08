@@ -66,14 +66,28 @@ export default function TransactionTable({ setTransactionsCount }) {
         <>
           <Table variant="simple" color={textColor}>
 
+            { window.innerWidth > 768 ?
             <Thead>
               <Tr my=".8rem" ps="0px">
-                <Th color="gray.400"></Th>
-                <Th color="gray.400">Transaction Hash</Th>
+                <Th color="gray.400">TX Hash</Th>
                 <Th color="gray.400" isNumeric>Block</Th>
                 <Th color="gray.400" isNumeric> Value</Th>
+                <Th color="gray.400"></Th>
               </Tr>
             </Thead>
+            :
+            <Thead>
+            <Tr my=".8rem" ps="0px">
+              <Th color="gray.400"></Th>
+              <Th color="gray.400">TX Hash</Th>
+              <Th color="gray.400" isNumeric>Block</Th>
+              <Th color="gray.400" isNumeric> Value</Th>
+            </Tr>
+          </Thead>
+
+            }
+
+            
 
 
             <Tbody>
@@ -101,8 +115,8 @@ export default function TransactionTable({ setTransactionsCount }) {
             dimensions={{
               sm: "59%",
               md: "59%",
-              lg: "59%",
-              xl: "97%"
+              lg: "90%",
+              xl: "90%"
             }} />
         </>
         : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}

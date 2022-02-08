@@ -1,38 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { ChakraProvider, Portal } from "@chakra-ui/react";
 
 import theme from "../../theme/theme";
-import Dashboard from "../../components/Dashboard/Dashboard"
-
 import MainPanel from "../../components/Layout/MainPanel";
 import PanelContainer from "../../components/Layout/PanelContainer";
 import PanelContent from "../../components/Layout/PanelContent";
-
 import NavBar from "../../components/NavBar/NavBar";
 
+import ReactGlobalContext from "../../components/Context/Context";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { routes } from "../../constants/routes";
+
+
+
 export default function App(props) {
-  const mainPanel = React.createRef();
-
+  const mainPanelRef = React.createRef();
   return (
-    <ChakraProvider theme={theme} resetCss={false}>
-      <MainPanel
-        ref={mainPanel}
-        w={{
-          base: "100%",
-          xl: "calc(100% - 50px)",
-        }}
-      >
-        <Portal>
-          <NavBar></NavBar>
-        </Portal>
+    <ReactGlobalContext.Provider value={globalStateObject}>
+      <ChakraProvider theme={theme} resetCss={false}>
+      <BrowserRouter>
+        <MainPanel
+          ref={mainPanelRef}
+          w={{
+            base: "100%",
+            xl: "calc(100% - 50px)",
+          }}
+        > 
+        
+          <Portal>
+            <NavBar></NavBar>
+          </Portal>
 
-        <PanelContent>
-          <PanelContainer>
-            <Dashboard></Dashboard>
-          </PanelContainer>
-        </PanelContent>
+          <PanelContent>
+            <PanelContainer>
+              <Routes>
+                {routes.map(route => <Route path={route.path} element={route.component} key={route.id} />)}
+              </Routes>
+            </PanelContainer>
+          </PanelContent>
+          
 
-      </MainPanel>
-    </ChakraProvider>
+        </MainPanel>
+        </BrowserRouter>
+      </ChakraProvider>
+    </ReactGlobalContext.Provider>
   );
 }
