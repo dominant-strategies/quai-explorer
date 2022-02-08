@@ -7,7 +7,6 @@ import PanelContainer from "../../components/Layout/PanelContainer";
 import PanelContent from "../../components/Layout/PanelContent";
 import NavBar from "../../components/NavBar/NavBar";
 
-import ReactGlobalContext from "../../components/Context/Context";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routes } from "../../constants/routes";
 
@@ -16,8 +15,8 @@ import { routes } from "../../constants/routes";
 export default function App(props) {
   const mainPanelRef = React.createRef();
   return (
-    <ReactGlobalContext.Provider value={globalStateObject}>
-      <ChakraProvider theme={theme} resetCss={false}>
+
+    <ChakraProvider theme={theme} resetCss={false}>
       <BrowserRouter>
         <MainPanel
           ref={mainPanelRef}
@@ -25,8 +24,8 @@ export default function App(props) {
             base: "100%",
             xl: "calc(100% - 50px)",
           }}
-        > 
-        
+        >
+
           <Portal>
             <NavBar></NavBar>
           </Portal>
@@ -38,11 +37,11 @@ export default function App(props) {
               </Routes>
             </PanelContainer>
           </PanelContent>
-          
+
 
         </MainPanel>
-        </BrowserRouter>
-      </ChakraProvider>
-    </ReactGlobalContext.Provider>
+      </BrowserRouter>
+    </ChakraProvider>
+
   );
 }
