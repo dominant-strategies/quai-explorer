@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -30,11 +30,25 @@ import { FaHardHat } from "react-icons/fa";
 
 import { useQuery } from '@apollo/client';
 
+import { CHAIN_SLUGS, POSITIONS  } from "../../constants";
+
+import { GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN } from '../../utils/queries'
+
 export default function Explorer() {
   const [blocksCount, setBlocksCount] = useState(0);
   const [transactionsCount, setTransactionsCount] = useState(0);
   const [hashrateValue, setHashrateValue] = useState(0);
   const [difficultyValue, setDifficultyValue] = useState(0);
+
+  const [primeDifficultyValue, setPrimeDifficultyValue] = useState(0);
+
+  const [region1DifficultyValue, setRegion1DifficultyValue] = useState(0);
+  const [region2DifficultyValue, setRegion2DifficultyValue] = useState(0);
+  const [region3DifficultyValue, setRegion3DifficultyValue] = useState(0);
+
+  const [zone11DifficultyValue, setZone11DifficultyValue] = useState(0);
+  const [zone12DifficultyValue, setZone12DifficultyValue] = useState(0);
+  const [zone13DifficultyValue, setZone13DifficultyValue] = useState(0);
 
   const [block, setBlock] = useState();
   const [allValues, setAllValues] = useState([]);
@@ -72,6 +86,84 @@ export default function Explorer() {
   const difficultyCardHeading = (<StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Difficulty </StatLabel>);
   const difficultyIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={FaHardHat} w="24px" h="24px" color="white" /> </IconBox>);
   const difficultyValueDisplay = (<Flex> <StatNumber fontSize="lg" color={textColor}> {difficultyValue} </StatNumber> </Flex>);
+  
+  const { loading: primeLoading, data: primeData } = useQuery(GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN, { variables: { location: "prime" } });
+
+  const { loading: region1Loading, data: region1Data } = useQuery(GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN, { variables: { location: "region-1" } });
+  const { loading: region2Loading, data: region2Data } = useQuery(GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN, { variables: { location: "region-2" } });
+  const { loading: region3Loading, data: region3Data } = useQuery(GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN, { variables: { location: "region-3" } });
+
+  const { loading: zone11Loading, data: zone11Data } = useQuery(GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN, { variables: { location: "zone-1-1" } });
+  const { loading: zone12Loading, data: zone12Data } = useQuery(GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN, { variables: { location: "zone-1-2" } });
+  const { loading: zone13Loading, data: zone13Data } = useQuery(GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN, { variables: { location: "zone-1-3" } });
+
+  useEffect(() => {
+    //console.log(primeData?.blocks[0]) 
+    if(primeData?.blocks[0]){
+      var difficultyArray = primeData?.blocks[0].difficulty.split(',');
+      let difficultyToAdd = parseInt(difficultyArray[0]);
+      setPrimeDifficultyValue( difficultyToAdd);
+    }
+  } ,[primeData] )
+
+  useEffect(() => {
+    //console.log(region1Data?.blocks[0]) 
+    if(region1Data?.blocks[0]){
+      var difficultyArray = region1Data?.blocks[0].difficulty.split(',');
+      let difficultyToAdd = parseInt(difficultyArray[1]);
+      setRegion1DifficultyValue( difficultyToAdd);
+    }
+  } ,[region1Data] )
+
+  useEffect(() => {
+    //console.log(region2Data?.blocks[0]) 
+    if(region2Data?.blocks[0]){
+      var difficultyArray = region2Data?.blocks[0].difficulty.split(',');
+      let difficultyToAdd = parseInt(difficultyArray[1]);
+      setRegion2DifficultyValue( difficultyToAdd);
+    }
+  } ,[region2Data] )
+
+  useEffect(() => {
+    //console.log(region3Data?.blocks[0]) 
+    if(region3Data?.blocks[0]){
+      var difficultyArray = region3Data?.blocks[0].difficulty.split(',');
+      let difficultyToAdd = parseInt(difficultyArray[1]);
+      setRegion3DifficultyValue( difficultyToAdd);
+    }
+  } ,[region3Data] )
+
+  useEffect(() => {
+    console.log("zone11: ", zone11Data?.blocks[0]) 
+    if(zone11Data?.blocks[0]){
+      var difficultyArray = zone11Data?.blocks[0].difficulty.split(',');
+      let difficultyToAdd = parseInt(difficultyArray[2]);
+      setZone11DifficultyValue( difficultyToAdd);
+    }
+  } ,[zone11Data] )
+
+  useEffect(() => {
+    console.log("zone12: ",zone12Data?.blocks[0]) 
+    if(zone12Data?.blocks[0]){
+      var difficultyArray = zone12Data?.blocks[0].difficulty.split(',');
+      let difficultyToAdd = parseInt(difficultyArray[2]);
+      setZone12DifficultyValue( difficultyToAdd);
+    }
+  } ,[zone12Data] )
+
+  useEffect(() => {
+    console.log("zone13: ",zone13Data?.blocks[0]) 
+    if(zone13Data?.blocks[0]){
+      var difficultyArray = zone13Data?.blocks[0].difficulty.split(',');
+      let difficultyToAdd = parseInt(difficultyArray[2]);
+      setZone13DifficultyValue( difficultyToAdd);
+    }
+  } ,[zone13Data] )
+  
+
+  
+
+
 
 
   return (
@@ -124,9 +216,12 @@ export default function Explorer() {
         <Card minH="83px">
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
-              <Stat me="auto">
+              <Stat me="auto" fontWeight="bold">
                 {difficultyCardHeading}
-                {difficultyValueDisplay}
+                { primeDifficultyValue + 
+                  region1DifficultyValue + region2DifficultyValue + region3DifficultyValue +
+                  zone11DifficultyValue + zone12DifficultyValue + zone13DifficultyValue
+                }
               </Stat>
               {difficultyIcon}
             </Flex>
