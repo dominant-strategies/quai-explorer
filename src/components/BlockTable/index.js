@@ -109,7 +109,7 @@ export default function BlockTable({ setBlocksCount }) {
 
 
             <Tbody>
-              {blocks?.map((block) => {
+              {blocks?.map((block, index) => {
                 return (
                   <BlockTableRow
                     location={block.location}
@@ -118,6 +118,7 @@ export default function BlockTable({ setBlocksCount }) {
                     transactionCount={0}
                     timestamp={block.timestamp}
                     hash={block.hash}
+                    key={index}
                   />
                 );
               })}

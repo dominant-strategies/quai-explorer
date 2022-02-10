@@ -18,8 +18,11 @@ const httpLink = new HttpLink({
 const wsLink = new WebSocketLink({
   uri: 'wss://quainetworktest.hasura.app/v1/subscriptions',
   options: {
-    reconnect: true
-  }
+    reconnect: true,
+    lazy: true,
+    timeout: 30000,
+    inactivityTimeout: 30000,
+  },
 });
 
 // The split function takes three parameters:

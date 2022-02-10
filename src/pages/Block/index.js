@@ -46,7 +46,7 @@ export default function Block() {
     const networkDifficulty = numberWithCommas(block?.header?.networkDifficulty[position]);
 
     let blockHash = block?.hash;
-    let blockHashReduced
+    let blockHashReduced;
     if ( blockHash ) { blockHashReduced = reduceStringShowMediumLength(blockHash); }
 
     let location = block?.location;

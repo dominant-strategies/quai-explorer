@@ -56,7 +56,6 @@ export default function NavBar(props) {
     refetchBlockData();
     refetchTransactionData();
     if (BlockData || TransactionData) {
-      console.log({ BlockData, TransactionData })
       if (BlockData?.blocks.length > 0) {
         navigateTo(`/block/${searchHash}`);
         setSearchHash("");

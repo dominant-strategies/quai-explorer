@@ -91,8 +91,7 @@ export default function TransactionTable({ setTransactionsCount }) {
 
 
             <Tbody>
-              {transactions?.map((transaction) => {
-                console.log(transaction)
+              {transactions?.map((transaction, index) => {
                 return (
                   <TransactionTableRow
                     transactionHash={transaction.hash}
@@ -101,6 +100,7 @@ export default function TransactionTable({ setTransactionsCount }) {
                     blockNumber={transaction.block_number}
                     quaiSent={transaction.value}
                     timestamp={transaction.timestamp}
+                    key={index}
                   />
                 );
               })}

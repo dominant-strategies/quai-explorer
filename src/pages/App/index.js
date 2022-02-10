@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ChakraProvider, Portal } from "@chakra-ui/react";
 
 import theme from "../../theme/theme";
@@ -13,13 +13,11 @@ import { routes } from "../../constants/routes";
 
 
 export default function App(props) {
-  const mainPanelRef = React.createRef();
   return (
 
     <ChakraProvider theme={theme} resetCss={false}>
       <BrowserRouter>
         <MainPanel
-          ref={mainPanelRef}
           w={{
             base: "100%",
             xl: "calc(100% - 50px)",

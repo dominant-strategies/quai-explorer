@@ -244,3 +244,12 @@ export const GET_LATEST_TRANSACTIONS = gql`
     }
 `
 
+export const GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN = gql`
+query GetNetworkDifficultyFromLatestPrimeBlockForOneChain {
+    blocks(limit: 1, where: {location: {_eq: "prime"}}, order_by: {timestamp: desc}) {
+      difficulty
+      location
+    }
+  }
+`
+
