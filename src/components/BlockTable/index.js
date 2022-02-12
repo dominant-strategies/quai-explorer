@@ -30,7 +30,7 @@ export default function BlockTable({ setBlocksCount }) {
   const [blocks, setBlocks] = useState([]);
 
   // GraphQL queries
-  const { loading, error, data } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, startPolling, stopPolling } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
@@ -56,6 +56,16 @@ export default function BlockTable({ setBlocksCount }) {
       setTotalPage(parseInt(blocksCount / limit) + 1);
     }
   }, [data])
+
+  // Update table data by polling every 2 seconds
+  // Called in useEffect so polling only happens after the component is rendered
+  useEffect(() => {
+    startPolling(2000)
+    return () => {
+      stopPolling()
+    }
+  }, [startPolling, stopPolling])
+
   /**
      * Error handling in the event the GQL query fails
      * Shows an alert

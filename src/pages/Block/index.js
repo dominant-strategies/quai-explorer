@@ -29,7 +29,10 @@ export default function Block() {
     // GraphQL queries
     const { hash } = useParams();
     const navigateTo = useNavigate();
-    const { loading, error, data } = useQuery(GET_BLOCK_WITH_HASH, { variables: { hash } });
+    const { loading, error, data } = useQuery(GET_BLOCK_WITH_HASH, {
+        variables: { hash },
+        pollInterval: 5000
+      });
 
     // When this component mounts, grab a reference to the block 
     useEffect(() => {
@@ -37,13 +40,15 @@ export default function Block() {
         setPosition(POSITIONS[CHAIN_SLUGS.findIndex((slug) => slug === data?.blocks[0]?.location)]);
     }, [data])
 
+    console.log(block?.header)
+
     // Block details to display
     const blockHeight = block?.header.number[position];
     const timestamp = convertTimeString(block?.timestamp);
     const gasUsed = block?.header?.gasUsed[position];
     const gasLimit = block?.header?.gasLimit[position];
     const difficulty = numberWithCommas(block?.header?.difficulty[position]);
-    const networkDifficulty = numberWithCommas(block?.header?.networkDifficulty[position]);
+    //const networkDifficulty = numberWithCommas(block?.header?.networkDifficulty[position]);
 
     let blockHash = block?.hash;
     let blockHashReduced;
@@ -75,7 +80,7 @@ export default function Block() {
                     <Heading as='h2' size='md'> Gas Used: </Heading> <Text fontSize="lg"> {gasUsed} </Text>
                     <Heading as='h2' size='md'> Gas Limit: </Heading> <Text fontSize="lg"> {gasLimit} </Text>
                     <Heading as='h2' size='md'> Difficulty: </Heading> <Text fontSize="lg"> {difficulty} </Text>
-                    <Heading as='h2' size='md'> Network Difficulty: </Heading> <Text fontSize="lg"> {networkDifficulty} </Text>
+                    <Heading as='h2' size='md'> Network Difficulty: </Heading> <Text fontSize="lg"> 0 </Text>
                 </VStack>
             </CardBody>
         </Card>

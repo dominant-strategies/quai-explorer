@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import {
   Box,
-  Button,
   Flex,
-  Grid,
   Icon,
-  Portal,
   SimpleGrid,
-  Spacer,
   Spinner,
   Stat,
   StatLabel,
@@ -28,7 +24,7 @@ import { GiMoneyStack } from "react-icons/gi";
 import { VscGraph } from "react-icons/vsc";
 import { FaHardHat } from "react-icons/fa";
 
-import { useQuery } from '@apollo/client';
+import DifficultyStatDisplay from "../../components/DifficultyStatDisplay/DifficultyStatDisplay.js";
 
 export default function Explorer() {
   const [blocksCount, setBlocksCount] = useState(0);
@@ -123,13 +119,7 @@ export default function Explorer() {
         {/* Difficulty Card -- TODO: Get actual hashrate, hard-coded to 0 for now  */}
         <Card minH="83px">
           <CardBody>
-            <Flex flexDirection="row" align="center" justify="center" w="100%">
-              <Stat me="auto">
-                {difficultyCardHeading}
-                {difficultyValueDisplay}
-              </Stat>
-              {difficultyIcon}
-            </Flex>
+            <DifficultyStatDisplay />
           </CardBody>
         </Card>
 

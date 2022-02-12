@@ -10,6 +10,8 @@ import NavBar from "../../components/NavBar/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routes } from "../../constants/routes";
 
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+const queryClient = new QueryClient()
 
 
 export default function App(props) {
@@ -27,15 +29,16 @@ export default function App(props) {
           <Portal>
             <NavBar></NavBar>
           </Portal>
+          <QueryClientProvider client={queryClient}>
+            <PanelContent>
+              <PanelContainer>
 
-          <PanelContent>
-            <PanelContainer>
-              <Routes>
-                {routes.map(route => <Route path={route.path} element={route.component} key={route.id} />)}
-              </Routes>
-            </PanelContainer>
-          </PanelContent>
-
+                <Routes>
+                  {routes.map(route => <Route path={route.path} element={route.component} key={route.id} />)}
+                </Routes>
+              </PanelContainer>
+            </PanelContent>
+          </QueryClientProvider>
 
         </MainPanel>
       </BrowserRouter>
