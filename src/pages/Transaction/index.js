@@ -41,16 +41,24 @@ export default function Transaction() {
 
 
     const blockNumber = transaction?.block_number;
-    const timestamp = transaction?.timestamp;
+    const timestamp = transaction?.tx_time;
 
-    let from = transaction?.from;
+    let from_addr = transaction?.from_addr;
     let fromHashReduced
-    let to = transaction?.to;
+    let to_addr = transaction?.to_addr;
     let toHashReduced
-    if (from) { fromHashReduced = reduceStringShowMediumLength(from); }
-    if (to) { toHashReduced = reduceStringShowMediumLength(to); }
+    if (from_addr) { fromHashReduced = reduceStringShowMediumLength(from_addr); }
+    if (to_addr) { toHashReduced = reduceStringShowMediumLength(to_addr); }
 
-    const value = transaction?.value;
+    const value = transaction?.tx_value;
+    
+    /**
+    * Error handling in the event the GQL query fails
+    */
+    if (error) {
+        console.log(error)
+        return null
+    }
 
     return (
         <>
@@ -68,12 +76,20 @@ export default function Transaction() {
                             <Heading as='h2' size='md'> Tx Hash: </Heading>
                             <CopyToClipboardButton innerText={transactionHashReduced} copyThisToClipboard={transactionHash} />
 
-                            <Heading as='h2' size='md'> Block: </Heading> <Text fontSize="lg"> {blockNumber} </Text>
-                            <Heading as='h2' size='md'> Timestamp: </Heading> <Text fontSize="lg"> {timestamp}</Text>
-                            <Heading as='h2' size='md'> From: </Heading>
-                            <CopyToClipboardButton innerText={fromHashReduced} copyThisToClipboard={from} />
-                            <Heading as='h2' size='md'> To: </Heading>
-                            <CopyToClipboardButton innerText={toHashReduced} copyThisToClipboard={to} />
+                            {blockNumber != null ? <> <Heading as='h2' size='md'> Block: </Heading> <Text fontSize="lg"> {blockNumber} </Text> </> : null}
+
+                            {timestamp !== null ? <> <Heading as='h2' size='md'> Timestamp: </Heading> <Text fontSize="lg"> {timestamp}</Text> </> : null}
+
+                            {from_addr !== null ? <>
+                                <Heading as='h2' size='md'> From: </Heading>
+                                <CopyToClipboardButton innerText={fromHashReduced} copyThisToClipboard={from_addr} />
+                            </> : null}
+
+                            {from_addr !== null ? <>
+                                <Heading as='h2' size='md'> To: </Heading>
+                                <CopyToClipboardButton innerText={toHashReduced} copyThisToClipboard={to_addr} />
+                            </> : null}
+
                             <Heading as='h2' size='md'> Value: </Heading> <Text fontSize="lg"> {value} </Text>
                         </VStack>
                     </CardBody>

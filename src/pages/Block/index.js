@@ -51,6 +51,14 @@ export default function Block() {
 
     let location = block?.location;
     if ( location ) { location = SHARDED_ADDRESS[location]; }
+    
+    /**
+     * Error handling in the event the GQL query fails
+     */
+  if (error) {
+    console.log(error)
+    return null
+  }
 
     return (
         <>
