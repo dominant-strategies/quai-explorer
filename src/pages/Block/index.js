@@ -24,7 +24,6 @@ import CardBody from '../../components/Card/CardBody';
 export default function Block() {
     // Component state
     const [block, setBlock] = useState();
-    const [position, setPosition] = useState();
 
     // GraphQL queries
     const { hash } = useParams();
@@ -34,16 +33,7 @@ export default function Block() {
     // When this component mounts, grab a reference to the block 
     useEffect(() => {
         setBlock(data?.blocks[0]);
-        setPosition(POSITIONS[CHAIN_SLUGS.findIndex((slug) => slug === data?.blocks[0]?.location)]);
     }, [data])
-
-    // Block details to display
-    const blockHeight = block?.header.number[position];
-    const timestamp = convertTimeString(block?.timestamp);
-    const gasUsed = block?.header?.gasUsed[position];
-    const gasLimit = block?.header?.gasLimit[position];
-    const difficulty = numberWithCommas(block?.header?.difficulty[position]);
-    const networkDifficulty = numberWithCommas(block?.header?.networkDifficulty[position]);
 
     let blockHash = block?.hash;
     let blockHashReduced;
@@ -51,6 +41,17 @@ export default function Block() {
 
     let location = block?.location;
     if ( location ) { location = SHARDED_ADDRESS[location]; }
+
+    let timestamp = block?.timestamp;
+    if ( timestamp ) { timestamp = convertTimeString(timestamp); }
+
+    const blockNumber = block?.number;
+    const gasLimit = block?.gas_limit;
+    const gasUsed = block?.gas_used;
+    const difficulty = block?.difficulty;
+
+    let networkDifficulty = block?.network_difficulty;
+    if( networkDifficulty ) { networkDifficulty = parseInt(networkDifficulty, 16); }
     
     /**
      * Error handling in the event the GQL query fails
@@ -73,7 +74,7 @@ export default function Block() {
                 <VStack spacing="12px" align="left">
                     <IconButton onClick={() => navigateTo('/')} icon={ <ArrowBackIcon />} aria-label="Back to the Explorer home page" w="24px"/> 
                     <Spacer />
-                    <Heading as='h2' size='md'> Block Height: </Heading> <Text fontSize="lg"> {blockHeight} </Text>
+                    <Heading as='h2' size='md'> Block Number: </Heading> <Text fontSize="lg"> {blockNumber} </Text>
                     <Heading as='h2' size='md'> Location: </Heading> <Text fontSize="lg"> {location} </Text>
                     
                     <Heading as='h2' size='md'> Hash: </Heading> 

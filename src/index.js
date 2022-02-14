@@ -47,7 +47,8 @@ const splitLink = split(
 const client = new ApolloClient({
   // uri: 'https://quainetworktest.hasura.app/v1/graphql',
   link: splitLink,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  options: { fetchPolicy: 'cache-first' }
 });
 
 ReactDOM.render(

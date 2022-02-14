@@ -27,7 +27,7 @@ export default function Transaction() {
     // GraphQL queries
     const { hash } = useParams();
     const navigateTo = useNavigate();
-    const { loading, error, data } = useQuery(GET_TRANSACTION_WITH_HASH, { variables: { hash } });
+    const { loading, error, data, startPolling, stopPolling } = useQuery(GET_TRANSACTION_WITH_HASH, { variables: { hash } });
 
     // When this component mounts, grab a reference to the transaction 
     useEffect(() => {
@@ -51,7 +51,7 @@ export default function Transaction() {
     if (to_addr) { toHashReduced = reduceStringShowMediumLength(to_addr); }
 
     const value = transaction?.tx_value;
-    
+
     /**
     * Error handling in the event the GQL query fails
     */

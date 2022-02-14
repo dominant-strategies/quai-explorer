@@ -39,13 +39,13 @@ export default function BlockTable({ setBlocksCount }) {
   useEffect(() => {
     if (data) {
       const tempBlocks = data?.blocks.map(block => {
-        const miner = block.header.miner[POSITIONS[CHAIN_SLUGS.findIndex((slug) => slug === block.location)]]
-        let unix_timestamp = block.header.timestamp;
+        const miner = block.header.miner;
+        let unix_timestamp = block.timestamp;
         const formattedTime = convertTimeString(unix_timestamp);
         return {
           ...block.header,
           location: SHARDED_ADDRESS[block.location],
-          number: block.header.number[POSITIONS[CHAIN_SLUGS.findIndex((slug) => slug === block.location)]],
+          number: block.number,
           miner,
           timestamp: formattedTime
         }
