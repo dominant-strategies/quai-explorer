@@ -26,7 +26,7 @@ export default function TransactionTable({ setTransactionsCount }) {
   const [transactions, setTransactions] = useState([]);
 
   // GraphQL queries
-  const { loading, error, data } = useQuery(GET_TRANSACTIONS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, refetch: refetchTransactionData } = useQuery(GET_TRANSACTIONS, { variables: {  fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
 
   // Other hooks
   // const navigateTo = useNavigate();
@@ -110,6 +110,7 @@ export default function TransactionTable({ setTransactionsCount }) {
           </Table>
           {totalPage > 1 ?
           <Pagination
+           refetchData={refetchTransactionData}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             limit={limit} setLimit={setLimit}
