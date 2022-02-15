@@ -65,10 +65,6 @@ export default function Explorer() {
     </Flex>
   );
 
-  const hashrateCardHeading = (<StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Hashrate </StatLabel>);
-  const hashrateIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={VscGraph} w="24px" h="24px" color="white" /> </IconBox>);
-  const hashrateValueDisplay = (<Flex> <StatNumber fontSize="lg" color={textColor}> {hashrateValue} </StatNumber> </Flex>);
-
   const difficultyCardHeading = (<StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Difficulty </StatLabel>);
   const difficultyIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={FaHardHat} w="24px" h="24px" color="white" /> </IconBox>);
   const difficultyValueDisplay = (<Flex> <StatNumber fontSize="lg" color={textColor}> {difficultyValue} </StatNumber> </Flex>);
@@ -79,7 +75,7 @@ export default function Explorer() {
     <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
 
       {/* Stat Cards Grid */}
-      <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing="24px">
+      <SimpleGrid columns={{ sm: 1, md: 2, xl: 3 }} spacing="24px">
 
         {/* Blocks Card */}
         <Card minH="83px">
@@ -103,19 +99,6 @@ export default function Explorer() {
                 {transactionsCountDisplay}
               </Stat>
               {transactionsIcon}
-            </Flex>
-          </CardBody>
-        </Card>
-
-        {/* Hashrate Card -- TODO: Get actual hashrate, hard-coded to 0 for now  */}
-        <Card minH="83px">
-          <CardBody>
-            <Flex flexDirection="row" align="center" justify="center" w="100%">
-              <Stat me="auto">
-                {hashrateCardHeading}
-                {hashrateValueDisplay}
-              </Stat>
-              {hashrateIcon}
             </Flex>
           </CardBody>
         </Card>
