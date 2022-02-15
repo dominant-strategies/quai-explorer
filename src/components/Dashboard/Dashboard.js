@@ -46,7 +46,7 @@ export default function Dashboard() {
   const overlayRef = React.useRef();
 
   const blocksCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Blocks </StatLabel> );
-  const blocksIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={BsBox} w="24px" h="24px" color="white"/> </IconBox>);
+  const blocksIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={BsBox} w="24px" h="24px" color="white"/> </IconBox>);
   const blocksCountSpinner = ( <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xs' label='Loading block count' /> );
   const blocksCountDisplay = ( 
     <Flex> 
@@ -57,7 +57,7 @@ export default function Dashboard() {
   );
 
   const transactionsCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Transactions </StatLabel> );
-  const transactionsIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={GiMoneyStack} w="24px" h="24px" color="white"/> </IconBox>);
+  const transactionsIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={GiMoneyStack} w="24px" h="24px" color="white"/> </IconBox>);
   const transactionsCountSpinner = ( <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xs' label='Loading transactions count' /> );
   const transactionsCountDisplay = ( 
     <Flex> 
@@ -68,11 +68,11 @@ export default function Dashboard() {
   );
 
   const hashrateCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Hashrate </StatLabel> );
-  const hashrateIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={VscGraph} w="24px" h="24px" color="white"/> </IconBox>);
+  const hashrateIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={VscGraph} w="24px" h="24px" color="white"/> </IconBox>);
   const hashrateValueDisplay = ( <Flex> <StatNumber fontSize="lg" color={textColor}> {hashrateValue} </StatNumber> </Flex> );
     
   const difficultyCardHeading = ( <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Difficulty </StatLabel> );
-  const difficultyIcon = (<IconBox as="box" h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={FaHardHat} w="24px" h="24px" color="white"/> </IconBox>);
+  const difficultyIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={FaHardHat} w="24px" h="24px" color="white"/> </IconBox>);
   const difficultyValueDisplay = ( <Flex> <StatNumber fontSize="lg" color={textColor}> {difficultyValue} </StatNumber> </Flex> );
   
   

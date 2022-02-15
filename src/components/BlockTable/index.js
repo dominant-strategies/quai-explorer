@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS, GET_BLOCK_WITH_HASH } from "../../utils/queries";
@@ -30,7 +30,7 @@ export default function BlockTable({ setBlocksCount }) {
   const [blocks, setBlocks] = useState([]);
 
   // GraphQL queries
-  const { loading, error, data } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, refetch: refetchBlockData } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
@@ -56,6 +56,7 @@ export default function BlockTable({ setBlocksCount }) {
       setTotalPage(parseInt(blocksCount / limit) + 1);
     }
   }, [data])
+
   /**
      * Error handling in the event the GQL query fails
      * Shows an alert
@@ -125,6 +126,7 @@ export default function BlockTable({ setBlocksCount }) {
             </Tbody>
           </Table>
           <Pagination
+            refetchData={refetchBlockData}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             limit={limit} setLimit={setLimit}

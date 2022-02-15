@@ -26,7 +26,7 @@ export default function TransactionTable({ setTransactionsCount }) {
   const [transactions, setTransactions] = useState([]);
 
   // GraphQL queries
-  const { loading, error, data, startPolling } = useQuery(GET_TRANSACTIONS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data } = useQuery(GET_TRANSACTIONS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
 
   // Other hooks
   // const navigateTo = useNavigate();
@@ -43,7 +43,6 @@ export default function TransactionTable({ setTransactionsCount }) {
       setTransactionsCount(transactionsCount);
       setTotalPage(parseInt(transactionsCount / limit) + 1);
     }
-    //startPolling(500)
   }, [data])
 
   /**
