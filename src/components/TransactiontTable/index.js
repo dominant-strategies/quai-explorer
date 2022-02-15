@@ -34,11 +34,12 @@ export default function TransactionTable({ setTransactionsCount }) {
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the transactions table";
 
+
   // When this component mounts, grab a reference to all transactions, set the transaction count, and set the totalPageCount to allow for pagination
   useEffect(() => {
     if (data) {
       setTransactions(data?.transactions);
-      const transactionsCount = data?.transactions_aggregate?.aggregate?.count;
+      let transactionsCount = data?.transactions_aggregate?.aggregate?.count;
       setTransactionsCount(transactionsCount);
       setTotalPage(parseInt(transactionsCount / limit) + 1);
     }
@@ -107,6 +108,7 @@ export default function TransactionTable({ setTransactionsCount }) {
             </Tbody>
 
           </Table>
+          {totalPage > 1 ?
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -117,7 +119,7 @@ export default function TransactionTable({ setTransactionsCount }) {
               md: "59%",
               lg: "90%",
               xl: "90%"
-            }} />
+            }} /> : null}
         </>
         : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>

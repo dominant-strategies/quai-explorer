@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS, GET_BLOCK_WITH_HASH } from "../../utils/queries";
@@ -30,7 +30,7 @@ export default function BlockTable({ setBlocksCount }) {
   const [blocks, setBlocks] = useState([]);
 
   // GraphQL queries
-  const { loading, error, data } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, refetch: refetchBlockData } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
@@ -39,13 +39,13 @@ export default function BlockTable({ setBlocksCount }) {
   useEffect(() => {
     if (data) {
       const tempBlocks = data?.blocks.map(block => {
-        const miner = block.header.miner[POSITIONS[CHAIN_SLUGS.findIndex((slug) => slug === block.location)]]
-        let unix_timestamp = block.header.timestamp;
+        const miner = block.header.miner;
+        let unix_timestamp = block.timestamp;
         const formattedTime = convertTimeString(unix_timestamp);
         return {
           ...block.header,
           location: SHARDED_ADDRESS[block.location],
-          number: block.header.number[POSITIONS[CHAIN_SLUGS.findIndex((slug) => slug === block.location)]],
+          number: block.number,
           miner,
           timestamp: formattedTime
         }
@@ -56,6 +56,7 @@ export default function BlockTable({ setBlocksCount }) {
       setTotalPage(parseInt(blocksCount / limit) + 1);
     }
   }, [data])
+
   /**
      * Error handling in the event the GQL query fails
      * Shows an alert
@@ -124,7 +125,9 @@ export default function BlockTable({ setBlocksCount }) {
               })}
             </Tbody>
           </Table>
+          {totalPage > 1 ?
           <Pagination
+            refetchData={refetchBlockData}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             limit={limit} setLimit={setLimit}
@@ -135,6 +138,8 @@ export default function BlockTable({ setBlocksCount }) {
               lg: "75%",
               xl: "93%"
             }} />
+            : null
+          }
         </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
   )

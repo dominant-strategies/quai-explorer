@@ -89,13 +89,13 @@ export const GET_TRANSACTIONS = gql`
         transactions(
             limit: $num
             offset: $offset
-            order_by: { timestamp: desc }
+            order_by: { tx_time: desc }
         ) {
             block_number
-            to
-            from
-            timestamp
-            value
+            to_addr
+            from_addr
+            tx_time
+            tx_value
             hash
             contract_code
             full_transaction
@@ -113,10 +113,10 @@ export const SUBSCRIBE_TRANSACTIONS = gql`
             order_by: { timestamp: desc }
         ) {
             block_number
-            to
-            from
-            timestamp
-            value
+            to_addr
+            from_addr
+            tx_time
+            tx_value
             hash
             contract_code
             full_transaction
@@ -135,10 +135,10 @@ export const GET_TRANSACTION_WITH_HASH = gql`
     query Transaction($hash: String!) {
         transactions(where: { hash: { _eq: $hash } }) {
             block_number
-            to
-            from
-            timestamp
-            value
+            to_addr
+            from_addr
+            tx_time
+            tx_value
             hash
             contract_code
             full_transaction
@@ -197,12 +197,12 @@ export const BlockOrTx = gql`
         transactions(where: { hash: { _eq: $hash } }) {
             block_number
             contract_code
-            from
+            from_addr
             full_transaction
             hash
-            timestamp
-            to
-            value
+            tx_time
+            to_addr
+            tx_value
         }
     }
 `
@@ -231,10 +231,10 @@ export const GET_LATEST_TRANSACTIONS = gql`
             order_by: { timestamp: desc }
         ) {
             block_number
-            to
-            from
-            timestamp
-            value
+            to_addr
+            from_addr
+            tx_time
+            tx_value
             hash
             contract_code
             full_transaction
