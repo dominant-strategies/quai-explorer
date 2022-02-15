@@ -30,7 +30,7 @@ export default function BlockTable({ setBlocksCount }) {
   const [blocks, setBlocks] = useState([]);
 
   // GraphQL queries
-  const { loading, error, data, refetch: refetchBlockData } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, refetch: refetchBlockData } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
@@ -125,6 +125,7 @@ export default function BlockTable({ setBlocksCount }) {
               })}
             </Tbody>
           </Table>
+          {totalPage > 1 ?
           <Pagination
             refetchData={refetchBlockData}
             currentPage={currentPage}
@@ -137,6 +138,8 @@ export default function BlockTable({ setBlocksCount }) {
               lg: "75%",
               xl: "93%"
             }} />
+            : null
+          }
         </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
   )

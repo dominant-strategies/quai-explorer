@@ -108,6 +108,7 @@ export default function TransactionTable({ setTransactionsCount }) {
             </Tbody>
 
           </Table>
+          {totalPage > 1 ?
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -118,7 +119,7 @@ export default function TransactionTable({ setTransactionsCount }) {
               md: "59%",
               lg: "90%",
               xl: "90%"
-            }} />
+            }} /> : null}
         </>
         : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
