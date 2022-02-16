@@ -10,6 +10,8 @@ import NavBar from "../../components/NavBar/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routes } from "../../constants/routes";
 
+import Footer from "../../components/Footer/Footer";
+
 
 
 export default function App(props) {
@@ -35,6 +37,10 @@ export default function App(props) {
               </Routes>
             </PanelContainer>
           </PanelContent>
+          
+          <Portal>
+            <Footer />
+          </Portal>
 
 
         </MainPanel>
