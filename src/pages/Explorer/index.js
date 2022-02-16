@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -25,20 +25,18 @@ import TransactionTable from "../../components/TransactiontTable";
 
 import { BsBox } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
-import { VscGraph } from "react-icons/vsc";
 import { FaHardHat } from "react-icons/fa";
 
-import { useQuery } from '@apollo/client';
+import AppContext from "../../components/AppContext/AppContext.js";
 
 export default function Explorer() {
   const [blocksCount, setBlocksCount] = useState(0);
+  
+  const globalState = useContext(AppContext);
+  console.log("Global state: ", globalState);
+
   const [transactionsCount, setTransactionsCount] = useState(0);
-  const [hashrateValue, setHashrateValue] = useState(0);
   const [difficultyValue, setDifficultyValue] = useState(0);
-
-  const [block, setBlock] = useState();
-  const [allValues, setAllValues] = useState([]);
-
 
   const quaiOrangeColor = useColorModeValue("brand.300", "brand.300");
   const textColor = useColorModeValue("gray.700", "white");
@@ -49,14 +47,14 @@ export default function Explorer() {
   const blocksCountDisplay = (
     <Flex>
       <StatNumber fontSize="lg" color={textColor}>
-        {blocksCount !== 0 ? blocksCount : blocksCountSpinner}
+        {blocksCount !== 0 ? blocksCount : ''}
       </StatNumber>
     </Flex>
   );
 
   const transactionsCardHeading = (<StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Transactions </StatLabel>);
   const transactionsIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={GiMoneyStack} w="24px" h="24px" color="white" /> </IconBox>);
-  const transactionsCountSpinner = (<Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xs' label='Loading transactions count' />);
+  const transactionsCountSpinner = (globalState.transactionCountIsLoading && <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xs' label='Loading transactions count' />);
   const transactionsCountDisplay = (
     <Flex>
       <StatNumber fontSize="lg" color={textColor}>
@@ -69,7 +67,14 @@ export default function Explorer() {
   const difficultyIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={FaHardHat} w="24px" h="24px" color="white" /> </IconBox>);
   const difficultyValueDisplay = (<Flex> <StatNumber fontSize="lg" color={textColor}> {difficultyValue} </StatNumber> </Flex>);
 
-
+  useEffect(() => {
+    if (globalState.transactionCountIsLoading) {
+      setTimeout(() => {
+        globalState.toggleTransactionCountIsLoading();
+      }, 2000);
+    }
+  }, [globalState.transactionCountIsLoading]);
+  
   return (
     // Container
     <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
@@ -103,7 +108,7 @@ export default function Explorer() {
           </CardBody>
         </Card>
 
-        {/* Difficulty Card -- TODO: Get actual hashrate, hard-coded to 0 for now  */}
+        {/* Difficulty Card */}
         <Card minH="83px">
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
@@ -22,6 +22,8 @@ import {
   Heading
 } from '@chakra-ui/react';
 
+import AppContext from '../AppContext/AppContext';
+
 export default function BlockTable({ setBlocksCount }) {
   // Component state
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +33,9 @@ export default function BlockTable({ setBlocksCount }) {
 
   // GraphQL queries
   const { loading, error, data, refetch: refetchBlockData, subscribeToMore } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
+  
+  const globalState = useContext(AppContext);
+  globalState.setBlocksCountisLoading(loading);
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
