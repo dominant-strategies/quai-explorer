@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
-import { GET_BLOCKS, GET_BLOCK_WITH_HASH } from "../../utils/queries";
+import { GET_BLOCKS, SUBSCRIBE_BLOCK_CHANGES } from "../../utils/queries";
 import { convertTimeString, numberWithCommas } from "../../utils";
 import BlockTableRow from "../Tables/BlockTableRow";
 import Pagination from '../Pagination';
@@ -30,7 +30,7 @@ export default function BlockTable({ setBlocksCount }) {
   const [blocks, setBlocks] = useState([]);
 
   // GraphQL queries
-  const { loading, error, data, refetch: refetchBlockData } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, refetch: refetchBlockData, subscribeToMore } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
@@ -55,6 +55,19 @@ export default function BlockTable({ setBlocksCount }) {
       setBlocksCount(blocksCount);
       setTotalPage(parseInt(blocksCount / limit) + 1);
     }
+
+    subscribeToMore({
+      document: SUBSCRIBE_BLOCK_CHANGES,
+      variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit },
+      updateQuery: (prev, { newData }) => {
+        if (!newData) return prev;
+        const newBlock = newData.blocks[0]
+        return Object.assign({}, prev, {
+          blocks: [newBlock, ...prev.blocks]
+        });
+      }
+    })
+    
   }, [data])
 
   /**

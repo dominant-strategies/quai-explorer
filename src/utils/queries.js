@@ -56,6 +56,30 @@ export const GET_BLOCK_WITH_LOCATION = gql`
     }
 `
 
+export const SUBSCRIBE_BLOCK_CHANGES = gql`
+    subscription GetBlock {
+        blocks(limit: 1, order_by: { timestamp: desc }) {
+            context
+            difficulty
+            gas_limit
+            gas_used
+            hash
+            header
+            location
+            network_difficulty
+            number
+            timestamp
+        }
+        
+        blocks_aggregate {
+            aggregate {
+                count
+            }
+        }
+        
+    }
+`
+
 export const SUBSCRIBE_BLOCKS = gql`
     subscription GetBlocks($num: Int!) {
         blocks(limit: $num, order_by: { timestamp: desc }) {
