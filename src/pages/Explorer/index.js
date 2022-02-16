@@ -25,10 +25,7 @@ import TransactionTable from "../../components/TransactiontTable";
 
 import { BsBox } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
-import { VscGraph } from "react-icons/vsc";
 import { FaHardHat } from "react-icons/fa";
-
-import { useQuery } from '@apollo/client';
 
 export default function Explorer() {
   const [blocksCount, setBlocksCount] = useState(0);
@@ -75,7 +72,7 @@ export default function Explorer() {
     <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
 
       {/* Stat Cards Grid */}
-      <SimpleGrid columns={{ sm: 1, md: 2, xl: 3 }} spacing="24px">
+      <SimpleGrid columns={{ sm: 1, md: 3, xl: 3 }} spacing="24px">
 
         {/* Blocks Card */}
         <Card minH="83px">
