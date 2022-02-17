@@ -246,3 +246,21 @@ query GetNetworkDifficultyFromLatestPrimeBlockForOneChain {
   }
 `
 
+export const SUBSCRIBE_BLOCK_CHANGES = gql`
+subscription subscribeBlockChanges {
+    blocks {
+      context
+      difficulty
+      gas_limit
+      timestamp
+      number
+      network_difficulty
+      location
+      header
+      hash
+      gas_used
+    }
+  }
+  
+`
+
