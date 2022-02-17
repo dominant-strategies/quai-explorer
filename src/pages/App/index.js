@@ -7,6 +7,8 @@ import PanelContainer from "../../components/Layout/PanelContainer";
 import PanelContent from "../../components/Layout/PanelContent";
 import NavBar from "../../components/NavBar/NavBar";
 
+import FloatingButton from "../../components/FloatingButton/FloatingButton";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routes } from "../../constants/routes";
 
@@ -42,6 +44,10 @@ export default function App(props) {
           
           <Portal>
             <Footer />
+          </Portal>
+
+          <Portal> 
+            <FloatingButton />
           </Portal>
 
 
