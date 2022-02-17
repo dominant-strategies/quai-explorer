@@ -67,35 +67,35 @@ const prefix = {
         low: 0x0a,
         high: 0x13,
     },
-    region2: {
+    zone11: {
         low: 0x14,
         high: 0x1d,
     },
-    region3: {
+    zone12: {
         low: 0x1e,
         high: 0x27,
     },
-    zone11: {
+    zone13: {
         low: 0x28,
         high: 0x31,
     },
-    zone12: {
+    region2: {
         low: 0x32,
         high: 0x3b,
     },
-    zone13: {
+    zone21: {
         low: 0x3c,
         high: 0x45,
     },
-    zone21: {
+    zone22: {
         low: 0x46,
         high: 0x4f,
     },
-    zone22: {
+    zone23: {
         low: 0x50,
         high: 0x59,
     },
-    zone23: {
+    region3: {
         low: 0x5a,
         high: 0x63,
     },
@@ -108,7 +108,7 @@ const prefix = {
         high: 0x77,
     },
     zone33: {
-        low: 0x6e,
+        low: 0x78,
         high: 0x81,
     },
 }
@@ -135,24 +135,20 @@ export default function Address() {
     }
 
     const addressPrefix = hash.substring(0, 4)
-    console.log(addressPrefix)
     const numAddressPrefix = hexToDec(addressPrefix)
 
     const chain = (numAddressPrefix) => {
-        var chainName
-        for (const key in prefix) {
-            console.log(prefix[key].low, prefix[key].high, numAddressPrefix)
+        var chainName = ''
+        for (var key in prefix) {
             if (
-                hexToDec(prefix[key].low) <=
-                numAddressPrefix <=
-                hexToDec(prefix[key].high)
+                prefix[key].low <= numAddressPrefix &&
+                numAddressPrefix <= prefix[key].high
             ) {
                 chainName = key
             }
         }
         return chainName
     }
-    console.log(chainPort(chain(numAddressPrefix)))
 
     useEffect(() => {
         const load = async () => {
