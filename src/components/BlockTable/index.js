@@ -52,24 +52,6 @@ export default function BlockTable({ setBlocksCount }) {
       setBlocksCount(blocksCount);
       setTotalPage(parseInt(blocksCount / limit) + 1);
     }
-
-    subscribeToMore({
-      document: SUBSCRIBE_BLOCKS,
-      updateQuery: (prev, { newData }) => {
-        if (!newData) return prev;
-        const newBlock = newData.blocks[0]
-        setBlocks(Object.assign({}, prev, {
-          blocks: [newBlock, ...prev.blocks]
-        }));
-        const blocksCount = blocks.length + 1
-        setBlocksCount(blocksCount);
-        setTotalPage(parseInt(blocksCount / limit) + 1);
-      }
-    })
-
-
-    
-    
   }, [data])
   
 
@@ -104,7 +86,6 @@ export default function BlockTable({ setBlocksCount }) {
                   <Th color="gray.400">Location</Th>
                   <Th color="gray.400" isNumeric>Block</Th>
                   <Th color="gray.400">Miner</Th>
-                  <Th color="gray.400">TX Count</Th>
                   <Th color="gray.400">Timestamp</Th>
                   <Th color="gray.400"></Th>
                 </Tr>
@@ -116,7 +97,6 @@ export default function BlockTable({ setBlocksCount }) {
                   <Th color="gray.400">Location</Th>
                   <Th color="gray.400" isNumeric>Block</Th>
                   <Th color="gray.400">Miner</Th>
-                  <Th color="gray.400">TX Count</Th>
                   <Th color="gray.400">Timestamp</Th>
 
                 </Tr>
@@ -132,7 +112,6 @@ export default function BlockTable({ setBlocksCount }) {
                     location={block.location}
                     blockNumber={block.number}
                     minerAddress={block.miner}
-                    transactionCount={0}
                     timestamp={block.timestamp}
                     hash={block.hash}
                     key={index}

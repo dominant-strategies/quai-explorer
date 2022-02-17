@@ -40,11 +40,7 @@ export default function BlockTableRow(props) {
           <CopyToClipboardButton innerText={reduceString(minerAddress)} copyThisToClipboard={minerAddress} />
         </Td>
   
-        <Td>
-          <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
-            {transactionCount}
-          </Text>
-        </Td>
+        
   
         <Td>
           <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
@@ -85,11 +81,7 @@ export default function BlockTableRow(props) {
           <CopyToClipboardButton innerText={reduceString(minerAddress)} copyThisToClipboard={minerAddress} />
         </Td>
   
-        <Td>
-          <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
-            {transactionCount}
-          </Text>
-        </Td>
+       
   
         <Td>
           <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
