@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
-import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
-import { GET_BLOCKS, GET_BLOCK_WITH_HASH } from "../../utils/queries";
-import { convertTimeString, numberWithCommas } from "../../utils";
+import { useQuery } from '@apollo/client';
+import { SHARDED_ADDRESS } from "../../constants";
+import { GET_BLOCKS, SUBSCRIBE_BLOCKS } from "../../utils/queries";
+import { convertTimeString } from "../../utils";
 import BlockTableRow from "../Tables/BlockTableRow";
 import Pagination from '../Pagination';
 
@@ -18,8 +17,6 @@ import {
   Tr,
   Th,
   useColorModeValue,
-  Flex,
-  Heading
 } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
@@ -30,7 +27,7 @@ export default function BlockTable({ setBlocksCount }) {
   const [blocks, setBlocks] = useState([]);
 
   // GraphQL queries
-  const { loading, error, data, refetch: refetchBlockData } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, refetch: refetchBlockData, subscribeToMore } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
@@ -56,6 +53,7 @@ export default function BlockTable({ setBlocksCount }) {
       setTotalPage(parseInt(blocksCount / limit) + 1);
     }
   }, [data])
+  
 
   /**
      * Error handling in the event the GQL query fails
@@ -88,7 +86,6 @@ export default function BlockTable({ setBlocksCount }) {
                   <Th color="gray.400">Location</Th>
                   <Th color="gray.400" isNumeric>Block</Th>
                   <Th color="gray.400">Miner</Th>
-                  <Th color="gray.400">TX Count</Th>
                   <Th color="gray.400">Timestamp</Th>
                   <Th color="gray.400"></Th>
                 </Tr>
@@ -100,7 +97,6 @@ export default function BlockTable({ setBlocksCount }) {
                   <Th color="gray.400">Location</Th>
                   <Th color="gray.400" isNumeric>Block</Th>
                   <Th color="gray.400">Miner</Th>
-                  <Th color="gray.400">TX Count</Th>
                   <Th color="gray.400">Timestamp</Th>
 
                 </Tr>
@@ -116,7 +112,6 @@ export default function BlockTable({ setBlocksCount }) {
                     location={block.location}
                     blockNumber={block.number}
                     minerAddress={block.miner}
-                    transactionCount={0}
                     timestamp={block.timestamp}
                     hash={block.hash}
                     key={index}

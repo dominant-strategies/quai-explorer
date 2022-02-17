@@ -57,26 +57,19 @@ export const GET_BLOCK_WITH_LOCATION = gql`
 `
 
 export const SUBSCRIBE_BLOCKS = gql`
-    subscription GetBlocks($num: Int!) {
-        blocks(limit: $num, order_by: { timestamp: desc }) {
+    subscription SubscribeBlocks {
+        blocks {
             context
             difficulty
             gas_limit
-            gas_used
-            hash
-            header
-            location
-            network_difficulty
-            number
             timestamp
+            number
+            network_difficulty
+            location
+            header
+            hash
+            gas_used
         }
-        
-        blocks_aggregate {
-            aggregate {
-                count
-            }
-        }
-        
     }
 `
 export const GET_TRANSACTIONS = gql`

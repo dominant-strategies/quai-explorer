@@ -72,7 +72,7 @@ export default function Explorer() {
     <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
 
       {/* Stat Cards Grid */}
-      <SimpleGrid columns={{ sm: 1, md: 3, xl: 3 }} spacing="24px">
+      <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="24px">
 
         {/* Blocks Card */}
         <Card minH="83px">
@@ -100,8 +100,8 @@ export default function Explorer() {
           </CardBody>
         </Card>
 
-        {/* Difficulty Card -- TODO: Get actual hashrate, hard-coded to 0 for now  */}
-        <Card minH="83px">
+        {/* Difficulty Card  */}
+        {/* <Card minH="83px">
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
@@ -111,7 +111,7 @@ export default function Explorer() {
               {difficultyIcon}
             </Flex>
           </CardBody>
-        </Card>
+        </Card> */}
 
         {/* END OF Stat Cards Grid */}
       </SimpleGrid>
@@ -121,7 +121,7 @@ export default function Explorer() {
 
 
       {/* Tables Grid */}
-      <SimpleGrid columns={{ xl: 2 }} spacing="12px" templateColumns="1.5fr 1fr">
+      <SimpleGrid columns={{ xl: 2 }} spacing="12px" templateColumns="1.37fr 1fr">
 
         <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
           <CardHeader mb="20px" pl="22px">
