@@ -16,6 +16,9 @@ export default function FloatingButton(props) {
     if (scrolled > documentHeight - 700){
       setVisible(true)
     } 
+    else if (scrolled <= 100){
+      setVisible(false)
+    } 
    
   };
   
@@ -23,8 +26,6 @@ export default function FloatingButton(props) {
     window.scrollTo({
       top: 0, 
       behavior: 'smooth'
-      /* you can also use 'auto' behaviour
-         in place of 'smooth' */
     });
   };
   
