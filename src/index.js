@@ -16,7 +16,7 @@ const httpLink = new HttpLink({
 });
 
 const wsLink = new WebSocketLink({
-  uri: 'wss://quainetworktest.hasura.app/v1/subscriptions',
+  uri: 'ws://quainetworktest.hasura.app/v1/graphql',
   options: {
     reconnect: true,
     lazy: true,

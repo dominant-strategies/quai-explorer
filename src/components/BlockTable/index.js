@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
-import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from "../../constants";
-import { GET_BLOCKS, SUBSCRIBE_BLOCK_CHANGES } from "../../utils/queries";
-import { convertTimeString, numberWithCommas } from "../../utils";
+import { useQuery } from '@apollo/client';
+import { SHARDED_ADDRESS } from "../../constants";
+import { GET_BLOCKS, SUBSCRIBE_BLOCKS } from "../../utils/queries";
+import { convertTimeString } from "../../utils";
 import BlockTableRow from "../Tables/BlockTableRow";
 import Pagination from '../Pagination';
 
@@ -18,8 +17,6 @@ import {
   Tr,
   Th,
   useColorModeValue,
-  Flex,
-  Heading
 } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
@@ -57,18 +54,24 @@ export default function BlockTable({ setBlocksCount }) {
     }
 
     subscribeToMore({
-      document: SUBSCRIBE_BLOCK_CHANGES,
-      variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit },
+      document: SUBSCRIBE_BLOCKS,
       updateQuery: (prev, { newData }) => {
         if (!newData) return prev;
         const newBlock = newData.blocks[0]
-        return Object.assign({}, prev, {
+        setBlocks(Object.assign({}, prev, {
           blocks: [newBlock, ...prev.blocks]
-        });
+        }));
+        const blocksCount = blocks.length + 1
+        setBlocksCount(blocksCount);
+        setTotalPage(parseInt(blocksCount / limit) + 1);
       }
     })
+
+
+    
     
   }, [data])
+  
 
   /**
      * Error handling in the event the GQL query fails
