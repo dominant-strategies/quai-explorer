@@ -67,7 +67,6 @@ export default class Pagination extends Component {
                     mt={10}
                     borderColor="brand.300"
                     borderRadius="16px"
-                    boxShadow="0px 7px 23px rgba(0, 0, 0, 0.05)"
                 >
                     <IconButton
                         onClick={this.goToFirstPage}

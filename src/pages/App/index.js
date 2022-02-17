@@ -1,5 +1,5 @@
 import React from "react";
-import { ChakraProvider, Portal } from "@chakra-ui/react";
+import { ChakraProvider, Portal, Divider, Center } from "@chakra-ui/react";
 
 import theme from "../../theme/theme";
 import MainPanel from "../../components/Layout/MainPanel";
@@ -37,6 +37,8 @@ export default function App(props) {
               </Routes>
             </PanelContainer>
           </PanelContent>
+
+          <Divider  maxWidth='calc(100vw - 100px)'/>
           
           <Portal>
             <Footer />

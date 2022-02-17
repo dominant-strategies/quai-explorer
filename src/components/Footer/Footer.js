@@ -3,8 +3,6 @@ import {
   Box,
   Container,
   Stack,
-  HStack,
-  SimpleGrid,
   Text,
   Link,
   VisuallyHidden,
@@ -34,10 +32,11 @@ export default function Footer() {
           direction={{ base: 'column', md: 'row' }}
           spacing={4}
           justify={{ md: 'space-between' }}
-          align={{ md: 'center' }}>
+          align={{ md: 'center' }}
+          >
 
           <Text pl={{ xl: '10', lg: '10', md: '0', sm: '0' }}>© 2022 Dominant Strategies. All rights reserved</Text>
-          
+    
           <Stack direction={'row'} spacing={4}>
             <Button
               bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
