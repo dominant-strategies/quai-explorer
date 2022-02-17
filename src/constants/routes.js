@@ -1,6 +1,7 @@
 import Explorer from "../pages/Explorer";
 import Transaction from "../pages/Transaction";
 import Block from "../pages/Block";
+import Address from "../pages/Address";
 
 export const routes = [
     {
@@ -17,5 +18,11 @@ export const routes = [
         id: 3,
         component: <Block />,
         path: "/block/:hash"
+    },
+    {
+        id: 4,
+        component: <Address />,
+        path: "/address/:hash"
     }
+
 ]
