@@ -99,7 +99,7 @@ export default function TransactionTable({ setTransactionsCount }) {
                     toThisMiner={transaction.to}
                     fromThisMiner={transaction.from}
                     blockNumber={transaction.block_number}
-                    quaiSent={transaction.value}
+                    quaiSent={transaction.tx_value}
                     timestamp={transaction.timestamp}
                     key={index}
                   />
