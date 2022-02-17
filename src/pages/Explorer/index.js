@@ -66,6 +66,96 @@ export default function Explorer() {
   const difficultyIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={FaHardHat} w="24px" h="24px" color="white" /> </IconBox>);
   const difficultyValueDisplay = (<Flex> <StatNumber fontSize="lg" color={textColor}> {difficultyValue} </StatNumber> </Flex>);
 
+  if(window.innerWidth < 768 ) {
+    return (
+      // Container
+      <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
+  
+        {/* Stat Cards Grid */}
+        <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="24px">
+  
+          {/* Blocks Card */}
+          <Card minH="83px">
+            <CardBody>
+              <Flex flexDirection="row" align="center" justify="center" w="100%">
+                <Stat me="auto">
+                  {blocksCardHeading}
+                  {blocksCountDisplay}
+                </Stat>
+                {blocksIcon}
+              </Flex>
+            </CardBody>
+          </Card>
+  
+          {/* Transactions Card */}
+          <Card minH="83px">
+            <CardBody>
+              <Flex flexDirection="row" align="center" justify="center" w="100%">
+                <Stat me="auto">
+                  {transactionsCardHeading}
+                  {transactionsCountDisplay}
+                </Stat>
+                {transactionsIcon}
+              </Flex>
+            </CardBody>
+          </Card>
+  
+          {/* Difficulty Card  */}
+          {/* <Card minH="83px">
+            <CardBody>
+              <Flex flexDirection="row" align="center" justify="center" w="100%">
+                <Stat me="auto">
+                  {difficultyCardHeading}
+                  {difficultyValueDisplay}
+                </Stat>
+                {difficultyIcon}
+              </Flex>
+            </CardBody>
+          </Card> */}
+  
+          {/* END OF Stat Cards Grid */}
+        </SimpleGrid>
+  
+        {/* Space between Stats Grid Row and Table Grid Row */}
+        <Box p={15}></Box>
+  
+  
+        {/* Tables Grid */}
+        <SimpleGrid spacing="12px">
+  
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
+            <CardHeader mb="20px" pl="22px">
+              <Flex direction="column" alignSelf="flex-start">
+                <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
+                  Blocks
+                </Text>
+  
+                <BlockTable setBlocksCount={setBlocksCount} />
+              </Flex>
+            </CardHeader>
+          </Card>
+  
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
+            <CardHeader mb="20px" pl="22px">
+              <Flex direction="column" alignSelf="flex-start">
+                <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
+                  Transactions
+                </Text>
+                <TransactionTable setTransactionsCount={setTransactionsCount} />
+              </Flex>
+            </CardHeader>
+          </Card>
+  
+          { /* END OF Tables Grid */}
+        </SimpleGrid>
+  
+  
+  
+        {/* END OF Container */}
+      </Flex>
+    );
+  }
+
 
   return (
     // Container

@@ -118,7 +118,8 @@ export default class Pagination extends Component {
         else {
             return (
                 <Flex
-                    flexDirection="column"
+                    alignContent="center"
+                    alignItems="center"
                     ml={6}
                     mt={10}
                     borderColor="brand.300"
@@ -132,7 +133,7 @@ export default class Pagination extends Component {
                         icon={<ArrowLeftIcon h="2" w="2" />}
                         aria-label="First page"
                         w="20vw"
-                        mb={3}
+
                     />
 
                     <Spacer />
@@ -141,23 +142,24 @@ export default class Pagination extends Component {
                         onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
                         cursor="pointer"
                         icon={<ArrowBackIcon />}
-                        w="20vw"
-                        mb={3}
+                        w="10vw"
+
                     />
 
-                    <Container ml={3}>
 
-                        <Spacer />
-                        <Text fontSize="sm"> Page  </Text>
-                        <Spacer />
-                        <Text fontSize="xl" fontWeight="bold" ml={3}> {currentPage}  </Text>
 
-                        <Spacer />
-                        <Text fontSize="sm"> of {totalPage}  </Text>
+                    <Spacer />
 
-                        <Spacer />
+                    <Text fontSize="sm"> Page  </Text>
+                    <Spacer />
+                    <Text fontSize="xl" fontWeight="bold" ml={3}> {currentPage}  </Text>
 
-                    </Container>
+                    <Spacer />
+                    <Text fontSize="sm"> of {totalPage}  </Text>
+
+                    <Spacer />
+
+
 
 
 
@@ -165,8 +167,8 @@ export default class Pagination extends Component {
                         onClick={() => currentPage < totalPage && setCurrentPage(currentPage + 1)}
                         cursor="pointer"
                         icon={<ArrowForwardIcon />}
-                        w="20vw"
-                        mt={3}
+                        w="10vw"
+
                     />
 
                     <Spacer />
@@ -177,13 +179,13 @@ export default class Pagination extends Component {
                         icon={<ArrowRightIcon h="2" w="2" />}
                         w="20vw"
                         aria-label="Last page"
-                        mt={3}
+
                     />
                 </Flex>
 
-               
 
-       
+
+
             )
         }
     }
