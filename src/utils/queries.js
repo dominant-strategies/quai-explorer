@@ -22,6 +22,23 @@ export const GET_BLOCKS = gql`
     }
 `
 
+export const SUBSCRIBE_TO_BLOCK_CHANGES = gql`
+    query SubscribeBlocks($num: Int!, $offset: Int!) {
+        blocks(limit: $num, offset: $offset, order_by: { timestamp: desc }) {
+            context
+            difficulty
+            gas_limit
+            gas_used
+            hash
+            header
+            location
+            network_difficulty
+            number
+            timestamp
+        }
+    }
+`
+
 export const GET_BLOCK_WITH_HASH = gql`
     query Block($hash: String!) {
         blocks(where: { hash: { _eq: $hash } }) {
@@ -245,4 +262,3 @@ query GetNetworkDifficultyFromLatestPrimeBlockForOneChain {
     }
   }
 `
-

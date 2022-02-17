@@ -19,7 +19,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-export default function BlockTable({ setBlocksCount }) {
+export default function BlockTableWithData({ setBlocksCount }) {
   // Component state
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
