@@ -40,8 +40,8 @@ export default function FloatingButton(props) {
         bg={buttonBackgroundColor}
         position="fixed"
         variant="no-hover"
-        right="45px"
-        bottom="80px"
+        right="35px"
+        bottom="70px"
         borderRadius="50px"
         boxShadow="0 2px 12px 0 rgb(0 0 0 / 16%)"
         display={ visible ? 'inline' : 'none'} 
