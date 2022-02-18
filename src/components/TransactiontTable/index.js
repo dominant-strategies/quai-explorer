@@ -68,7 +68,7 @@ export default function TransactionTable({ setTransactionsCount }) {
     <>
       {!loading ?
         <>
-          <Table variant="simple" color={textColor}>
+          <Table variant="simple" color={textColor} mb={6}>
 
             { window.innerWidth > 768 ?
             <Thead>

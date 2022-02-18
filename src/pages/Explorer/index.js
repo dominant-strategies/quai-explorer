@@ -123,7 +123,7 @@ export default function Explorer() {
         {/* Tables Grid */}
         <SimpleGrid spacing="12px">
   
-          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX="scroll">
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
                 <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
@@ -135,7 +135,7 @@ export default function Explorer() {
             </CardHeader>
           </Card>
   
-          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX="scroll">
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
                 <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
@@ -211,7 +211,7 @@ export default function Explorer() {
 
 
       {/* Tables Grid */}
-      <SimpleGrid columns={{ xl: 2 }} spacing="12px" templateColumns="1.37fr 1fr">
+      <SimpleGrid columns={{ xl: 2 }} spacing="12px" templateColumns="1fr 1fr">
 
         <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
           <CardHeader mb="20px" pl="22px">
