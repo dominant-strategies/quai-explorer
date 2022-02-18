@@ -141,6 +141,23 @@ export const GET_TRANSACTION_WITH_HASH = gql`
     }
 `
 
+export const GET_TRANSACTION_WITH_FROM_ADDR = gql`
+    query Transaction($hash: String!) {
+        transactions(where: { hash: { _eq: $from_addr } }) {
+            block_number
+            to_addr
+            from_addr
+            tx_time
+            tx_value
+            hash
+            contract_code
+            full_transaction
+            to_location
+            from_location
+        }
+    }
+`
+
 export const GET_NODE_INFO_WITH_LOCATION = gql`
     query NodeInfo($location: String!) {
         node_info(where: { location: { _eq: $location } }) {
@@ -221,7 +238,7 @@ export const GET_LATEST_TRANSACTIONS = gql`
         transactions(
             limit: 20
             where: { location: { _eq: $location } }
-            order_by: { timestamp: desc }
+            order_by: { tx_time: desc }
         ) {
             block_number
             to_addr
@@ -238,11 +255,58 @@ export const GET_LATEST_TRANSACTIONS = gql`
 `
 
 export const GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN = gql`
-query GetNetworkDifficultyFromLatestPrimeBlockForOneChain {
-    blocks(limit: 1, where: {location: {_eq: "prime"}}, order_by: {timestamp: desc}) {
-      difficulty
-      location
+    query GetNetworkDifficultyFromLatestPrimeBlockForOneChain {
+        blocks(limit: 1, where: {location: {_eq: "prime"}}, order_by: {timestamp: desc}) {
+        difficulty
+        location
+        }
     }
-  }
 `
+
+export const GET_TRANSACTION_WITH_ADDRESS = gql`
+    query Transaction($num: Int!, $offset: Int!, $hash: String!) {
+        transactions(where: { from_addr: { _eq: $hash }}, limit: 10) {
+            block_number
+            to_addr
+            from_addr
+            tx_time
+            tx_value
+            hash
+            contract_code
+            full_transaction
+            to_location
+            from_location
+        }
+    }
+`
+
+export const GET_TRANSACTION_WITH_ADDRESS_2 = gql`
+    query Transaction($num: Int!, $offset: Int!, $hash: String!) {
+        transactions_aggregate {
+            aggregate {
+                count
+            }
+        }
+        transactions(
+            limit: $num
+            offset: $offset
+            order_by: { tx_time: desc }
+            where: { from_addr: { _eq: $hash }}
+        ) {
+            block_number
+            to_addr
+            from_addr
+            tx_time
+            tx_value
+            hash
+            contract_code
+            full_transaction
+            to_location
+            from_location
+        }
+    }
+`
+
+
+
 

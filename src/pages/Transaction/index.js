@@ -9,8 +9,9 @@ import {
     Spinner,
     IconButton,
     VStack,
-    Button,
-    Spacer
+    Spacer,
+    Alert,
+    AlertIcon
 } from '@chakra-ui/react';
 import { reduceStringShowMediumLength } from '../../utils';
 
@@ -57,7 +58,15 @@ export default function Transaction() {
     */
     if (error) {
         console.log(error)
-        return null
+        return (
+            <>
+            { window.innerWidth < 768 ? <Box p={4}></Box> : null }
+            <Alert status='error' mt={20}>
+              <AlertIcon />
+              <Text fontSize='sm'>There was a problem. We sincerely apologize for any inconvenience this may cause.</Text>
+            </Alert>
+          </>
+        )
     }
 
     return (
