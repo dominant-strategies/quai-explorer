@@ -107,7 +107,6 @@ export default function Address() {
                             },
                         }
                     )
-                    console.log("balance: ", balance)
                 } catch (err) {
                     console.log(err)
                     return (

@@ -13,7 +13,7 @@ import {
 import React, { useState } from "react";
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { SearchIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { SearchIcon, MoonIcon, SunIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import LogoBanner from "../../assets/images/QuaiLogoBanner.svg"
 import LogoBannerGray from "../../assets/images/quaiLogoBannerGray.svg"
 import { FaHouseUser } from 'react-icons/fa'
@@ -60,18 +60,21 @@ export default function NavBar(props) {
     refetchTransactionAddressData();
     
     if (BlockData || TransactionData || TransactionAddressData) {
-      console.log(BlockData || TransactionData || TransactionAddressData)
       if (BlockData?.blocks.length > 0) {
         navigateTo(`/block/${searchHash}`);
         setSearchHash("");
-      } else if (TransactionData?.transactions.length > 0) {
+      }
+      
+      if (TransactionData?.transactions.length > 0) {
         navigateTo(`/tx/${searchHash}`);
         setSearchHash("");
       }
-      else if (TransactionAddressData?.transactions.length > 0) {
+      
+      if (TransactionAddressData?.transactions.length > 0) {
         navigateTo(`/address/${searchHash}`);
         setSearchHash("");
       }
+
     }
   }
 
@@ -84,6 +87,58 @@ export default function NavBar(props) {
     if (event.key === 'Enter') {
       searchHashEvent();
     }
+  }
+
+  const showSearchIconInSearchBar = () => {
+    if(( (BlockData?.blocks.length > 0) || (TransactionData?.transactions.length > 0) || (TransactionAddressData?.transactions.length > 0)) && (searchHash.length != 0)){
+        return (
+          <InputRightElement
+            children={
+              <IconButton
+                aria-label="Click to search"
+                bg="inherit"
+                borderRadius="inherit"
+                _hover="none"
+                _active={{
+                  bg: "inherit",
+                  transform: "none",
+                  borderColor: "transparent",
+                }}
+                _focus={{
+                  boxShadow: "none",
+                }}
+                icon={<SearchIcon color={searchIconColor} w="15px" h="15px" aria-label="Click to Search"/>}
+              ></IconButton>
+            }
+          />
+          )     
+    }
+    else {
+      if(searchHash.length != 0) {
+      return (
+        <InputRightElement
+          children={
+            <IconButton
+              aria-label="Invalid query"
+              bg="inherit"
+              borderRadius="inherit"
+              _hover="none"
+              _active={{
+                bg: "inherit",
+                transform: "none",
+                borderColor: "transparent",
+              }}
+              _focus={{
+                boxShadow: "none",
+              }}
+              icon={<SmallCloseIcon color='red.600' w="15px" h="15px" aria-label="Invalid query"/>}
+            ></IconButton>
+          }
+        />
+        )     
+      }
+  }
+    
   }
 
   return (
@@ -216,27 +271,7 @@ export default function NavBar(props) {
               ml={4}
             >
 
-              {(BlockData || TransactionData || TransactionAddressData) && (searchHash.length != 0) && 
-                <InputRightElement
-                  children={
-                    <IconButton
-                      aria-label="Click to search"
-                      bg="inherit"
-                      borderRadius="inherit"
-                      _hover="none"
-                      _active={{
-                        bg: "inherit",
-                        transform: "none",
-                        borderColor: "transparent",
-                      }}
-                      _focus={{
-                        boxShadow: "none",
-                      }}
-                      icon={<SearchIcon color={searchIconColor} w="15px" h="15px" />}
-                    ></IconButton>
-                  }
-                />
-              }
+              {showSearchIconInSearchBar()}
               <Input
                 fontSize="xs"
                 py="11px"
