@@ -1,20 +1,26 @@
 export const MENU = [
     {
-        name: "EXPLORER",
-        path: "/"
+        name: 'EXPLORER',
+        path: '/',
     },
     {
-        name: "NETWORK STATS",
-        path: "/network"
+        name: 'NETWORK STATS',
+        path: '/network',
     },
     {
-        name: "CHAINS",
-        path: "/chains"
-    }
+        name: 'CHAINS',
+        path: '/chains',
+    },
 ]
 
-export const BLOCK_TABLE_HEADER = ["Location", "Number", "Miner", "Txs", "Timestamp"]
-export const TRANSACTION_TABLE_HEADER = ["TX Hash", "Block Number", "Quai Sent"]
+export const BLOCK_TABLE_HEADER = [
+    'Location',
+    'Number',
+    'Miner',
+    'Txs',
+    'Timestamp',
+]
+export const TRANSACTION_TABLE_HEADER = ['TX Hash', 'Block Number', 'Quai Sent']
 
 export const CHAIN_SLUGS = [
     'prime',
@@ -30,26 +36,26 @@ export const CHAIN_SLUGS = [
     'zone-3-1',
     'zone-3-2',
     'zone-3-3',
-  ]
+]
 
-  export const SHARDED_ADDRESS = {
-    'prime' : 'Prime',
-    'region-1' : 'Cyprus',
-    'region-2' : 'Paxos',
-    'region-3' : 'Hydra',
-    'zone-1-1' : 'Cyprus One',
-    'zone-1-2' : 'Cyprus Two',
-    'zone-1-3' : 'Cyprus Three',
-    'zone-2-1' : 'Paxos One',
-    'zone-2-2' : 'Paxos Two',
-    'zone-2-3' : 'Paxos Three',
-    'zone-3-1' : 'Hydra One',
-    'zone-3-2' : 'Hydra Two',
-    'zone-3-3' : 'Hydra Three',
-  }
-  export const POSITIONS = [0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+export const SHARDED_ADDRESS = {
+    prime: 'Prime',
+    'region-1': 'Cyprus',
+    'region-2': 'Paxos',
+    'region-3': 'Hydra',
+    'zone-1-1': 'Cyprus One',
+    'zone-1-2': 'Cyprus Two',
+    'zone-1-3': 'Cyprus Three',
+    'zone-2-1': 'Paxos One',
+    'zone-2-2': 'Paxos Two',
+    'zone-2-3': 'Paxos Three',
+    'zone-3-1': 'Hydra One',
+    'zone-3-2': 'Hydra Two',
+    'zone-3-3': 'Hydra Three',
+}
+export const POSITIONS = [0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 
-  export const CHAIN_SLUGS_2 = [
+export const CHAIN_SLUGS_2 = [
     'prime',
     'region1',
     'region2',
@@ -135,4 +141,36 @@ export const PREFIX = {
         low: 0x78,
         high: 0x81,
     },
+}
+
+export const QUAI_STATS_LINKS = {
+    prime: 'prime',
+    'region-1': 'cyprus',
+    'region-2': 'paxos',
+    'region-3': 'hydra',
+    'zone-1-1': 'cyprus1',
+    'zone-1-2': 'cyprus2',
+    'zone-1-3': 'cyprus3',
+    'zone-2-1': 'paxos1',
+    'zone-2-2': 'paxos2',
+    'zone-2-3': 'paxos3',
+    'zone-3-1': 'hydra1',
+    'zone-3-2': 'hydra2',
+    'zone-3-3': 'hydra3',
+}
+
+export const QUAI_STATS_BLOCKS_LINKS = {
+    Prime: 'prime',
+    Cyprus: 'cyprus',
+    Paxos: 'paxos',
+    Hydra: 'hydra',
+    'Cyprus One': 'cyprus1',
+    'Cyprus Two': 'cyprus2',
+    'Cyprus Three': 'cyprus3',
+    'Paxos One': 'paxos1',
+    'Paxos Two': 'paxos2',
+    'Paxos Three': 'paxos3',
+    'Hydra One': 'hydra1',
+    'Hydra Two': 'hydra2',
+    'Hydra Three': 'hydra3',
 }

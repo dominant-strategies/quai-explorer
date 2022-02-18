@@ -2,12 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { useParams, useNavigate } from 'react-router-dom'
 import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
-import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from '../../constants'
-import {
-    convertTimeString,
-    numberWithCommas,
-    reduceStringShowMediumLength,
-} from '../../utils'
+import { SHARDED_ADDRESS, QUAI_STATS_LINKS } from '../../constants'
+import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
 import {
     Box,
     Spacer,
@@ -18,6 +14,7 @@ import {
     Heading,
     Alert,
     AlertIcon,
+    Link,
 } from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
@@ -53,6 +50,8 @@ export default function Block() {
     }
 
     let location = block?.location
+    let linkToQuaiStats = `https://${QUAI_STATS_LINKS[location]}.quaistats.info/`
+
     if (location) {
         location = SHARDED_ADDRESS[location]
     }
@@ -131,7 +130,13 @@ export default function Block() {
                                 {' '}
                                 Location:{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg"> {location} </Text>
+                            <Text fontSize="lg" color="blue.500">
+                                {' '}
+                                <Link href={linkToQuaiStats} isExternal>
+                                    {' '}
+                                    {location}{' '}
+                                </Link>{' '}
+                            </Text>
                             <Heading as="h2" size="md">
                                 {' '}
                                 Hash:{' '}
