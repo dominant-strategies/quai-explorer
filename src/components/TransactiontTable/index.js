@@ -15,7 +15,8 @@ import {
   Tbody,
   Tr,
   Th,
-  useColorModeValue
+  useColorModeValue,
+  Flex
 } from '@chakra-ui/react';
 
 export default function TransactionTable({ setTransactionsCount }) {
@@ -24,6 +25,7 @@ export default function TransactionTable({ setTransactionsCount }) {
   const [limit, setLimit] = useState(10);
   const [totalPage, setTotalPage] = useState(1);
   const [transactions, setTransactions] = useState([]);
+  const [txCountLocal, setTxCountLocal] = useState(0);
 
   // GraphQL queries
   const { loading, error, data, refetch: refetchTransactionData } = useQuery(GET_TRANSACTIONS, { variables: {  fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
@@ -41,6 +43,7 @@ export default function TransactionTable({ setTransactionsCount }) {
       setTransactions(data?.transactions);
       let transactionsCount = data?.transactions_aggregate?.aggregate?.count;
       setTransactionsCount(transactionsCount);
+      setTxCountLocal(transactionsCount);
       setTotalPage(parseInt(transactionsCount / limit) + 1);
     }
   }, [data])
@@ -108,19 +111,16 @@ export default function TransactionTable({ setTransactionsCount }) {
             </Tbody>
 
           </Table>
+          <Flex justifyContent="space-between">
           {totalPage > 1 ?
-          <Pagination
-           refetchData={refetchTransactionData}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            limit={limit} setLimit={setLimit}
-            totalPage={totalPage}
-            dimensions={{
-              sm: "59%",
-              md: "59%",
-              lg: "90%",
-              xl: "90%"
-            }} /> : null}
+           <Pagination
+           currentPage={currentPage}
+           totalCount={txCountLocal != 0 ? txCountLocal : 0}
+           pageSize={limit}
+           onPageChange={page => setCurrentPage(page)}
+           textColor={textColor}
+         /> : null}
+         </Flex>
         </>
         : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>

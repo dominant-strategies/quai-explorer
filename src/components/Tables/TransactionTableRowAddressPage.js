@@ -19,45 +19,52 @@ const hexToDec = (value) => {
 }
 
 export default function TransactionTableRowAddressPage(props) {
-  const { transactionHash, blockNumber, quaiSent, fromThisMiner, toThisMiner, gas, w } = props;
+  const { transactionHash, blockNumber, quaiSent, fromThisMiner, toThisMiner, gas, blockHash } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const navigateTo = useNavigate();
 
-  let from_addr = fromThisMiner
-  let fromHashReduced
+
   let to_addr = toThisMiner;
   let toHashReduced
-  if (from_addr) { fromHashReduced = reduceStringShowMediumLength(from_addr); }
   if (to_addr) { toHashReduced = reduceStringShowMediumLength(to_addr); }
 
 
   return (
-    <Tr maxWidth='50%'>
-      <Td>
-        <CopyToClipboardButton innerText={reduceString(transactionHash)} copyThisToClipboard={transactionHash} />
-      </Td>
+    <Tr>
 
-      {blockNumber != null && <Td>
-        <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
-          {blockNumber}
-        </Text>
-      </Td> }
+      {transactionHash !== null ? <Td>
+        <CopyToClipboardButton innerText={reduceStringShowMediumLength(transactionHash)} copyThisToClipboard={transactionHash} />
+      </Td> : null}
 
       {to_addr !== null ? <Td>
-        <CopyToClipboardButton innerText={fromHashReduced} copyThisToClipboard={to_addr} />
+        <CopyToClipboardButton innerText={toHashReduced} copyThisToClipboard={to_addr} />
       </Td> : null}
 
       {quaiSent != null && <Td>
         <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
           {quaiSent}
         </Text>
-      </Td> }
+      </Td>}
 
       {gas != null && <Td>
         <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
           {hexToDec(gas)}
         </Text>
-      </Td> }
+      </Td>}
+
+
+      {blockNumber != null && <Td>
+        <Text fontSize="sm" color={textColor} fontWeight="bold" pb=".5rem">
+          {blockNumber}
+        </Text>
+      </Td>}
+
+      {blockHash !== null ? <Td>
+        <CopyToClipboardButton innerText={reduceStringShowMediumLength(blockHash)} copyThisToClipboard={blockHash} />
+      </Td> : null}
+
+
+
 
 
 

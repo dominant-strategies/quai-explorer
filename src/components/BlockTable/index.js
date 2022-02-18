@@ -17,6 +17,9 @@ import {
   Tr,
   Th,
   useColorModeValue,
+  Container,
+  Center,
+  Flex
 } from '@chakra-ui/react';
 
 export default function BlockTable({ setBlocksCount }) {
@@ -25,6 +28,7 @@ export default function BlockTable({ setBlocksCount }) {
   const [limit, setLimit] = useState(10);
   const [totalPage, setTotalPage] = useState(1);
   const [blocks, setBlocks] = useState([]);
+  const [blocksCountLocal, setBlocksCountLocal] = useState(0);
 
   // GraphQL queries
   const { loading, error, data, refetch: refetchBlockData, subscribeToMore } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
@@ -50,6 +54,7 @@ export default function BlockTable({ setBlocksCount }) {
       setBlocks(tempBlocks);
       const blocksCount = data?.blocks_aggregate?.aggregate?.count;
       setBlocksCount(blocksCount);
+      setBlocksCountLocal(blocksCount);
       setTotalPage(parseInt(blocksCount / limit) + 1);
     }
   }, [data])
@@ -120,21 +125,22 @@ export default function BlockTable({ setBlocksCount }) {
               })}
             </Tbody>
           </Table>
+          
+          <Flex justifyContent="space-between">
           {totalPage > 1 ?
-          <Pagination
-            refetchData={refetchBlockData}
+          
+            
+            <Pagination
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            limit={limit} setLimit={setLimit}
-            totalPage={totalPage}
-            dimensions={{
-              sm: "40%",
-              md: "55%",
-              lg: "75%",
-              xl: "93%"
-            }} />
+            totalCount={blocksCountLocal != 0 ? blocksCountLocal : 0}
+            pageSize={limit}
+            onPageChange={page => setCurrentPage(page)}
+            textColor={textColor}
+          />
+
             : null
           }
+          </Flex>
         </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
   )

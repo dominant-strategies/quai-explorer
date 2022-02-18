@@ -126,6 +126,7 @@ export default function Address() {
                 }
             }
             load().then(() => {
+                console.log("address data: ", data)
                 if (data) {
                     setTransactions(data?.transactions);
                     let transactionsCount = data?.transactions_aggregate?.aggregate?.count;
@@ -149,7 +150,7 @@ export default function Address() {
         else { setShowErrorWithHash(true) }
     })
 
-    if ( error || errorWithHash) {
+    if (error || errorWithHash) {
         return (
             <>
                 {window.innerWidth < 768 ? <Box p={4}></Box> : null}
@@ -211,54 +212,67 @@ export default function Address() {
 
                     {!loading ?
                         <CardBody >
-                            <Table variant="simple" color={textColor}>
 
-                                <Thead>
-                                    <Tr my=".8rem" ps="0px">
-                                        <Th color="gray.400">Hash</Th>
-                                        <Th color="gray.400" >Block</Th>
-                                        <Th color="gray.400">To</Th>
-                                        <Th color="gray.400"> Value</Th>
-                                        <Th color="gray.400">Gas</Th>
-                                    </Tr>
-                                </Thead>
+                            <Flex flexDirection='column'>
+                                <Table variant="simple" color={textColor}>
+
+                                    <Thead>
+                                        <Tr my=".8rem" ps="0px">
+                                            <Th color="gray.400">Tx Hash</Th>
+                                            <Th color="gray.400">To</Th>
+                                            <Th color="gray.400" isNumeric> Value</Th>
+                                            <Th color="gray.400" isNumeric>Gas</Th>
+                                            <Th color="gray.400" isNumeric >Block Number</Th>
+                                            <Th color="gray.400" >Block Hash</Th>
+                                        </Tr>
+                                    </Thead>
+                                    
+
+
+                                    <Tbody>
+                                        {transactions?.map((transaction, index) => {
+                                            return (
+                                                <TransactionTableRowAddressPage
+                                                    transactionHash={transaction.hash}
+                                                    toThisMiner={transaction.to_addr}
+                                                    fromThisMiner={transaction.from_addr}
+                                                    blockNumber={transaction.block_number}
+                                                    quaiSent={transaction.tx_value}
+                                                    timestamp={transaction.tx_time}
+                                                    gas={transaction.full_transaction.gas}
+                                                    blockHash={transaction.full_transaction.blockHash}
+                                                    key={index}
+                                                />
+                                            );
+                                        })}
+
+                                    </Tbody>
 
 
 
-                                <Tbody>
-                                    {transactions?.map((transaction, index) => {
-                                        return (
-                                            <TransactionTableRowAddressPage
-                                                transactionHash={transaction.hash}
-                                                toThisMiner={transaction.to_addr}
-                                                fromThisMiner={transaction.from_addr}
-                                                blockNumber={transaction.block_number}
-                                                quaiSent={transaction.tx_value}
-                                                timestamp={transaction.tx_time}
-                                                gas={transaction.full_transaction.gas}
-                                                key={index}
-                                            />
-                                        );
-                                    })}
+
+
+
+
+
+                                </Table>
+
+               
+
+                                <Flex>
                                     {totalPage > 1 ?
                                         <Pagination
-                                            refetchData={refetchTransactionData}
                                             currentPage={currentPage}
-                                            setCurrentPage={setCurrentPage}
-                                            limit={limit} setLimit={setLimit}
-                                            totalPage={totalPage}
-                                            dimensions={{
-                                                sm: '100%',
-                                                md: '100%',
-                                                lg: '100%',
-                                                xl: "100%"
-                                            }} /> : null}
-                                </Tbody>
+                                            totalCount={transactionsCount != 0 ? transactionsCount : 0}
+                                            pageSize={limit}
+                                            onPageChange={page => setCurrentPage(page)}
+                                            textColor={textColor}
+                                        /> : null}
+                                </Flex>
 
+               
 
-
-                            </Table>
-
+                            </Flex>
                         </CardBody>
 
 

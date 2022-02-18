@@ -1,192 +1,145 @@
-import React, { Component } from 'react'
+import React, { useMemo } from 'react';
 
-import {
-    Flex,
-    IconButton,
-    Spacer,
-    Text,
-    Container,
-} from "@chakra-ui/react";
-import { ArrowBackIcon, ArrowForwardIcon, ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
+import { Grid, Flex, Button, ButtonGroup, Text, useColorModeValue } from "@chakra-ui/react"
 
-export default class Pagination extends Component {
-    constructor(props) {
-        super(props);
+
+import Card from "../Card/Card.js";
+import CardBody from "../Card/CardBody.js";
+
+
+const DOTS = '...';
+
+
+const range = (start, end) => {
+  let length = end - start + 1;
+  return Array.from({ length }, (_, idx) => idx + start);
+};
+
+const usePagination = ({
+  totalCount,
+  pageSize,
+  siblingCount = 1,
+  currentPage
+}) => {
+  const paginationRange = useMemo(() => {
+    const totalPageCount = Math.ceil(totalCount / pageSize);
+
+    // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
+    const totalPageNumbers = siblingCount + 5;
+
+    /*
+      If the number of pages is less than the page numbers we want to show in our
+      paginationComponent, we return the range [1..totalPageCount]
+    */
+    if (totalPageNumbers >= totalPageCount) {
+      return range(1, totalPageCount);
     }
 
-    goToFirstPage = () => {
-        const { setCurrentPage } = this.props;
-        setCurrentPage(1);
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
+    const rightSiblingIndex = Math.min(
+      currentPage + siblingCount,
+      totalPageCount
+    );
+
+    /*
+      We do not want to show dots if there is only one position left 
+      after/before the left/right page count as that would lead to a change if our Pagination
+      component size which we do not want
+    */
+    const shouldShowLeftDots = leftSiblingIndex > 2;
+    const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
+
+    const firstPageIndex = 1;
+    const lastPageIndex = totalPageCount;
+
+    if (!shouldShowLeftDots && shouldShowRightDots) {
+      let leftItemCount = 3 + 2 * siblingCount;
+      let leftRange = range(1, leftItemCount);
+
+      return [...leftRange, DOTS, totalPageCount];
     }
 
-    goToPreviousPage = () => {
-        const { refetchData, currentPage, setCurrentPage } = this.props;
-        currentPage > 1 && setCurrentPage(currentPage - 1)
-        refetchData();
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      let rightItemCount = 3 + 2 * siblingCount;
+      let rightRange = range(
+        totalPageCount - rightItemCount + 1,
+        totalPageCount
+      );
+      return [firstPageIndex, DOTS, ...rightRange];
     }
 
-    goToNextPage = () => {
-        const { refetchData, currentPage, setCurrentPage, totalPage } = this.props;
-        currentPage < totalPage && setCurrentPage(currentPage + 1);
-        refetchData();
+    if (shouldShowLeftDots && shouldShowRightDots) {
+      let middleRange = range(leftSiblingIndex, rightSiblingIndex);
+      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
     }
+  }, [totalCount, pageSize, siblingCount, currentPage]);
 
-    goToLastPage = () => {
-        const { setCurrentPage, totalPage } = this.props;
-        setCurrentPage(totalPage);
-    }
-
-    preventBackSpace = (e) => {
-        if (e.keyCode === 8) {
-            return;
-        }
-    }
-
-    onChangeInput = (event) => {
-        const { setCurrentPage } = this.props;
-
-        console.log(event.key)
-
-        if (!isNaN(event.target.value)) {
-            if (event.key !== 'Backspace' || event.key !== 'Delete') {
-                setCurrentPage(parseInt(event.target.value));
-            }
-        }
-    }
+  return paginationRange;
+};
 
 
 
-    render() {
+const Pagination = props => {
+  const {
+    onPageChange,
+    totalCount,
+    siblingCount = 1,
+    currentPage,
+    pageSize,
+    textColor
+  } = props;
 
-        const { currentPage, setCurrentPage, totalPage, dimensions } = this.props;
+  const paginationRange = usePagination({
+    currentPage,
+    totalCount,
+    siblingCount,
+    pageSize
+  });
 
-        if (window.innerWidth > 670) {
-            return (
-                <Flex w={dimensions} alignItems="center"
-                    ml={6}
-                    mt={10}
-                    borderColor="brand.300"
-                    borderRadius="16px"
-                >
-                    <IconButton
-                        onClick={this.goToFirstPage}
-                        cursor="pointer"
-                        icon={<ArrowLeftIcon h="2" w="2" />}
-                        aria-label="First page"
-                    />
+  if (currentPage === 0 || paginationRange.length < 2) {
+    return null;
+  }
 
-                    <Spacer />
+  const onNext = () => {
+    onPageChange(currentPage + 1);
+  };
 
-                    <IconButton
-                        onClick={this.goToPreviousPage}
-                        cursor="pointer"
-                        icon={<ArrowBackIcon />}
-                        aria-label="Previous page"
-                    />
-
-                    <Spacer />
-                    <Text fontSize="sm"> Page  </Text>
-                    <Spacer />
-                    <Text fontSize="xl" fontWeight="bold"> {currentPage}  </Text>
-
-                    <Spacer />
-                    <Text fontSize="sm"> of {totalPage}  </Text>
-
-                    <Spacer />
-
-                    <IconButton
-                        onClick={this.goToNextPage}
-                        cursor="pointer"
-                        icon={<ArrowForwardIcon />}
-                        aria-label="Next page"
-                    />
-
-                    <Spacer />
-
-                    <IconButton
-                        onClick={this.goToLastPage}
-                        cursor="pointer"
-                        icon={<ArrowRightIcon h="2" w="2" />}
-                        aria-label="Last page"
-                    />
+  const onPrevious = () => {
+    onPageChange(currentPage - 1);
+  };
 
 
+  let lastPage = paginationRange[paginationRange.length - 1];
 
-                </Flex>
-            )
-        }
-        else {
-            return (
-                <Flex
-                    alignContent="center"
-                    alignItems="center"
-                    ml={6}
-                    mt={10}
-                    borderColor="brand.300"
-                    borderRadius="16px"
-                    boxShadow="0px 7px 23px rgba(0, 0, 0, 0.05)"
-                >
+  
 
-                    <IconButton
-                        onClick={this.goToFirstPage}
-                        cursor="pointer"
-                        icon={<ArrowLeftIcon h="2" w="2" />}
-                        aria-label="First page"
-                        w="20vw"
+  return (
+    <Flex direction="column">
+    <Card p="16px" my="24px">
+      <CardBody px="5px">
+          <Flex direction="column">
+              <Flex justifyContent="space-between">
+                <ButtonGroup size="lg" spacing="2">
 
-                    />
+                {paginationRange.map(pageNumber => {
+                    if (pageNumber === DOTS) {
+                    return <Button>...</Button>;
+                    }
 
-                    <Spacer />
+                    return (
+                    <Button onClick={() => onPageChange(pageNumber)}> {pageNumber}</Button>
+                    );
+                })}
 
-                    <IconButton
-                        onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-                        cursor="pointer"
-                        icon={<ArrowBackIcon />}
-                        w="10vw"
+                </ButtonGroup>
+              </Flex>
+ 
+          </Flex>
+      </CardBody>
+    </Card>
+  </Flex>
+  )
 
-                    />
+};
 
-
-
-                    <Spacer />
-
-                    <Text fontSize="sm"> Page  </Text>
-                    <Spacer />
-                    <Text fontSize="xl" fontWeight="bold" ml={3}> {currentPage}  </Text>
-
-                    <Spacer />
-                    <Text fontSize="sm"> of {totalPage}  </Text>
-
-                    <Spacer />
-
-
-
-
-
-                    <IconButton
-                        onClick={() => currentPage < totalPage && setCurrentPage(currentPage + 1)}
-                        cursor="pointer"
-                        icon={<ArrowForwardIcon />}
-                        w="10vw"
-
-                    />
-
-                    <Spacer />
-
-                    <IconButton
-                        onClick={this.goToLastPage}
-                        cursor="pointer"
-                        icon={<ArrowRightIcon h="2" w="2" />}
-                        w="20vw"
-                        aria-label="Last page"
-
-                    />
-                </Flex>
-
-
-
-
-            )
-        }
-    }
-}
+export default Pagination;
