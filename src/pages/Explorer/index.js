@@ -121,7 +121,7 @@ export default function Explorer() {
   
   
         {/* Tables Grid */}
-        <SimpleGrid spacing="12px">
+        <SimpleGrid spacing="12px" templateRows="1fr 1fr">
   
           <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX="scroll">
             <CardHeader mb="20px" pl="22px">
