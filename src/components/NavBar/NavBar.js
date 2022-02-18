@@ -18,7 +18,7 @@ import LogoBanner from "../../assets/images/QuaiLogoBanner.svg"
 import LogoBannerGray from "../../assets/images/quaiLogoBannerGray.svg"
 import { FaHouseUser } from 'react-icons/fa'
 
-import { GET_BLOCK_WITH_HASH, GET_TRANSACTION_WITH_HASH } from '../../utils/queries';
+import { GET_BLOCK_WITH_HASH, GET_TRANSACTION_WITH_HASH, GET_TRANSACTION_WITH_ADDRESS_2 } from '../../utils/queries';
 
 export default function NavBar(props) {
   const settingsRef = React.useRef();
@@ -28,6 +28,8 @@ export default function NavBar(props) {
 
   const { data: BlockData, refetch: refetchBlockData } = useQuery(GET_BLOCK_WITH_HASH, { variables: { hash: searchHash } });
   const { data: TransactionData, refetch: refetchTransactionData } = useQuery(GET_TRANSACTION_WITH_HASH, { variables: { hash: searchHash } });
+  const { data: TransactionAddressData, refetch: refetchTransactionAddressData } = useQuery(GET_TRANSACTION_WITH_ADDRESS_2, { variables: { num: 1, offset: 1, hash: searchHash } });
+
 
   let mainTextColor = useColorModeValue("gray.700", "gray.200");
   let inputBgColor = useColorModeValue("white", "gray.800");
@@ -55,13 +57,20 @@ export default function NavBar(props) {
   const searchHashEvent = () => {
     refetchBlockData();
     refetchTransactionData();
-    if (BlockData || TransactionData) {
-      console.log(BlockData || TransactionData)
+    refetchTransactionAddressData();
+    
+    if (BlockData || TransactionData || TransactionAddressData) {
+      
       if (BlockData?.blocks.length > 0) {
         navigateTo(`/block/${searchHash}`);
         setSearchHash("");
       } else if (TransactionData?.transactions.length > 0) {
         navigateTo(`/tx/${searchHash}`);
+        setSearchHash("");
+      }
+      else if (TransactionAddressData?.transactions.length > 0) {
+        console.log(TransactionAddressData)
+        navigateTo(`/address/${searchHash}`);
         setSearchHash("");
       }
     }
@@ -208,7 +217,7 @@ export default function NavBar(props) {
               ml={4}
             >
 
-              {(BlockData || TransactionData) &&
+              {(BlockData || TransactionData || TransactionAddressData) && (searchHash.length != 0) && 
                 <InputRightElement
                   children={
                     <IconButton
