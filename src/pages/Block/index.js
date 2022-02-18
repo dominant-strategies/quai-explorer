@@ -12,7 +12,8 @@ import {
     VStack,
     IconButton,
     Heading,
-    Button
+    Alert,
+    AlertIcon
 } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton';
@@ -58,7 +59,14 @@ export default function Block() {
      */
   if (error) {
     console.log(error)
-    return null
+    return (
+        <>
+          <Alert status='error' mt={20}>
+            <AlertIcon />
+            <Text fontSize='sm'>There was a problem. We sincerely apologize for any inconvenience this may cause.</Text>
+          </Alert>
+        </>
+      )
   }
 
     return (

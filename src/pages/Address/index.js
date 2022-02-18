@@ -9,14 +9,12 @@ import {
     reduceStringShowMediumLength,
 } from '../../utils'
 import {
-    Box,
     Spacer,
-    Spinner,
     Text,
     VStack,
     IconButton,
     Heading,
-    Button,
+    useColorModeValue,
 } from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
@@ -25,95 +23,11 @@ import axios from 'axios'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 
-const chainSlugs = [
-    'prime',
-    'region1',
-    'region2',
-    'region3',
-    'zone11',
-    'zone12',
-    'zone13',
-    'zone21',
-    'zone22',
-    'zone23',
-    'zone31',
-    'zone32',
-    'zone33',
-]
+import { CHAIN_SLUGS_2, PORTS, PREFIX } from '../../constants'
 
-const ports = [
-    '8546',
-    '8578',
-    '8580',
-    '8582',
-    '8610',
-    '8642',
-    '8674',
-    '8612',
-    '8644',
-    '8676',
-    '8614',
-    '8646',
-    '8678',
-]
 
-// prefix - low and high for a valid address in a given chain
-const prefix = {
-    prime: {
-        low: 0x00,
-        high: 0x09,
-    },
-    region1: {
-        low: 0x0a,
-        high: 0x13,
-    },
-    zone11: {
-        low: 0x14,
-        high: 0x1d,
-    },
-    zone12: {
-        low: 0x1e,
-        high: 0x27,
-    },
-    zone13: {
-        low: 0x28,
-        high: 0x31,
-    },
-    region2: {
-        low: 0x32,
-        high: 0x3b,
-    },
-    zone21: {
-        low: 0x3c,
-        high: 0x45,
-    },
-    zone22: {
-        low: 0x46,
-        high: 0x4f,
-    },
-    zone23: {
-        low: 0x50,
-        high: 0x59,
-    },
-    region3: {
-        low: 0x5a,
-        high: 0x63,
-    },
-    zone31: {
-        low: 0x64,
-        high: 0x6d,
-    },
-    zone32: {
-        low: 0x6e,
-        high: 0x77,
-    },
-    zone33: {
-        low: 0x78,
-        high: 0x81,
-    },
-}
 
-// converts hexadecimal string with a 0x prefix to a integer value
+// converts hexadecimal string with a 0x PREFIX to a integer value
 const hexToDec = (value) => {
     console.log(parseInt(value.substring(2), 16))
     return parseInt(value.substring(2), 16)
@@ -121,13 +35,14 @@ const hexToDec = (value) => {
 
 // chainPort returns the port number for a given chain
 const chainPort = (chain) => {
-    return ports[chainSlugs.indexOf(chain)]
+    return PORTS[CHAIN_SLUGS_2.indexOf(chain)]
 }
 
 export default function Address() {
     const { hash } = useParams()
     const navigateTo = useNavigate()
     const [balance, setBalance] = useState(0)
+    let buttonBackgroundColor = useColorModeValue("white", "gray.600");
 
     // checking if the address is 20 bytes
     if (hash.length != 42) {
@@ -139,10 +54,10 @@ export default function Address() {
 
     const chain = (numAddressPrefix) => {
         var chainName = ''
-        for (var key in prefix) {
+        for (var key in PREFIX) {
             if (
-                prefix[key].low <= numAddressPrefix &&
-                numAddressPrefix <= prefix[key].high
+                PREFIX[key].low <= numAddressPrefix &&
+                numAddressPrefix <= PREFIX[key].high
             ) {
                 chainName = key
             }
@@ -189,22 +104,34 @@ export default function Address() {
                 <CardBody>
                     <VStack spacing="12px" align="left">
                         <IconButton
-                            onClick={() => navigateTo('/')}
                             icon={<ArrowBackIcon />}
                             aria-label="Back to the Explorer home page"
-                            w="24px"
+                            h="50px"
+                            w="50px"
+                            onClick={() => navigateTo('/')}
+                            bg={buttonBackgroundColor}
+                            position="fixed"
+                            variant="no-hover"
+                            left="15px"
+                            top="35px"
+                            borderRadius="30px"
+                            boxShadow="0 2px 12px 0 rgb(0 0 0 / 16%)"
                         />
                         <Spacer />
-                        <Heading as="h2" size="md">
-                            {' '}
-                            Hash: {hash}{' '}
-                        </Heading>
+                        <Heading as="h1" size="lg">
+                            Address
+                        </Heading>{' '}
+
+                        <CopyToClipboardButton innerText={hash} copyThisToClipboard={hash} />
+
                         <Heading as="h2" size="md">
                             {' '}
                             Balance:{' '}
                         </Heading>{' '}
                         <Text fontSize="lg"> {balance}</Text>
                     </VStack>
+
+
                 </CardBody>
             </Card>
         </>
