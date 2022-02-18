@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { SearchIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import LogoBanner from "../../assets/images/QuaiLogoBanner.svg"
 import LogoBannerGray from "../../assets/images/quaiLogoBannerGray.svg"
-import LogoBannerTransparent from "../../assets/images/quaiAppIcon.svg"
+import { FaHouseUser } from 'react-icons/fa'
 
 import { GET_BLOCK_WITH_HASH, GET_TRANSACTION_WITH_HASH } from '../../utils/queries';
 
@@ -123,6 +123,8 @@ export default function NavBar(props) {
 
         {colorMode === "light" ?
           <Image
+          onClick={() => navigateTo(`/`)}
+          cursor="pointer"
             src={LogoBanner}
             w={{
               sm: "100px",
@@ -146,6 +148,8 @@ export default function NavBar(props) {
           />
           :
           <Image
+          onClick={() => navigateTo(`/`)}
+          cursor="pointer"
             src={LogoBannerGray}
             w={{
               sm: "100px",
@@ -168,8 +172,7 @@ export default function NavBar(props) {
             alt='logo'
           />
         }
-
-        
+       
 
 
         <Box ms="auto" w={{ sm: "100%", md: "unset" }}>
@@ -205,26 +208,26 @@ export default function NavBar(props) {
               ml={4}
             >
 
-              { searchHash.length != 0 &&
-              <InputRightElement
-                children={
-                  <IconButton
-                    aria-label="Click to search"
-                    bg="inherit"
-                    borderRadius="inherit"
-                    _hover="none"
-                    _active={{
-                      bg: "inherit",
-                      transform: "none",
-                      borderColor: "transparent",
-                    }}
-                    _focus={{
-                      boxShadow: "none",
-                    }}
-                    icon={<SearchIcon color={searchIconColor} w="15px" h="15px" />}
-                  ></IconButton>
-                }
-              />
+              {(BlockData || TransactionData) &&
+                <InputRightElement
+                  children={
+                    <IconButton
+                      aria-label="Click to search"
+                      bg="inherit"
+                      borderRadius="inherit"
+                      _hover="none"
+                      _active={{
+                        bg: "inherit",
+                        transform: "none",
+                        borderColor: "transparent",
+                      }}
+                      _focus={{
+                        boxShadow: "none",
+                      }}
+                      icon={<SearchIcon color={searchIconColor} w="15px" h="15px" />}
+                    ></IconButton>
+                  }
+                />
               }
               <Input
                 fontSize="xs"
@@ -238,7 +241,7 @@ export default function NavBar(props) {
                 onKeyPress={handleKeyPress}
               />
 
-             
+
             </InputGroup>
 
 
