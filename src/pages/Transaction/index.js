@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery } from '@apollo/client';
-import { useParams, useNavigate } from 'react-router-dom';
-import { GET_TRANSACTION_WITH_HASH } from "../../utils/queries";
+import { useQuery } from '@apollo/client'
+import { useParams, useNavigate } from 'react-router-dom'
+import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
 import {
     Box,
     Heading,
@@ -11,105 +11,173 @@ import {
     VStack,
     Spacer,
     Alert,
-    AlertIcon
-} from '@chakra-ui/react';
-import { reduceStringShowMediumLength } from '../../utils';
+    AlertIcon,
+} from '@chakra-ui/react'
+import { reduceStringShowMediumLength } from '../../utils'
 
-import { ArrowBackIcon } from '@chakra-ui/icons';
-import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton';
+import { ArrowBackIcon } from '@chakra-ui/icons'
+import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
 
-import Card from '../../components/Card/Card';
-import CardBody from '../../components/Card/CardBody';
+import Card from '../../components/Card/Card'
+import CardBody from '../../components/Card/CardBody'
 
 export default function Transaction() {
     // Component state
-    const [transaction, setTransaction] = useState();
-    const [showErrorAlert, setShowErrorAlert] = useState(false);
+    const [transaction, setTransaction] = useState()
+    const [showErrorAlert, setShowErrorAlert] = useState(false)
 
     // GraphQL queries
-    const { hash } = useParams();
-    const navigateTo = useNavigate();
-    const { loading, error, data } = useQuery(GET_TRANSACTION_WITH_HASH, { variables: { hash } });
+    const { hash } = useParams()
+    const navigateTo = useNavigate()
+    const { loading, error, data } = useQuery(GET_TRANSACTION_WITH_HASH, {
+        variables: { hash },
+    })
 
-    // When this component mounts, grab a reference to the transaction 
+    // When this component mounts, grab a reference to the transaction
     useEffect(() => {
         if (hash.length === 66) {
-            setTransaction(data?.transactions[0]);
+            setTransaction(data?.transactions[0])
         } else {
-            setShowErrorAlert(true);
+            setShowErrorAlert(true)
         }
     }, [data])
 
     // Transaction details to display
-    let transactionHash = transaction?.hash;
+    let transactionHash = transaction?.hash
     let transactionHashReduced
-    if (transactionHash) { transactionHashReduced = reduceStringShowMediumLength(transactionHash); }
+    if (transactionHash) {
+        transactionHashReduced = reduceStringShowMediumLength(transactionHash)
+    }
 
+    const blockNumber = transaction?.block_number
+    const timestamp = transaction?.tx_time
 
-    const blockNumber = transaction?.block_number;
-    const timestamp = transaction?.tx_time;
-
-    let from_addr = transaction?.from_addr;
+    let from_addr = transaction?.from_addr
     let fromHashReduced
-    let to_addr = transaction?.to_addr;
+    let to_addr = transaction?.to_addr
     let toHashReduced
-    if (from_addr) { fromHashReduced = reduceStringShowMediumLength(from_addr); }
-    if (to_addr) { toHashReduced = reduceStringShowMediumLength(to_addr); }
+    if (from_addr) {
+        fromHashReduced = reduceStringShowMediumLength(from_addr)
+    }
+    if (to_addr) {
+        toHashReduced = reduceStringShowMediumLength(to_addr)
+    }
 
-    const value = transaction?.tx_value;
+    const value = transaction?.tx_value
 
-  /**
+    /**
      * Error handling in the event the GQL query fails
      */
-   if (error || showErrorAlert) {
-    console.log(error)
+    if (error || showErrorAlert) {
+        console.log(error)
+        return (
+            <>
+                {window.innerWidth < 768 ? <Box p={4}></Box> : null}
+                <Box p={10}></Box>
+                <IconButton
+                    onClick={() => navigateTo('/')}
+                    icon={<ArrowBackIcon />}
+                    aria-label="Back to the Explorer home page"
+                    w="24px"
+                />
+                <Alert status="error" mt={7}>
+                    <AlertIcon />
+                    <Text fontSize="xl">This hash is invalid.</Text>
+                </Alert>
+            </>
+        )
+    }
     return (
         <>
-            {window.innerWidth < 768 ? <Box p={4}></Box> : null}
-            <Box p={10}></Box>
-            <IconButton onClick={() => navigateTo('/')} icon={<ArrowBackIcon />} aria-label="Back to the Explorer home page" w="24px" />
-            <Alert status='error'  mt={7} >
-                <AlertIcon />
-                <Text fontSize='xl'>This hash is invalid.</Text>
-            </Alert>
-        </>
-    )
-}
-    return (
-        <>
-            {loading ?
+            {loading ? (
                 <>
                     <Box p={5}></Box>
-                    <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xl' ml={5} mt={20} label="Loading details for this transaction" />
+                    <Spinner
+                        thickness="2px"
+                        speed="0.65s"
+                        emptyColor="gray.300"
+                        color="brand.300"
+                        size="xl"
+                        ml={5}
+                        mt={20}
+                        label="Loading details for this transaction"
+                    />
                 </>
-                :
-                <Card pt={{ base: "120px", md: "100px" }}>
+            ) : (
+                <Card mt={{ base: '120px', md: '100px' }}>
                     <CardBody>
                         <VStack spacing="12px" align="left">
-                            <IconButton onClick={() => navigateTo('/')} icon={<ArrowBackIcon />} aria-label="Back to the Explorer home page" w="24px" />
+                            <IconButton
+                                onClick={() => navigateTo('/')}
+                                icon={<ArrowBackIcon />}
+                                aria-label="Back to the Explorer home page"
+                                w="24px"
+                            />
                             <Spacer />
-                            <Heading as='h2' size='md'> Tx Hash: </Heading>
-                            <CopyToClipboardButton innerText={transactionHashReduced} copyThisToClipboard={transactionHash} />
-
-                            {blockNumber != null ? <> <Heading as='h2' size='md'> Block: </Heading> <Text fontSize="lg"> {blockNumber} </Text> </> : null}
-
-                            {timestamp !== null ? <> <Heading as='h2' size='md'> Timestamp: </Heading> <Text fontSize="lg"> {timestamp}</Text> </> : null}
-
-                            {from_addr !== null ? <>
-                                <Heading as='h2' size='md'> From: </Heading>
-                                <CopyToClipboardButton innerText={fromHashReduced} copyThisToClipboard={from_addr} />
-                            </> : null}
-
-                            {from_addr !== null ? <>
-                                <Heading as='h2' size='md'> To: </Heading>
-                                <CopyToClipboardButton innerText={toHashReduced} copyThisToClipboard={to_addr} />
-                            </> : null}
-
-                            <Heading as='h2' size='md'> Value: </Heading> <Text fontSize="lg"> {value} </Text>
+                            <Heading as="h2" size="md">
+                                {' '}
+                                Tx Hash:{' '}
+                            </Heading>
+                            <CopyToClipboardButton
+                                innerText={transactionHashReduced}
+                                copyThisToClipboard={transactionHash}
+                            />
+                            {blockNumber != null ? (
+                                <>
+                                    {' '}
+                                    <Heading as="h2" size="md">
+                                        {' '}
+                                        Block:{' '}
+                                    </Heading>{' '}
+                                    <Text fontSize="lg">
+                                        {' '}
+                                        {blockNumber}{' '}
+                                    </Text>{' '}
+                                </>
+                            ) : null}
+                            {timestamp !== null ? (
+                                <>
+                                    {' '}
+                                    <Heading as="h2" size="md">
+                                        {' '}
+                                        Timestamp:{' '}
+                                    </Heading>{' '}
+                                    <Text fontSize="lg"> {timestamp}</Text>{' '}
+                                </>
+                            ) : null}
+                            {from_addr !== null ? (
+                                <>
+                                    <Heading as="h2" size="md">
+                                        {' '}
+                                        From:{' '}
+                                    </Heading>
+                                    <CopyToClipboardButton
+                                        innerText={fromHashReduced}
+                                        copyThisToClipboard={from_addr}
+                                    />
+                                </>
+                            ) : null}
+                            {from_addr !== null ? (
+                                <>
+                                    <Heading as="h2" size="md">
+                                        {' '}
+                                        To:{' '}
+                                    </Heading>
+                                    <CopyToClipboardButton
+                                        innerText={toHashReduced}
+                                        copyThisToClipboard={to_addr}
+                                    />
+                                </>
+                            ) : null}
+                            <Heading as="h2" size="md">
+                                {' '}
+                                Value:{' '}
+                            </Heading>{' '}
+                            <Text fontSize="lg"> {value} </Text>
                         </VStack>
                     </CardBody>
                 </Card>
-            }
+            )}
         </>
     )
 }
