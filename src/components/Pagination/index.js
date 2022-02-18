@@ -1,33 +1,145 @@
-import React from 'react'
-import DropDown from '../DropDown'
+import React, { useMemo } from 'react';
 
-function Pagination({currentPage, setCurrentPage, limit, setLimit, totalPage}) {
-    return (
-        <nav aria-label="Page navigation" className="flex justify-end items-center px-3">
-            <ul className="inline-flex space-x-2 justify-center items-center">
-                <li>
-                    <button className="flex items-center justify-center w-10 h-10 text-red-600 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100" onClick={()=> currentPage > 1 && setCurrentPage(currentPage - 1)}>
-                        <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" fillRule="evenodd"></path></svg>
-                    </button>
-                </li>
-                <div className="flex items-center justify-center">
-                    <p>Page</p>
-                    <input className="w-6 h-6 mx-2 bg-gray-200 text-black rounded-md flex justify-center items-center text-center" value={currentPage} onChange={(e)=>setCurrentPage(parseInt(e.target.value))} />
-                    <p>of {totalPage}</p>
-                </div>
-                <li>
-                    <button className="flex items-center justify-center w-10 h-10 text-red-600 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100" onClick={()=>currentPage < totalPage && setCurrentPage(currentPage+1)}>
-                        <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" fillRule="evenodd"></path></svg>
-                    </button>
-                </li>
-                <div className="flex items-center justify-center">
-                    <DropDown value={limit} setValue={setLimit} items={[5, 10, 20, 30, 40, 50]} />
-                    <p>per page</p>
-                </div>
-            </ul>
-            
-        </nav>
-    )
-}
+import { Grid, Flex, Button, ButtonGroup, Text, useColorModeValue } from "@chakra-ui/react"
 
-export default Pagination
+
+import Card from "../Card/Card.js";
+import CardBody from "../Card/CardBody.js";
+
+
+const DOTS = '...';
+
+
+const range = (start, end) => {
+  let length = end - start + 1;
+  return Array.from({ length }, (_, idx) => idx + start);
+};
+
+const usePagination = ({
+  totalCount,
+  pageSize,
+  siblingCount = 1,
+  currentPage
+}) => {
+  const paginationRange = useMemo(() => {
+    const totalPageCount = Math.ceil(totalCount / pageSize);
+
+    // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
+    const totalPageNumbers = siblingCount + 5;
+
+    /*
+      If the number of pages is less than the page numbers we want to show in our
+      paginationComponent, we return the range [1..totalPageCount]
+    */
+    if (totalPageNumbers >= totalPageCount) {
+      return range(1, totalPageCount);
+    }
+
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
+    const rightSiblingIndex = Math.min(
+      currentPage + siblingCount,
+      totalPageCount
+    );
+
+    /*
+      We do not want to show dots if there is only one position left 
+      after/before the left/right page count as that would lead to a change if our Pagination
+      component size which we do not want
+    */
+    const shouldShowLeftDots = leftSiblingIndex > 2;
+    const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
+
+    const firstPageIndex = 1;
+    const lastPageIndex = totalPageCount;
+
+    if (!shouldShowLeftDots && shouldShowRightDots) {
+      let leftItemCount = 3 + 2 * siblingCount;
+      let leftRange = range(1, leftItemCount);
+
+      return [...leftRange, DOTS, totalPageCount];
+    }
+
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      let rightItemCount = 3 + 2 * siblingCount;
+      let rightRange = range(
+        totalPageCount - rightItemCount + 1,
+        totalPageCount
+      );
+      return [firstPageIndex, DOTS, ...rightRange];
+    }
+
+    if (shouldShowLeftDots && shouldShowRightDots) {
+      let middleRange = range(leftSiblingIndex, rightSiblingIndex);
+      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
+    }
+  }, [totalCount, pageSize, siblingCount, currentPage]);
+
+  return paginationRange;
+};
+
+
+
+const Pagination = props => {
+  const {
+    onPageChange,
+    totalCount,
+    siblingCount = 1,
+    currentPage,
+    pageSize,
+    textColor
+  } = props;
+
+  const paginationRange = usePagination({
+    currentPage,
+    totalCount,
+    siblingCount,
+    pageSize
+  });
+
+  if (currentPage === 0 || paginationRange.length < 2) {
+    return null;
+  }
+
+  const onNext = () => {
+    onPageChange(currentPage + 1);
+  };
+
+  const onPrevious = () => {
+    onPageChange(currentPage - 1);
+  };
+
+
+  let lastPage = paginationRange[paginationRange.length - 1];
+
+  
+
+  return (
+    <Flex direction="column">
+    <Card p="16px" my="24px">
+      <CardBody px="5px">
+          <Flex direction="column">
+              <Flex justifyContent="space-between">
+                <ButtonGroup size="lg" spacing="2">
+
+                {paginationRange.map(pageNumber => {
+                    if (pageNumber === DOTS) {
+                    return <Button>...</Button>;
+                    }
+
+                    return (
+                    <Button onClick={() => onPageChange(pageNumber)}> {pageNumber}</Button>
+                    );
+                })}
+
+                </ButtonGroup>
+              </Flex>
+ 
+          </Flex>
+      </CardBody>
+    </Card>
+  </Flex>
+  )
+
+};
+
+export default Pagination;

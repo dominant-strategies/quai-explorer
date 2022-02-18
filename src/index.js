@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql
+  ApolloProvider
 } from "@apollo/client";
 
 import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
-import './index.css';
 import App from './pages/App';
 
 const httpLink = new HttpLink({
@@ -19,10 +16,13 @@ const httpLink = new HttpLink({
 });
 
 const wsLink = new WebSocketLink({
-  uri: 'wss://quainetworktest.hasura.app/v1/subscriptions',
+  uri: 'ws://quainetworktest.hasura.app/v1/graphql',
   options: {
-    reconnect: true
-  }
+    reconnect: true,
+    lazy: true,
+    timeout: 30000,
+    inactivityTimeout: 30000,
+  },
 });
 
 // The split function takes three parameters:
@@ -47,7 +47,7 @@ const splitLink = split(
 const client = new ApolloClient({
   // uri: 'https://quainetworktest.hasura.app/v1/graphql',
   link: splitLink,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 ReactDOM.render(

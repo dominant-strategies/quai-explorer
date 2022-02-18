@@ -57,26 +57,19 @@ export const GET_BLOCK_WITH_LOCATION = gql`
 `
 
 export const SUBSCRIBE_BLOCKS = gql`
-    subscription GetBlocks($num: Int!) {
-        blocks(limit: $num, order_by: { timestamp: desc }) {
+    subscription SubscribeBlocks {
+        blocks {
             context
             difficulty
             gas_limit
-            gas_used
-            hash
-            header
-            location
-            network_difficulty
-            number
             timestamp
+            number
+            network_difficulty
+            location
+            header
+            hash
+            gas_used
         }
-        
-        blocks_aggregate {
-            aggregate {
-                count
-            }
-        }
-        
     }
 `
 export const GET_TRANSACTIONS = gql`
@@ -89,17 +82,18 @@ export const GET_TRANSACTIONS = gql`
         transactions(
             limit: $num
             offset: $offset
-            order_by: { timestamp: desc }
+            order_by: { tx_time: desc }
         ) {
             block_number
-            to
-            from
-            timestamp
-            value
+            to_addr
+            from_addr
+            tx_time
+            tx_value
             hash
             contract_code
             full_transaction
-            location
+            to_location
+            from_location
         }
     }
 `
@@ -112,10 +106,10 @@ export const SUBSCRIBE_TRANSACTIONS = gql`
             order_by: { timestamp: desc }
         ) {
             block_number
-            to
-            from
-            timestamp
-            value
+            to_addr
+            from_addr
+            tx_time
+            tx_value
             hash
             contract_code
             full_transaction
@@ -134,14 +128,32 @@ export const GET_TRANSACTION_WITH_HASH = gql`
     query Transaction($hash: String!) {
         transactions(where: { hash: { _eq: $hash } }) {
             block_number
-            to
-            from
-            timestamp
-            value
+            to_addr
+            from_addr
+            tx_time
+            tx_value
             hash
             contract_code
             full_transaction
-            location
+            to_location
+            from_location
+        }
+    }
+`
+
+export const GET_TRANSACTION_WITH_FROM_ADDR = gql`
+    query Transaction($hash: String!) {
+        transactions(where: { hash: { _eq: $from_addr } }) {
+            block_number
+            to_addr
+            from_addr
+            tx_time
+            tx_value
+            hash
+            contract_code
+            full_transaction
+            to_location
+            from_location
         }
     }
 `
@@ -195,12 +207,12 @@ export const BlockOrTx = gql`
         transactions(where: { hash: { _eq: $hash } }) {
             block_number
             contract_code
-            from
+            from_addr
             full_transaction
             hash
-            timestamp
-            to
-            value
+            tx_time
+            to_addr
+            tx_value
         }
     }
 `
@@ -226,18 +238,75 @@ export const GET_LATEST_TRANSACTIONS = gql`
         transactions(
             limit: 20
             where: { location: { _eq: $location } }
-            order_by: { timestamp: desc }
+            order_by: { tx_time: desc }
         ) {
             block_number
-            to
-            from
-            timestamp
-            value
+            to_addr
+            from_addr
+            tx_time
+            tx_value
             hash
             contract_code
             full_transaction
-            location
+            to_location
+            from_location
         }
     }
 `
+
+export const GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN = gql`
+    query GetNetworkDifficultyFromLatestPrimeBlockForOneChain {
+        blocks(limit: 1, where: {location: {_eq: "prime"}}, order_by: {timestamp: desc}) {
+        difficulty
+        location
+        }
+    }
+`
+
+export const GET_TRANSACTION_WITH_ADDRESS = gql`
+    query Transaction($num: Int!, $offset: Int!, $hash: String!) {
+        transactions(where: { from_addr: { _eq: $hash }}, limit: 10) {
+            block_number
+            to_addr
+            from_addr
+            tx_time
+            tx_value
+            hash
+            contract_code
+            full_transaction
+            to_location
+            from_location
+        }
+    }
+`
+
+export const GET_TRANSACTION_WITH_ADDRESS_2 = gql`
+    query Transaction($num: Int!, $offset: Int!, $hash: String!) {
+        transactions_aggregate {
+            aggregate {
+                count
+            }
+        }
+        transactions(
+            limit: $num
+            offset: $offset
+            order_by: { tx_time: desc }
+            where: { from_addr: { _eq: $hash }}
+        ) {
+            block_number
+            to_addr
+            from_addr
+            tx_time
+            tx_value
+            hash
+            contract_code
+            full_transaction
+            to_location
+            from_location
+        }
+    }
+`
+
+
+
 

@@ -1,7 +1,7 @@
 import Explorer from "../pages/Explorer";
 import Transaction from "../pages/Transaction";
-import NetwlrkStats from "../pages/NetworkStats";
 import Block from "../pages/Block";
+import Address from "../pages/Address";
 
 export const routes = [
     {
@@ -21,7 +21,8 @@ export const routes = [
     },
     {
         id: 4,
-        component: <NetwlrkStats />,
-        path: "/network"
+        component: <Address />,
+        path: "/address/:hash"
     }
+
 ]
