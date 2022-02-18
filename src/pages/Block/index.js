@@ -61,7 +61,9 @@ export default function Block() {
     console.log(error)
     return (
         <>
-          <Alert status='error' mt={20}>
+          { window.innerWidth < 768 ? <Box p={4}></Box> : null }
+          <Box p={4}></Box>
+          <Alert status='error' mt={20} >
             <AlertIcon />
             <Text fontSize='sm'>There was a problem. We sincerely apologize for any inconvenience this may cause.</Text>
           </Alert>
