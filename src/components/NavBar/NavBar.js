@@ -303,7 +303,7 @@ export default function NavBar(props) {
                                 fontSize="xs"
                                 py="11px"
                                 color={mainTextColor}
-                                placeholder="Search by Txn Hash/Block"
+                                placeholder="Search by Txn Hash/Block/Address"
                                 borderRadius="inherit"
                                 focusBorderColor="brand.300"
                                 onChange={(e) => setSearchHash(e.target.value)}
