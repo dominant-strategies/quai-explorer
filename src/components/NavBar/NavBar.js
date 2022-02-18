@@ -60,7 +60,7 @@ export default function NavBar(props) {
     refetchTransactionAddressData();
     
     if (BlockData || TransactionData || TransactionAddressData) {
-      
+      console.log(BlockData || TransactionData || TransactionAddressData)
       if (BlockData?.blocks.length > 0) {
         navigateTo(`/block/${searchHash}`);
         setSearchHash("");
@@ -69,7 +69,6 @@ export default function NavBar(props) {
         setSearchHash("");
       }
       else if (TransactionAddressData?.transactions.length > 0) {
-        console.log(TransactionAddressData)
         navigateTo(`/address/${searchHash}`);
         setSearchHash("");
       }

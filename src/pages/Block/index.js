@@ -25,6 +25,7 @@ import CardBody from '../../components/Card/CardBody';
 export default function Block() {
     // Component state
     const [block, setBlock] = useState();
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
 
     // GraphQL queries
     const { hash } = useParams();
@@ -33,18 +34,22 @@ export default function Block() {
 
     // When this component mounts, grab a reference to the block 
     useEffect(() => {
-        setBlock(data?.blocks[0]);
+        if (hash.length === 66) {
+            setBlock(data?.blocks[0]);
+        } else {
+            setShowErrorAlert(true);
+        }
     }, [data])
 
     let blockHash = block?.hash;
     let blockHashReduced;
-    if ( blockHash ) { blockHashReduced = reduceStringShowMediumLength(blockHash); }
+    if (blockHash) { blockHashReduced = reduceStringShowMediumLength(blockHash); }
 
     let location = block?.location;
-    if ( location ) { location = SHARDED_ADDRESS[location]; }
+    if (location) { location = SHARDED_ADDRESS[location]; }
 
     let timestamp = block?.timestamp;
-    if ( timestamp ) { timestamp = convertTimeString(timestamp); }
+    if (timestamp) { timestamp = convertTimeString(timestamp); }
 
     const blockNumber = block?.number;
     const gasLimit = block?.gas_limit;
@@ -52,53 +57,54 @@ export default function Block() {
     const difficulty = block?.difficulty;
 
     let networkDifficulty = block?.network_difficulty;
-    if( networkDifficulty ) { networkDifficulty = parseInt(networkDifficulty, 16); }
-    
+    if (networkDifficulty) { networkDifficulty = parseInt(networkDifficulty, 16); }
+
     /**
      * Error handling in the event the GQL query fails
      */
-  if (error) {
-    console.log(error)
-    return (
-        <>
-          { window.innerWidth < 768 ? <Box p={4}></Box> : null }
-          <Box p={4}></Box>
-          <Alert status='error' mt={20} >
-            <AlertIcon />
-            <Text fontSize='sm'>There was a problem. We sincerely apologize for any inconvenience this may cause.</Text>
-          </Alert>
-        </>
-      )
-  }
+    if (error || showErrorAlert) {
+        console.log(error)
+        return (
+            <>
+                {window.innerWidth < 768 ? <Box p={4}></Box> : null}
+                <Box p={10}></Box>
+                <IconButton onClick={() => navigateTo('/')} icon={<ArrowBackIcon />} aria-label="Back to the Explorer home page" w="24px" />
+                <Alert status='error' mt={7}>
+                    <AlertIcon />
+                    <Text fontSize='xl'>This hash is invalid.</Text>
+                </Alert>
+            </>
+        )
+    }
 
     return (
         <>
-        {loading ?  
-        <>
-            <Box p={5}></Box> 
-            <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xl' ml={5} mt={20} label="Loading details for this block" /> 
-        </>
-        :
-        <Card pt={{ base: "120px", md: "100px" }}>
-            <CardBody>
-                <VStack spacing="12px" align="left">
-                    <IconButton onClick={() => navigateTo('/')} icon={ <ArrowBackIcon />} aria-label="Back to the Explorer home page" w="24px"/> 
-                    <Spacer />
-                    <Heading as='h2' size='md'> Block Number: </Heading> <Text fontSize="lg"> {blockNumber} </Text>
-                    <Heading as='h2' size='md'> Location: </Heading> <Text fontSize="lg"> {location} </Text>
-                    
-                    <Heading as='h2' size='md'> Hash: </Heading> 
-                    <CopyToClipboardButton innerText={blockHashReduced} copyThisToClipboard={blockHash} />
+            {loading ?
+                <>
+                    <Box p={5}></Box>
+                    <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xl' ml={5} mt={20} label="Loading details for this block" />
+                </>
+                :
+                <Card pt={{ base: "120px", md: "100px" }}>
+                    <CardBody>
+                        <VStack spacing="12px" align="left">
+                            <IconButton onClick={() => navigateTo('/')} icon={<ArrowBackIcon />} aria-label="Back to the Explorer home page" w="24px" />
+                            <Spacer />
+                            <Heading as='h2' size='md'> Block Number: </Heading> <Text fontSize="lg"> {blockNumber} </Text>
+                            <Heading as='h2' size='md'> Location: </Heading> <Text fontSize="lg"> {location} </Text>
 
-                    <Heading as='h2' size='md'> Timestamp: </Heading> <Text fontSize="lg"> {timestamp}</Text>
-                    <Heading as='h2' size='md'> Gas Used: </Heading> <Text fontSize="lg"> {gasUsed} </Text>
-                    <Heading as='h2' size='md'> Gas Limit: </Heading> <Text fontSize="lg"> {gasLimit} </Text>
-                    <Heading as='h2' size='md'> Difficulty: </Heading> <Text fontSize="lg"> {difficulty} </Text>
-                    <Heading as='h2' size='md'> Network Difficulty: </Heading> <Text fontSize="lg"> {networkDifficulty} </Text>
-                </VStack>
-            </CardBody>
-        </Card>
-        }
+                            <Heading as='h2' size='md'> Hash: </Heading>
+                            <CopyToClipboardButton innerText={blockHashReduced} copyThisToClipboard={blockHash} />
+
+                            <Heading as='h2' size='md'> Timestamp: </Heading> <Text fontSize="lg"> {timestamp}</Text>
+                            <Heading as='h2' size='md'> Gas Used: </Heading> <Text fontSize="lg"> {gasUsed} </Text>
+                            <Heading as='h2' size='md'> Gas Limit: </Heading> <Text fontSize="lg"> {gasLimit} </Text>
+                            <Heading as='h2' size='md'> Difficulty: </Heading> <Text fontSize="lg"> {difficulty} </Text>
+                            <Heading as='h2' size='md'> Network Difficulty: </Heading> <Text fontSize="lg"> {networkDifficulty} </Text>
+                        </VStack>
+                    </CardBody>
+                </Card>
+            }
         </>
     )
 }

@@ -24,6 +24,7 @@ import CardBody from '../../components/Card/CardBody';
 export default function Transaction() {
     // Component state
     const [transaction, setTransaction] = useState();
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
 
     // GraphQL queries
     const { hash } = useParams();
@@ -32,7 +33,11 @@ export default function Transaction() {
 
     // When this component mounts, grab a reference to the transaction 
     useEffect(() => {
-        setTransaction(data?.transactions[0]);
+        if (hash.length === 66) {
+            setTransaction(data?.transactions[0]);
+        } else {
+            setShowErrorAlert(true);
+        }
     }, [data])
 
     // Transaction details to display
@@ -53,22 +58,23 @@ export default function Transaction() {
 
     const value = transaction?.tx_value;
 
-    /**
-    * Error handling in the event the GQL query fails
-    */
-    if (error) {
-        console.log(error)
-        return (
-            <>
-            { window.innerWidth < 768 ? <Box p={4}></Box> : null }
-            <Alert status='error' mt={20}>
-              <AlertIcon />
-              <Text fontSize='sm'>There was a problem. We sincerely apologize for any inconvenience this may cause.</Text>
+  /**
+     * Error handling in the event the GQL query fails
+     */
+   if (error || showErrorAlert) {
+    console.log(error)
+    return (
+        <>
+            {window.innerWidth < 768 ? <Box p={4}></Box> : null}
+            <Box p={10}></Box>
+            <IconButton onClick={() => navigateTo('/')} icon={<ArrowBackIcon />} aria-label="Back to the Explorer home page" w="24px" />
+            <Alert status='error'  mt={7} >
+                <AlertIcon />
+                <Text fontSize='xl'>This hash is invalid.</Text>
             </Alert>
-          </>
-        )
-    }
-
+        </>
+    )
+}
     return (
         <>
             {loading ?
