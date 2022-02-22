@@ -336,7 +336,7 @@ export const GET_LATEST_BLOCKS_SUBSCRIPTION = gql`
 
 export const GET_LATEST_TRANSACTIONS_SUBSCRIPTION = gql`
     subscription GetLatestTransactions {
-        transactions(limit: 12, order_by: {tx_time: desc}) {
+        transactions(limit: 5, order_by: {tx_time: desc}) {
             block_number
             to_addr
             from_addr

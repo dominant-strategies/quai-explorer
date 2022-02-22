@@ -12,7 +12,7 @@ import {
   Spinner,
   Table,
   Text,
-  Thead,
+  Button,
   Tbody,
   Tr,
   Th,
@@ -83,14 +83,6 @@ export default function BlocksMiniTable() {
       {!loading ?
         <>
           <Table variant="simple" color={textColor}>
-
-          <Tr my="1.2rem" ps="0px">
-                  
-                  <Th color="gray.400">Location</Th>
-                  <Th color="gray.400"> Block Number </Th>
-                  <Th color="gray.400">Block Hash</Th>
-                </Tr>
-
             <Tbody>
               {blocks?.map((block, index) => {
                 return (

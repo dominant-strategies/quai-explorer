@@ -62,7 +62,7 @@ export default function TransactionsMiniTable() {
     <>
       {!loading ?
         <>
-          <Table variant="simple" color={textColor}>
+          <Table size="sm" variant="simple" color={textColor}>
 
           <Tr my="1.2rem" ps="0px">
                   
@@ -91,9 +91,6 @@ export default function TransactionsMiniTable() {
 
          
           </Table>
-
-          <Button> View All Blocks</Button>
-
           
         </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>

@@ -10,7 +10,7 @@ const Table = ({ headers, contents}) => {
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full sm:px-6 lg:px-8">
                         <div className="overflow-hidden">
-                            <table className="min-w-full border shadow-lg">
+                            <Table size="sm" className="min-w-full border shadow-lg">
                                 <thead className="bg-white border-b">
                                     <tr>
                                         {headers?.map(header =>

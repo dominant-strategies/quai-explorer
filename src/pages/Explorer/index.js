@@ -37,17 +37,17 @@ import { GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS, GET_TOTAL_NUMBER_OF_BLOCKS
 export default function Explorer() {
 
   const { loading: loadingCounts, error: errorCounts, data: dataCounts } = useQuery(GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS);
-  
+
   const { loading: loadingBlockCount, error: errorBlockCount, data: dataBlockCount } = useSubscription(GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION)
   const [blocksCount, setBlocksCount] = useState(0);
   const [transactionsCount, setTransactionsCount] = useState(0);
 
-  useEffect(() =>{
+  useEffect(() => {
 
-    if(dataCounts && dataBlockCount){
+    if (dataCounts && dataBlockCount) {
 
-      const totalBlockCount =  dataBlockCount?.blocks_aggregate?.aggregate?.count;
-      const totalTransactionCount =  dataCounts?.transactions_aggregate?.aggregate?.count;
+      const totalBlockCount = dataBlockCount?.blocks_aggregate?.aggregate?.count;
+      const totalTransactionCount = dataCounts?.transactions_aggregate?.aggregate?.count;
 
       setBlocksCount(totalBlockCount)
       setTransactionsCount(totalTransactionCount)
@@ -83,14 +83,14 @@ export default function Explorer() {
     </Flex>
   );
 
-  if(window.innerWidth < 768) {
+  if (window.innerWidth < 768) {
     return (
       // Container
       <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
-  
+
         {/* Stat Cards Grid */}
         <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="24px">
-  
+
           {/* Blocks Card */}
           <Card minH="60px">
             <CardBody>
@@ -103,7 +103,7 @@ export default function Explorer() {
               </Flex>
             </CardBody>
           </Card>
-  
+
           {/* Transactions Card */}
           <Card minH="60px">
             <CardBody>
@@ -116,60 +116,44 @@ export default function Explorer() {
               </Flex>
             </CardBody>
           </Card>
-  
-          {/* Difficulty Card  */}
-          {/* <Card minH="60px">
-            <CardBody>
-              <Flex flexDirection="row" align="center" justify="center" w="100%">
-                <Stat me="auto">
-                  {difficultyCardHeading}
-                  {difficultyValueDisplay}
-                </Stat>
-                {difficultyIcon}
-              </Flex>
-            </CardBody>
-          </Card> */}
-  
+
           {/* END OF Stat Cards Grid */}
         </SimpleGrid>
-  
+
         {/* Space between Stats Grid Row and Table Grid Row */}
         <Box p={10}></Box>
-  
-  
+
+
         {/* Tables Grid */}
-        <SimpleGrid spacing="12px" templateRows="1fr 1fr">
-  
-          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX="scroll" maxH="60px">
+        <SimpleGrid spacing="24px" templateRows="1fr 1fr">
+
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} maxH="515px">
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
-                <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
+                <Text fontSize="xl" color={textColor} fontWeight="bold" ml="10px" mb="6px">
                   Latest Blocks
                 </Text>
-  
-                {/* <BlockTable setBlocksCount={setBlocksCount} /> */}
                 <BlocksMiniTable />
               </Flex>
             </CardHeader>
           </Card>
-  
-          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX="scroll">
+
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}>
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
                 <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
-                  Transactions
+                  Latest Transactions
                 </Text>
-                {/* <TransactionTable setTransactionsCount={setTransactionsCount} /> */}
                 <TransactionsMiniTable />
               </Flex>
             </CardHeader>
           </Card>
-  
+
           { /* END OF Tables Grid */}
         </SimpleGrid>
-  
-  
-  
+
+
+
         {/* END OF Container */}
       </Flex>
     );
@@ -181,7 +165,7 @@ export default function Explorer() {
     <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
 
       {/* Stat Cards Grid */}
-      <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="24px">
+      <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="12px">
 
         {/* Blocks Card */}
         <Card minH="60px">
@@ -209,19 +193,6 @@ export default function Explorer() {
           </CardBody>
         </Card>
 
-        {/* Difficulty Card  */}
-        {/* <Card minH="60px">
-          <CardBody>
-            <Flex flexDirection="row" align="center" justify="center" w="100%">
-              <Stat me="auto">
-                {difficultyCardHeading}
-                {difficultyValueDisplay}
-              </Stat>
-              {difficultyIcon}
-            </Flex>
-          </CardBody>
-        </Card> */}
-
         {/* END OF Stat Cards Grid */}
       </SimpleGrid>
 
@@ -232,27 +203,28 @@ export default function Explorer() {
       {/* Tables Grid */}
       <SimpleGrid columns={{ xl: 2 }} spacing="12px" templateColumns="1fr 1fr">
 
-        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}  maxH="515px">
-          <CardHeader mb="20px" pl="22px">
+        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} maxH="515px">
+          <
+            CardHeader mb="20px" pl="22px">
             <Flex direction="column" alignSelf="flex-start">
-             <Text fontSize="xl" color={textColor} fontWeight="bold" ml="22px" mb="7px">
-              Latest Blocks
-            </Text>
-  
-                <BlocksMiniTable />
-              {/* <BlockTable setBlocksCount={setBlocksCount} /> */}
+              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="7px">
+                Latest Blocks
+              </Text>
+              
+
+              <BlocksMiniTable />
+              <Button> View all Blocks </Button>
             </Flex>
           </CardHeader>
         </Card>
 
-        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
+        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} maxH="515px">
           <CardHeader mb="20px" pl="22px">
             <Flex direction="column" alignSelf="flex-start">
-              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="22px" mb="7px">
-                Transactions
+              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="18px" mb="7px">
+                Latest Transactions
               </Text>
-              {/* <TransactionTable setTransactionsCount={setTransactionsCount} /> */}
-              <TransactionsMiniTable />              
+              <TransactionsMiniTable />
             </Flex>
           </CardHeader>
         </Card>

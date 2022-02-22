@@ -243,7 +243,7 @@ export default function Address() {
                     {!loading ? (
                         <CardBody>
                             <Flex flexDirection="column">
-                                <Table variant="simple" color={textColor}>
+                                <Table size="sm" variant="simple" color={textColor}>
                                     <Thead>
                                         <Tr my=".8rem" ps="0px">
                                             <Th color="gray.400">Tx Hash</Th>

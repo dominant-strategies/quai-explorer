@@ -79,7 +79,7 @@ export default function BlockTable() {
     <>
       {!loading ?
         <>
-          <Table variant="simple" color={textColor}>
+          <Table size="sm" variant="simple" color={textColor}>
 
             <Thead>
                 <Tr my=".8rem" ps="0px">
