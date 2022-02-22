@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Divider,
   Flex,
   Grid,
   Icon,
-  Portal,
+  HStack,
   SimpleGrid,
   Spacer,
   Spinner,
@@ -15,6 +16,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useQuery, useSubscription } from '@apollo/client';
 
 import Card from "../../components/Card/Card.js";
 import CardBody from "../../components/Card/CardBody.js";
@@ -23,18 +25,37 @@ import IconBox from "../../components/Icons/IconBox";
 import BlockTable from "../../components/BlockTable";
 import TransactionTable from "../../components/TransactiontTable";
 
+import BlocksMiniTable from "../../components/BlocksMiniTable/index.js";
+import TransactionsMiniTable from "../../components/TransactionsMiniTable/index.js";
+
 import { BsBox } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
 import { FaHardHat } from "react-icons/fa";
 
+import { GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS, GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION } from "../../utils/queries.js";
+
 export default function Explorer() {
+
+  const { loading: loadingCounts, error: errorCounts, data: dataCounts } = useQuery(GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS);
+  
+  const { loading: loadingBlockCount, error: errorBlockCount, data: dataBlockCount } = useSubscription(GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION)
   const [blocksCount, setBlocksCount] = useState(0);
   const [transactionsCount, setTransactionsCount] = useState(0);
-  const [hashrateValue, setHashrateValue] = useState(0);
-  const [difficultyValue, setDifficultyValue] = useState(0);
 
-  const [block, setBlock] = useState();
-  const [allValues, setAllValues] = useState([]);
+  useEffect(() =>{
+
+    if(dataCounts && dataBlockCount){
+
+      const totalBlockCount =  dataBlockCount?.blocks_aggregate?.aggregate?.count;
+      const totalTransactionCount =  dataCounts?.transactions_aggregate?.aggregate?.count;
+
+      setBlocksCount(totalBlockCount)
+      setTransactionsCount(totalTransactionCount)
+
+    }
+
+
+  }, [dataCounts, dataBlockCount])
 
 
   const quaiOrangeColor = useColorModeValue("brand.300", "brand.300");
@@ -46,7 +67,7 @@ export default function Explorer() {
   const blocksCountDisplay = (
     <Flex>
       <StatNumber fontSize="lg" color={textColor}>
-        {blocksCount !== 0 ? blocksCount : blocksCountSpinner}
+        {loadingBlockCount ? blocksCountSpinner : blocksCount}
       </StatNumber>
     </Flex>
   );
@@ -57,16 +78,12 @@ export default function Explorer() {
   const transactionsCountDisplay = (
     <Flex>
       <StatNumber fontSize="lg" color={textColor}>
-        {transactionsCount !== 0 ? transactionsCount : transactionsCountSpinner}
+        {loadingCounts ? transactionsCountSpinner : transactionsCount}
       </StatNumber>
     </Flex>
   );
 
-  const difficultyCardHeading = (<StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Difficulty </StatLabel>);
-  const difficultyIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={FaHardHat} w="24px" h="24px" color="white" /> </IconBox>);
-  const difficultyValueDisplay = (<Flex> <StatNumber fontSize="lg" color={textColor}> {difficultyValue} </StatNumber> </Flex>);
-
-  if(window.innerWidth < 768 ) {
+  if(window.innerWidth < 768) {
     return (
       // Container
       <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
@@ -75,7 +92,7 @@ export default function Explorer() {
         <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="24px">
   
           {/* Blocks Card */}
-          <Card minH="83px">
+          <Card minH="60px">
             <CardBody>
               <Flex flexDirection="row" align="center" justify="center" w="100%">
                 <Stat me="auto">
@@ -88,7 +105,7 @@ export default function Explorer() {
           </Card>
   
           {/* Transactions Card */}
-          <Card minH="83px">
+          <Card minH="60px">
             <CardBody>
               <Flex flexDirection="row" align="center" justify="center" w="100%">
                 <Stat me="auto">
@@ -101,7 +118,7 @@ export default function Explorer() {
           </Card>
   
           {/* Difficulty Card  */}
-          {/* <Card minH="83px">
+          {/* <Card minH="60px">
             <CardBody>
               <Flex flexDirection="row" align="center" justify="center" w="100%">
                 <Stat me="auto">
@@ -117,20 +134,21 @@ export default function Explorer() {
         </SimpleGrid>
   
         {/* Space between Stats Grid Row and Table Grid Row */}
-        <Box p={15}></Box>
+        <Box p={10}></Box>
   
   
         {/* Tables Grid */}
         <SimpleGrid spacing="12px" templateRows="1fr 1fr">
   
-          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX="scroll">
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX="scroll" maxH="60px">
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
                 <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
-                  Blocks
+                  Latest Blocks
                 </Text>
   
-                <BlockTable setBlocksCount={setBlocksCount} />
+                {/* <BlockTable setBlocksCount={setBlocksCount} /> */}
+                <BlocksMiniTable />
               </Flex>
             </CardHeader>
           </Card>
@@ -141,7 +159,8 @@ export default function Explorer() {
                 <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
                   Transactions
                 </Text>
-                <TransactionTable setTransactionsCount={setTransactionsCount} />
+                {/* <TransactionTable setTransactionsCount={setTransactionsCount} /> */}
+                <TransactionsMiniTable />
               </Flex>
             </CardHeader>
           </Card>
@@ -165,7 +184,7 @@ export default function Explorer() {
       <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="24px">
 
         {/* Blocks Card */}
-        <Card minH="83px">
+        <Card minH="60px">
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
@@ -178,7 +197,7 @@ export default function Explorer() {
         </Card>
 
         {/* Transactions Card */}
-        <Card minH="83px">
+        <Card minH="60px">
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
@@ -191,7 +210,7 @@ export default function Explorer() {
         </Card>
 
         {/* Difficulty Card  */}
-        {/* <Card minH="83px">
+        {/* <Card minH="60px">
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
@@ -213,14 +232,15 @@ export default function Explorer() {
       {/* Tables Grid */}
       <SimpleGrid columns={{ xl: 2 }} spacing="12px" templateColumns="1fr 1fr">
 
-        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
+        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}  maxH="515px">
           <CardHeader mb="20px" pl="22px">
             <Flex direction="column" alignSelf="flex-start">
-              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
-                Blocks
-              </Text>
-
-              <BlockTable setBlocksCount={setBlocksCount} />
+             <Text fontSize="xl" color={textColor} fontWeight="bold" ml="22px" mb="7px">
+              Latest Blocks
+            </Text>
+  
+                <BlocksMiniTable />
+              {/* <BlockTable setBlocksCount={setBlocksCount} /> */}
             </Flex>
           </CardHeader>
         </Card>
@@ -228,10 +248,11 @@ export default function Explorer() {
         <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
           <CardHeader mb="20px" pl="22px">
             <Flex direction="column" alignSelf="flex-start">
-              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
+              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="22px" mb="7px">
                 Transactions
               </Text>
-              <TransactionTable setTransactionsCount={setTransactionsCount} />
+              {/* <TransactionTable setTransactionsCount={setTransactionsCount} /> */}
+              <TransactionsMiniTable />              
             </Flex>
           </CardHeader>
         </Card>

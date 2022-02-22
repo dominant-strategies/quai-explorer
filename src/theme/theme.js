@@ -25,6 +25,21 @@ export default extendTheme(
     colors: {
       brand: {
         300: "#ec4d37"
+      },
+      paxosRed: {
+        100: "#EE6363",
+        200: "#C73D3D",
+        300: "#A11616"
+      },
+      cyprusGreen: {
+        100: "#8DD181",
+        200: "#74B768",
+        300: "#5A9E4E"
+      },
+      hydraBlue: {
+        100: "#5A75AD",
+        200: "#415C94",
+        300: "#27427A"
       }
     }
   },

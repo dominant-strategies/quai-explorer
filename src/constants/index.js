@@ -174,3 +174,37 @@ export const QUAI_STATS_BLOCKS_LINKS = {
     'Hydra Two': 'hydra2',
     'Hydra Three': 'hydra3',
 }
+
+
+export const BLOCK_COLORS = {
+    'Paxos': 'gray.300',
+    'Cyprus': 'green.800',
+    'Paxos': 'red.800',
+    'Hydra': 'blue.800',
+    'Cyprus One': 'green.300',
+    'Cyprus Two': 'green.500',
+    'Cyprus Three': 'green.700',
+    'Paxos One': 'red.300',
+    'Paxos Two': 'red.500',
+    'Paxos Three': 'red.700',
+    'Hydra One': 'blue.300',
+    'Hydra Two': 'blue.500',
+    'Hydra Three': 'blue.700',
+}
+
+
+export const BLOCK_COLORS_CUSTOM = {
+    'Paxos': 'gray.300',
+    'Cyprus': 'green.800',
+    'Paxos': 'red.800',
+    'Hydra': 'blue.800',
+    'Cyprus One': 'green.300',
+    'Cyprus Two': 'green.500',
+    'Cyprus Three': 'green.700',
+    'Paxos One': 'red.300',
+    'Paxos Two': 'red.500',
+    'Paxos Three': 'red.700',
+    'Hydra One': 'blue.300',
+    'Hydra Two': 'blue.500',
+    'Hydra Three': 'blue.700',
+}

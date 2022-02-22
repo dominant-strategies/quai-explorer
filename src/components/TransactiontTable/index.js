@@ -115,7 +115,7 @@ export default function TransactionTable({ setTransactionsCount }) {
           {totalPage > 1 ?
            <Pagination
            currentPage={currentPage}
-           totalCount={txCountLocal != 0 ? txCountLocal : 0}
+           totalCount={txCountLocal !== 0 ? txCountLocal : 0}
            pageSize={limit}
            onPageChange={page => setCurrentPage(page)}
            textColor={textColor}

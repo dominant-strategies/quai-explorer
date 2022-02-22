@@ -307,6 +307,74 @@ export const GET_TRANSACTION_WITH_ADDRESS_2 = gql`
     }
 `
 
+export const GET_NUMBER_OF_TRANSASCTIONS_FOR_BLOCK = gql`
+    query GetTransactionsForAddress($block_number: String!) {
+        transactions_aggregate(where: {block_number: {_eq: $block_number}}) {
+        aggregate {
+            count
+        }
+    }
+ }
+`
+
+export const GET_LATEST_BLOCKS_SUBSCRIPTION = gql`
+    subscription GetLatestBlocks {
+        blocks(limit: 5, order_by: {timestamp: desc}) {
+        context
+        difficulty
+        gas_limit
+        timestamp
+        number
+        network_difficulty
+        location
+        header
+        hash
+        gas_used
+        }
+    }  
+`
+
+export const GET_LATEST_TRANSACTIONS_SUBSCRIPTION = gql`
+    subscription GetLatestTransactions {
+        transactions(limit: 12, order_by: {tx_time: desc}) {
+            block_number
+            to_addr
+            from_addr
+            tx_time
+            tx_value
+            hash
+            contract_code
+            full_transaction
+            to_location
+            from_location
+        }
+    }  
+`
+
+export const GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS = gql`
+    query GetTotalNumberOfBlocks {
+        blocks_aggregate {
+            aggregate {
+                count
+            }
+        }
+        transactions_aggregate {
+            aggregate {
+                count
+            }
+        }
+    }
+`
+
+export const GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION = gql`
+    subscription GetTotalNumberOfBlocks {
+        blocks_aggregate {
+            aggregate {
+                count
+            }
+        }
+    }
+`
 
 
 
