@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Box,
   Button,
@@ -22,25 +22,26 @@ import Card from "../../components/Card/Card.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import IconBox from "../../components/Icons/IconBox";
-import BlockTable from "../../components/BlockTable";
-import TransactionTable from "../../components/TransactiontTable";
 
 import BlocksMiniTable from "../../components/BlocksMiniTable/index.js";
 import TransactionsMiniTable from "../../components/TransactionsMiniTable/index.js";
 
 import { BsBox } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
-import { FaHardHat } from "react-icons/fa";
+
+import AppContext from "../../components/AppContext/AppContext.js";
 
 import { GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS, GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION } from "../../utils/queries.js";
 
 export default function Explorer() {
 
   const { loading: loadingCounts, error: errorCounts, data: dataCounts } = useQuery(GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS);
-
   const { loading: loadingBlockCount, error: errorBlockCount, data: dataBlockCount } = useSubscription(GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION)
+
   const [blocksCount, setBlocksCount] = useState(0);
   const [transactionsCount, setTransactionsCount] = useState(0);
+
+  const globalState = useContext(AppContext);
 
   useEffect(() => {
 
@@ -73,7 +74,7 @@ export default function Explorer() {
   );
 
   const transactionsCardHeading = (<StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb=".1rem" > Transactions </StatLabel>);
-  const transactionsIcon = (<IconBox h={"45px"} w={"45px"} bg={quaiOrangeColor}> <Icon as={GiMoneyStack} w="24px" h="24px" color="white" /> </IconBox>);
+  const transactionsIcon = (<IconBox h={"45px"} w={"45px"} bg={"green.400"}> <Icon as={GiMoneyStack} w="24px" h="24px" color="white" /> </IconBox>);
   const transactionsCountSpinner = (<Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='xs' label='Loading transactions count' />);
   const transactionsCountDisplay = (
     <Flex>
@@ -121,18 +122,15 @@ export default function Explorer() {
         </SimpleGrid>
 
         {/* Space between Stats Grid Row and Table Grid Row */}
-        <Box p={10}></Box>
+        <Box p={3}></Box>
 
 
         {/* Tables Grid */}
         <SimpleGrid spacing="24px" templateRows="1fr 1fr">
 
-          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} maxH="515px">
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}>
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
-                <Text fontSize="xl" color={textColor} fontWeight="bold" ml="10px" mb="6px">
-                  Latest Blocks
-                </Text>
                 <BlocksMiniTable />
               </Flex>
             </CardHeader>
@@ -141,9 +139,6 @@ export default function Explorer() {
           <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}>
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
-                <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="6px">
-                  Latest Transactions
-                </Text>
                 <TransactionsMiniTable />
               </Flex>
             </CardHeader>
@@ -151,8 +146,6 @@ export default function Explorer() {
 
           { /* END OF Tables Grid */}
         </SimpleGrid>
-
-
 
         {/* END OF Container */}
       </Flex>
@@ -162,78 +155,53 @@ export default function Explorer() {
 
   return (
     // Container
-    <Flex flexDirection="column" pt={{ base: "120px", md: "100px" }}>
-
-      {/* Stat Cards Grid */}
-      <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="12px">
-
-        {/* Blocks Card */}
-        <Card minH="60px">
-          <CardBody>
-            <Flex flexDirection="row" align="center" justify="center" w="100%">
-              <Stat me="auto">
-                {blocksCardHeading}
-                {blocksCountDisplay}
-              </Stat>
-              {blocksIcon}
-            </Flex>
-          </CardBody>
-        </Card>
-
-        {/* Transactions Card */}
-        <Card minH="60px">
-          <CardBody>
-            <Flex flexDirection="row" align="center" justify="center" w="100%">
-              <Stat me="auto">
-                {transactionsCardHeading}
-                {transactionsCountDisplay}
-              </Stat>
-              {transactionsIcon}
-            </Flex>
-          </CardBody>
-        </Card>
-
-        {/* END OF Stat Cards Grid */}
-      </SimpleGrid>
-
-      {/* Space between Stats Grid Row and Table Grid Row */}
-      <Box p={15}></Box>
-
-
+    <Flex flexDirection="column" pt={{ base: "80px", md: "70px" }}>
       {/* Tables Grid */}
       <SimpleGrid columns={{ xl: 2 }} spacing="12px" templateColumns="1fr 1fr">
 
-        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} maxH="515px">
-          <
-            CardHeader mb="20px" pl="22px">
+        <Card mb={{ sm: "26px", lg: "0px" }} maxH="700px">
+          <CardHeader mb="20px" pl="22px">
+            <Flex flexDirection="row" align="center" justify="center" w="100%">
+              {blocksIcon}
+              <Box p={2}></Box>
+              <Stat me="auto">
+                {blocksCountDisplay}
+                {blocksCardHeading}
+              </Stat>
+
+            </Flex>
+          </CardHeader>
+
+          <CardBody pl={2}>
             <Flex direction="column" alignSelf="flex-start">
-              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="20px" mb="7px">
-                Latest Blocks
-              </Text>
-              
 
               <BlocksMiniTable />
-              <Button> View all Blocks </Button>
             </Flex>
-          </CardHeader>
+          </CardBody>
         </Card>
 
-        <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} maxH="515px">
+        <Card mb={{ sm: "26px", lg: "0px" }} maxH="700px">
           <CardHeader mb="20px" pl="22px">
-            <Flex direction="column" alignSelf="flex-start">
-              <Text fontSize="xl" color={textColor} fontWeight="bold" ml="18px" mb="7px">
-                Latest Transactions
-              </Text>
-              <TransactionsMiniTable />
+            <Flex flexDirection="row" align="center" justify="center" w="100%">
+              {transactionsIcon}
+              <Box p={2}></Box>
+              <Stat me="auto">
+                {transactionsCountDisplay}
+                {transactionsCardHeading}
+              </Stat>
             </Flex>
           </CardHeader>
+
+          <CardBody pl={2}>
+            <Flex direction="column" alignSelf="flex-start">
+
+              <TransactionsMiniTable />
+            </Flex>
+          </CardBody>
         </Card>
 
         { /* END OF Tables Grid */}
       </SimpleGrid>
-
-
-
       {/* END OF Container */}
     </Flex>
   );

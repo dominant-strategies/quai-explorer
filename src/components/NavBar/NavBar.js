@@ -203,8 +203,8 @@ export default function NavBar(props) {
                 xl: '12px',
             }}
             pt="8px"
-            top="20px"
-            w={{ sm: 'calc(100vw - 60px)', xl: 'calc(100vw - 120px)' }}
+            top="10px"
+            w={{ sm: 'calc(100vw - 60px)', xl: 'calc(100vw - 110px)' }}
         >
             <Flex
                 w="100%"

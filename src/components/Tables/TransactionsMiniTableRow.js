@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Icon,
+  Box,
   Td,
   Text,
   Tr,
@@ -29,12 +29,12 @@ export default function TransactionsMiniTableRow(props) {
 
   let fromAddressReduced
   if (fromAddress) {
-    fromAddressReduced = reduceString(fromAddress)
+    fromAddressReduced = reduceStringShowMediumLength(fromAddress)
   }
 
   let toAddressReduced
   if (toAddress) {
-    toAddressReduced = reduceString(toAddress)
+    toAddressReduced = reduceStringShowMediumLength(toAddress)
   }
 
   return (
@@ -42,7 +42,7 @@ export default function TransactionsMiniTableRow(props) {
 
       <Td>
     
-        <VStack alignItems="left" spacing={0}>
+        <VStack alignItems="left" spacing={1}>
         <Link onClick={() => navigateTo(`/tx/${hash}`)}>
             <Text
               fontSize="md"
@@ -71,7 +71,7 @@ export default function TransactionsMiniTableRow(props) {
      
       <Td>
     
-        <VStack alignItems="left" spacing={2}>
+        <VStack alignItems="left" spacing={5}>
         <Link onClick={() => navigateTo(`/address/${fromAddress}`)}>
             <Text
               fontSize="md"
@@ -112,7 +112,7 @@ export default function TransactionsMiniTableRow(props) {
 
 
             >
-              {value}
+              {value} QUAI
             </Text>
 
 

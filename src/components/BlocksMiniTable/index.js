@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useQuery, useSubscription } from '@apollo/client';
 import { SHARDED_ADDRESS } from "../../constants";
 import { GET_BLOCKS, GET_LATEST_BLOCKS_SUBSCRIPTION } from "../../utils/queries";
 import { convertTimeString } from "../../utils";
 import BlocksMiniTableRow from "../Tables/BlocksMiniTableRow";
 import Pagination from '../Pagination';
+import { useNavigate } from 'react-router-dom'
+
+import AppContext from '../AppContext/AppContext'
 
 import {
   Alert,
@@ -23,18 +26,20 @@ import {
 } from '@chakra-ui/react';
 
 import moment from 'moment'
+import { RepeatIcon } from '@chakra-ui/icons';
 
 export default function BlocksMiniTable() {
   // Component state
   const [blocks, setBlocks] = useState([]);
 
-  // GraphQL queries
-  //const { loading, error, data, refetch: refetchBlockData, subscribeToMore } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
-
   const { data, error, loading } = useSubscription(GET_LATEST_BLOCKS_SUBSCRIPTION);
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
+
+  const globalState = useContext(AppContext);
+
+  const navigateTo = useNavigate()
 
   // When this component mounts, grab a reference to all blocks, reformat the object, and set blocks in state
   useEffect(() => {
@@ -43,8 +48,6 @@ export default function BlocksMiniTable() {
         const miner = block.header.miner;
         let unix_timestamp = block.timestamp;
         var differenceOfTime = moment.unix(unix_timestamp).fromNow();
-
-
 
         return {
           ...block.header,
@@ -56,8 +59,6 @@ export default function BlocksMiniTable() {
         }
       });
       setBlocks(tempBlocks);
-  
-      
     }
   }, [data])
 
@@ -72,7 +73,8 @@ export default function BlocksMiniTable() {
       <>
         <Alert status='error' mt={5} >
           <AlertIcon />
-          <Text fontSize='sm'>There was a problem loading this table. We sincerely apologize for any inconvenience this may cause.</Text>
+           <Text fontSize='sm'> Sorry! There seems to be a problem with loading this table. </Text>
+           <Button bgColor="transparent" leftIcon={<RepeatIcon  />} onClick={() => navigateTo('/')}> Refresh </Button>
         </Alert>
       </>
     )
@@ -97,10 +99,12 @@ export default function BlocksMiniTable() {
                   />
                 );
               })}
+           
             </Tbody>
+           
           </Table>
+          <Button mt={2} alignContent="center"> View All </Button> 
 
-          
         </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
   )

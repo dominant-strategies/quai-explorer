@@ -319,7 +319,7 @@ export const GET_NUMBER_OF_TRANSASCTIONS_FOR_BLOCK = gql`
 
 export const GET_LATEST_BLOCKS_SUBSCRIPTION = gql`
     subscription GetLatestBlocks {
-        blocks(limit: 5, order_by: {timestamp: desc}) {
+        blocks(limit: 7, order_by: {timestamp: desc}) {
         context
         difficulty
         gas_limit
@@ -336,7 +336,7 @@ export const GET_LATEST_BLOCKS_SUBSCRIPTION = gql`
 
 export const GET_LATEST_TRANSACTIONS_SUBSCRIPTION = gql`
     subscription GetLatestTransactions {
-        transactions(limit: 5, order_by: {tx_time: desc}) {
+        transactions(limit: 7, order_by: {tx_time: desc}) {
             block_number
             to_addr
             from_addr
