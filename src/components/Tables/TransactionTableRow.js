@@ -22,7 +22,7 @@ import { QUAI_STATS_BLOCKS_LINKS, BLOCK_COLORS, QUAI_STATS_LINKS_MAPPING_2, BLOC
 
 export default function TransactionTableRow(props) {
   const { transactionHash, value, toThisMiner, fromThisMiner, 
-    blockNumber, timestamp, blockHash, toLocation, fromLocation } = props;
+    blockNumber, timestamp, blockHash, toLocation, fromLocation, fromAddressPage } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const navigateTo = useNavigate();
 
@@ -61,6 +61,8 @@ export default function TransactionTableRow(props) {
     return (
       <Tr>
 
+        
+
         <Td>
           <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
             <Link onClick={() => navigateTo(`/tx/${transactionHash}`)}>
@@ -86,6 +88,9 @@ export default function TransactionTableRow(props) {
 
         <Td>
             <VStack sapcing={2}>
+
+              {!fromAddressPage && 
+              <>
           <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
             
             <Link onClick={() => navigateTo(`/address/${fromThisMiner}`)}>
@@ -93,9 +98,13 @@ export default function TransactionTableRow(props) {
             </Link>
           
           </Text>
+          </>
+        }
           <Text fontSize="md" color={locationColorFromLocation} fontWeight="bold" pb=".5rem">
               <Link href={linkToQuaiStatsFromLocation} isExternal> <Icon pt={1} as={BsBox} color={locationColorFromLocation} />  {LINKS_PRESENT[fromLocationConverted]} </Link>
           </Text>
+       
+          
           </VStack>
         </Td>
 

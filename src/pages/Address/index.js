@@ -299,6 +299,7 @@ export default function Address() {
                                                         value={transaction.tx_value}
                                                         timestamp={transaction.tx_time}
                                                         key={index}
+                                                        fromAddressPage={true}
                                                     />
                                                 )
                                             }
