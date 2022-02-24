@@ -73,6 +73,7 @@ export default function TransactionsTable() {
       {!loading ?
         <>
            <Flex flexDir="column">
+           <Text size="md" fontWeight="bold" ml={5} pb={5} color="gray.400"> {txCountLocal} total transactions </Text>
           <Table variant="simple" color={textColor} mb={6}>
 
           

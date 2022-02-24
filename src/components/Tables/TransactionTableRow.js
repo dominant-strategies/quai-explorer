@@ -27,12 +27,13 @@ export default function TransactionTableRow(props) {
   const navigateTo = useNavigate();
 
   let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[toLocation]
+
   let fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[fromLocation]
 
-  let linkToQuaiStatsToLocation = `https://${QUAI_STATS_BLOCKS_LINKS[toLocationConverted]}.quaistats.info/`
+  let linkToQuaiStatsToLocation = `https://${toLocationConverted}.quaistats.info/`
   let locationColorToLocation = BLOCK_COLORS_MAPPING_2[toLocationConverted];
 
-  let linkToQuaiStatsFromLocation = `https://${QUAI_STATS_BLOCKS_LINKS[fromLocationConverted]}.quaistats.info/`
+  let linkToQuaiStatsFromLocation = `https://${fromLocationConverted}.quaistats.info/`
   let locationColorFromLocation = BLOCK_COLORS_MAPPING_2[fromLocationConverted];
 
 

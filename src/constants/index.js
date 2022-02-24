@@ -208,10 +208,10 @@ export const LINKS_PRESENT = {
 
 
 export const QUAI_STATS_BLOCKS_LINKS = {
-    Prime: 'prime',
-    Cyprus: 'cyprus',
-    Paxos: 'paxos',
-    Hydra: 'hydra',
+    'Prime': 'prime',
+    'Cyprus': 'cyprus',
+    'Paxos': 'paxos',
+    'Hydra': 'hydra',
     'Cyprus One': 'cyprus1',
     'Cyprus Two': 'cyprus2',
     'Cyprus Three': 'cyprus3',

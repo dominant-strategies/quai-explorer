@@ -13,14 +13,18 @@ import {
     Alert,
     AlertIcon,
     Link,
+    Icon,
+    HStack
 } from '@chakra-ui/react'
 import { reduceStringShowMediumLength, convertTimeString } from '../../utils'
 
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
+import { BsBox } from "react-icons/bs";
 
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+
+import { QUAI_STATS_BLOCKS_LINKS, BLOCK_COLORS, QUAI_STATS_LINKS_MAPPING_2, BLOCK_COLORS_MAPPING_2, LINKS_PRESENT } from '../../constants'
 
 export default function Transaction() {
     // Component state
@@ -65,6 +69,13 @@ export default function Transaction() {
     }
 
     const value = transaction?.tx_value
+
+    let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[transaction?.to_location]
+    let fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[transaction?.from_location]
+    let linkToQuaiStatsToLocation = `https://${toLocationConverted}.quaistats.info/`
+    let locationColorToLocation = BLOCK_COLORS_MAPPING_2[toLocationConverted];
+    let linkToQuaiStatsFromLocation = `https://${fromLocationConverted}.quaistats.info/`
+    let locationColorFromLocation = BLOCK_COLORS_MAPPING_2[fromLocationConverted];
 
     /**
      * Error handling in the event the GQL query fails
@@ -150,12 +161,22 @@ export default function Transaction() {
                                         From:{' '}
                                     </Heading>
 
-                                    <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
+                                    <HStack>
 
-                                        <Link onClick={() => navigateTo(`/address/${from_addr}`)}>
-                                            {fromHashReduced}
-                                        </Link>
-                                    </Text>
+                                        <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
+
+                                            <Link onClick={() => navigateTo(`/address/${from_addr}`)}>
+                                                {fromHashReduced}
+                                            </Link>
+
+
+                                        </Text>
+
+                                        <Text fontSize="md" color={locationColorFromLocation} fontWeight="bold" pb=".5rem">
+                                            <Link href={linkToQuaiStatsFromLocation} isExternal> <Icon pt={1} as={BsBox} color={locationColorFromLocation} />  {LINKS_PRESENT[fromLocationConverted]} </Link>
+                                        </Text>
+
+                                    </HStack>
                                 </>
                             ) : null}
                             {from_addr !== null ? (
@@ -164,13 +185,20 @@ export default function Transaction() {
                                         {' '}
                                         To:{' '}
                                     </Heading>
-                                    <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
 
-                                        <Link onClick={() => navigateTo(`/address/${to_addr}`)}>
-                                            {toHashReduced}
-                                        </Link>
+                                    <HStack>
+                                        <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
 
-                                    </Text>
+                                            <Link onClick={() => navigateTo(`/address/${to_addr}`)}>
+                                                {toHashReduced}
+                                            </Link>
+
+                                        </Text>
+
+                                        <Text fontSize="md" color={locationColorToLocation} fontWeight="bold" pb=".5rem">
+                                            <Link href={linkToQuaiStatsToLocation} isExternal>  <Icon pt={1} as={BsBox} color={locationColorToLocation} />  {LINKS_PRESENT[toLocationConverted]} </Link>
+                                        </Text>
+                                    </HStack>
                                 </>
                             ) : null}
                             <Heading as="h2" size="md">

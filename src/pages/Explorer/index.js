@@ -29,22 +29,22 @@ import TransactionsMiniTable from "../../components/TransactionsMiniTable/index.
 import { BsBox } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
 
-import { GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS, GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION } from "../../utils/queries.js";
+import { GET_TOTAL_NUMBER_OF_TRANSACTIONS_SUBSCRIPTION, GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION } from "../../utils/queries.js";
 
 export default function Explorer() {
 
-  const { loading: loadingCounts, error: errorCounts, data: dataCounts } = useQuery(GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS);
-  const { loading: loadingBlockCount, error: errorBlockCount, data: dataBlockCount } = useSubscription(GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION)
+  const { loading: loadingTranscationsCount, error: errorTransactionsCount, data: dataTransactionsCount } = useSubscription(GET_TOTAL_NUMBER_OF_TRANSACTIONS_SUBSCRIPTION);
+  const { loading: loadingBlockCount, error: errorBlockCount, data: dataBlockCount } = useSubscription(GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION);
 
   const [blocksCount, setBlocksCount] = useState(0);
   const [transactionsCount, setTransactionsCount] = useState(0);
 
   useEffect(() => {
 
-    if (dataCounts && dataBlockCount) {
+    if (dataTransactionsCount && dataBlockCount) {
 
       const totalBlockCount = dataBlockCount?.blocks_aggregate?.aggregate?.count;
-      const totalTransactionCount = dataCounts?.transactions_aggregate?.aggregate?.count;
+      const totalTransactionCount = dataTransactionsCount?.transactions_aggregate?.aggregate?.count;
 
       setBlocksCount(totalBlockCount)
       setTransactionsCount(totalTransactionCount)
@@ -52,7 +52,7 @@ export default function Explorer() {
     }
 
 
-  }, [dataCounts, dataBlockCount])
+  }, [dataTransactionsCount, dataBlockCount])
 
 
   const quaiOrangeColor = useColorModeValue("brand.300", "brand.300");
@@ -75,7 +75,7 @@ export default function Explorer() {
   const transactionsCountDisplay = (
     <Flex>
       <StatNumber fontSize="lg" color={textColor}>
-        {loadingCounts ? transactionsCountSpinner : transactionsCount}
+        {loadingTranscationsCount ? transactionsCountSpinner : transactionsCount}
       </StatNumber>
     </Flex>
   );

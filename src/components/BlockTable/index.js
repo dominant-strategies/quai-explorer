@@ -20,7 +20,7 @@ import {
   Th,
   useColorModeValue,
   Container,
-  IconButton,
+  VStack,
   Flex,
   Link
 } from '@chakra-ui/react';
@@ -36,6 +36,8 @@ export default function BlockTable() {
   const [totalPage, setTotalPage] = useState(1);
   const [blocks, setBlocks] = useState([]);
   const [blocksCountLocal, setBlocksCountLocal] = useState(0);
+  const [firstBlockNumber, setFirstBlockNumber] = useState("");
+  const [lastBlockNumber, setLastBlockNumber] = useState("");
 
   // GraphQL queries
   const { loading, error, data, refetch: refetchBlocks } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
@@ -52,6 +54,10 @@ export default function BlockTable() {
         let unix_timestamp = block.timestamp;
         let converted_unix_timestamp = convertTimeString(unix_timestamp)
         let differenceOfTime = moment.unix(unix_timestamp).fromNow();
+
+        let transactions = block.header.transactions
+        let uncles = block.header.uncles
+
         return {
           ...block.header,
           location: SHARDED_ADDRESS[block.location],
@@ -60,10 +66,14 @@ export default function BlockTable() {
           age: differenceOfTime,
           timestamp: converted_unix_timestamp,
           gasLimit: block.gas_limit,
-          gasUsed: block.gas_used
+          gasUsed: block.gas_used,
+          transactions,
+          uncles
         }
       });
       setBlocks(tempBlocks);
+      setFirstBlockNumber(tempBlocks[0].number)
+      setLastBlockNumber(tempBlocks[tempBlocks.length-1].number)
       const blocksCount = data?.blocks_aggregate?.aggregate?.count;
       setBlocksCountLocal(blocksCount);
       setTotalPage(parseInt(blocksCount / limit) + 1);
@@ -92,14 +102,18 @@ export default function BlockTable() {
       {!loading ?
         <>
           <Flex flexDir="column">
+           
+            <Text size="md" fontWeight="bold" ml={5} pb={5} color="gray.400"> Block {firstBlockNumber} to Block {lastBlockNumber} of {blocksCountLocal} blocks </Text>
+          
             <Table variant="simple" color={textColor}>
+
               <Thead>
                 <Tr my=".8rem" pl="0px" color="gray.400">
                   <Th color="gray.400">Block</Th>
                   <Th color="gray.400">Location</Th>
                   <Th color="gray.400">Age</Th>
-                  {/* <Th color="gray.400">Txn</Th>
-                  <Th color="gray.400">Uncles</Th> */}
+                  <Th color="gray.400">Txs</Th>
+                  <Th color="gray.400">Uncles</Th>
                   <Th color="gray.400">Miner</Th>
                   <Th color="gray.400">Gas Used</Th>
                   <Th color="gray.400">Gas Limit</Th>
@@ -119,6 +133,8 @@ export default function BlockTable() {
                       gasUsed={block.gasUsed}
                       gasLimit={block.gasLimit}
                       age={block.age}
+                      transactions={block.transactions}
+                      uncles={block.uncles}
                       key={index}
                     />
                   );
