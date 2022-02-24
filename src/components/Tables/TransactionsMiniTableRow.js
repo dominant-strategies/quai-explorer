@@ -41,20 +41,20 @@ export default function TransactionsMiniTableRow(props) {
     <Tr>
 
       <Td>
-    
+
         <VStack alignItems="left" spacing={1}>
-        <Link onClick={() => navigateTo(`/tx/${hash}`)}>
+          <Link onClick={() => navigateTo(`/tx/${hash}`)}>
             <Text
               fontSize="md"
               color={"blue.300"}
               fontWeight="bold"
-              as="u"
+              
             >
-              {hashReduced} 
+              {hashReduced}
             </Text>
-            </Link>
+          </Link>
 
-        
+
 
 
           <Text
@@ -68,34 +68,34 @@ export default function TransactionsMiniTableRow(props) {
 
       </Td>
 
-     
+
       <Td>
-    
+
         <VStack alignItems="left" spacing={5}>
-        <Link onClick={() => navigateTo(`/address/${fromAddress}`)}>
+          <Link onClick={() => navigateTo(`/address/${fromAddress}`)}>
             <Text
               fontSize="md"
               color={"blue.300"}
               fontWeight="bold"
-              as="u"
+              
 
             >
-              From: {fromAddressReduced} 
+              From: {fromAddressReduced}
             </Text>
-            </Link>
+          </Link>
 
-            <Link onClick={() => navigateTo(`/address/${toAddress}`)}>
+          <Link onClick={() => navigateTo(`/address/${toAddress}`)}>
             <Text
               fontSize="md"
               color={"blue.300"}
               fontWeight="bold"
-              as="u"
+              
 
             >
-              To: {toAddressReduced} 
+              To: {toAddressReduced}
             </Text>
-            </Link>
-      
+          </Link>
+
 
 
         </VStack>
@@ -104,16 +104,16 @@ export default function TransactionsMiniTableRow(props) {
 
       <Td>
 
-            <Text
-              fontSize="md"
-              color={textColor}
-              fontWeight="bold"
+        <Text
+          fontSize="md"
+          color={textColor}
+          fontWeight="bold"
 
 
 
-            >
-              {value} QUAI
-            </Text>
+        >
+          {value} QUAI
+        </Text>
 
 
 

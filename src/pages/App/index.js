@@ -50,7 +50,7 @@ export default function App() {
   return (
     <AppContext.Provider value={globalState}>
       <ChakraProvider theme={theme} resetCss={false}>
-        <BrowserRouter>
+        <BrowserRouter onUpdate={() => window.scrollTo(0, 0)}>
           <MainPanel
             w={{
               base: "100%",

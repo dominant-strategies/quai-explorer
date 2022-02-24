@@ -12,8 +12,9 @@ import {
     Spacer,
     Alert,
     AlertIcon,
+    Link,
 } from '@chakra-ui/react'
-import { reduceStringShowMediumLength } from '../../utils'
+import { reduceStringShowMediumLength, convertTimeString } from '../../utils'
 
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
@@ -75,14 +76,14 @@ export default function Transaction() {
                 {window.innerWidth < 768 ? <Box p={4}></Box> : null}
                 <Box p={10}></Box>
                 <IconButton
-                    onClick={() => navigateTo('/')}
+                    onClick={() => navigateTo(-1)}
                     icon={<ArrowBackIcon />}
-                    aria-label="Back to the Explorer home page"
+                    aria-label="Back to the previous page"
                     w="24px"
                 />
                 <Alert status="error" mt={7}>
                     <AlertIcon />
-                    <Text fontSize="xl">This hash is invalid.</Text>
+                    <Text fontSize="xl">Sorry! There was a problem loading the page. The hash may be invalid.</Text>
                 </Alert>
             </>
         )
@@ -108,9 +109,9 @@ export default function Transaction() {
                     <CardBody>
                         <VStack spacing="12px" align="left">
                             <IconButton
-                                onClick={() => navigateTo('/')}
+                                onClick={() => navigateTo(-1)}
                                 icon={<ArrowBackIcon />}
-                                aria-label="Back to the Explorer home page"
+                                aria-label="Back to the previous page"
                                 w="24px"
                             />
                             <Spacer />
@@ -142,7 +143,7 @@ export default function Transaction() {
                                         {' '}
                                         Timestamp:{' '}
                                     </Heading>{' '}
-                                    <Text fontSize="lg"> {timestamp}</Text>{' '}
+                                    <Text fontSize="lg"> {convertTimeString(timestamp)}</Text>{' '}
                                 </>
                             ) : null}
                             {from_addr !== null ? (
@@ -151,10 +152,13 @@ export default function Transaction() {
                                         {' '}
                                         From:{' '}
                                     </Heading>
-                                    <CopyToClipboardButton
-                                        innerText={fromHashReduced}
-                                        copyThisToClipboard={from_addr}
-                                    />
+
+                                    <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
+
+                                        <Link onClick={() => navigateTo(`/address/${from_addr}`)}>
+                                            {fromHashReduced}
+                                        </Link>
+                                    </Text>
                                 </>
                             ) : null}
                             {from_addr !== null ? (
@@ -163,10 +167,13 @@ export default function Transaction() {
                                         {' '}
                                         To:{' '}
                                     </Heading>
-                                    <CopyToClipboardButton
-                                        innerText={toHashReduced}
-                                        copyThisToClipboard={to_addr}
-                                    />
+                                    <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
+
+                                        <Link onClick={() => navigateTo(`/address/${to_addr}`)}>
+                                            {toHashReduced}
+                                        </Link>
+
+                                    </Text>
                                 </>
                             ) : null}
                             <Heading as="h2" size="md">

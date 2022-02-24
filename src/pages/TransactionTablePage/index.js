@@ -37,12 +37,12 @@ import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CardHeader from '../../components/Card/CardHeader'
 
-import BlockTable from "../../components/BlockTable"
+import TransactionsTable from "../../components/TransactionsTable"
 
 import Pagination from '../../components/Pagination'
 
 
-export default function BlockTablePage() {
+export default function TransactionTablePage() {
     const navigateTo = useNavigate()
     return (
         <Flex direction="column" pt={{ base: "120px", md: "75px" }}>
@@ -58,11 +58,11 @@ export default function BlockTablePage() {
                             w="24px"
                         />
                         <Box p={3}> </Box>
-                        <Heading as='h1' fontWeight={"bold"} > Blocks </Heading>
+                        <Heading as='h1' fontWeight={"bold"} > Transactions </Heading>
                     </Flex>
                 </CardHeader>
                 <CardBody>
-                    <BlockTable />
+                     <TransactionsTable />
                 </CardBody>
             </Card>
         </Flex>

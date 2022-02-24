@@ -3,6 +3,7 @@ import Transaction from "../pages/Transaction";
 import Block from "../pages/Block";
 import Address from "../pages/Address";
 import BlockTable from "../pages/BlockTablePage";
+import TransactionTablePage from "../pages/TransactionTablePage";
 
 export const routes = [
     {
@@ -29,6 +30,11 @@ export const routes = [
         id: 5,
         component: <BlockTable />,
         path: "/blocks"
+    },
+    {
+        id: 5,
+        component: <TransactionTablePage />,
+        path: "/transactions"
     }
 
 ]

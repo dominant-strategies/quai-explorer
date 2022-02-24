@@ -81,14 +81,14 @@ export default function Block() {
                 {window.innerWidth < 768 ? <Box p={4}></Box> : null}
                 <Box p={10}></Box>
                 <IconButton
-                    onClick={() => navigateTo('/')}
+                    onClick={() => navigateTo(-1)}
                     icon={<ArrowBackIcon />}
-                    aria-label="Back to the Explorer home page"
+                    aria-label="Back to the previous page"
                     w="24px"
                 />
                 <Alert status="error" mt={7}>
                     <AlertIcon />
-                    <Text fontSize="xl">This hash is invalid.</Text>
+                    <Text fontSize="xl">Sorry! There was a problem loading the page. The hash may be invalid.</Text>
                 </Alert>
             </>
         )
@@ -115,9 +115,9 @@ export default function Block() {
                     <CardBody>
                         <VStack spacing="12px" align="left">
                             <IconButton
-                                onClick={() => navigateTo('/')}
+                                onClick={() => navigateTo(-1)}
                                 icon={<ArrowBackIcon />}
-                                aria-label="Back to the Explorer home page"
+                                aria-label="Back to the previous page"
                                 w="24px"
                             />
                             <Spacer />

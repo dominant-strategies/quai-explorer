@@ -19,7 +19,7 @@ import {
   useColorModeValue,
   VStack,
   Box,
-  Flex
+  Link
 } from '@chakra-ui/react';
 
 import moment from 'moment'
@@ -27,20 +27,19 @@ import moment from 'moment'
 export default function TransactionsMiniTable() {
   // Component state
   const [transactions, setTransactions] = useState([]);
-
   const { data, error, loading } = useSubscription(GET_LATEST_TRANSACTIONS_SUBSCRIPTION);
+  const navigateTo = useNavigate()
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the transactions table";
 
-  const navigateTo = useNavigate()
 
   // When this component mounts, grab a reference to all transactions and set transactions in state
   useEffect(() => {
     if (data) {
       setTransactions(data?.transactions);
-  
-      
+
+
     }
   }, [data])
 
@@ -55,8 +54,7 @@ export default function TransactionsMiniTable() {
       <>
         <Alert status='error' mt={5} >
           <AlertIcon />
-            <Text fontSize='sm'> Sorry! There seems to be a problem with loading this table. </Text>
-            <Button bgColor="transparent" leftIcon={<RepeatIcon  />} onClick={() => navigateTo('/')}> Refresh </Button>
+          <Text fontSize='md'> Sorry! There seems to be a problem with loading this table. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>
         </Alert>
       </>
     )
@@ -69,7 +67,7 @@ export default function TransactionsMiniTable() {
           <Table size="sm" variant="simple" color={textColor}>
             <Tbody>
               {transactions?.map((transaction, index) => {
-                const timeDisplay =  moment.unix(transaction.tx_time).fromNow();
+                const timeDisplay = moment.unix(transaction.tx_time).fromNow();
                 return (
                   <TransactionsMiniTableRow
                     value={transaction.tx_value}
@@ -82,14 +80,14 @@ export default function TransactionsMiniTable() {
                   />
                 );
               })}
-             
+
             </Tbody>
 
-         
+
           </Table>
 
-          <Button mt={5} alignContent="center"> View All </Button> 
-          
+          <Button mt={5} alignContent="center" onClick={() => navigateTo("/transactions")}> View All </Button>
+
         </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
   )

@@ -6,6 +6,8 @@ import { convertTimeString } from "../../utils";
 import BlockTableRow from "../Tables/BlockTableRow";
 import Pagination from '../Pagination';
 
+import { useNavigate } from 'react-router-dom';
+
 import {
   Alert,
   AlertIcon,
@@ -18,11 +20,16 @@ import {
   Th,
   useColorModeValue,
   Container,
-  Center,
-  Flex
+  IconButton,
+  Flex,
+  Link
 } from '@chakra-ui/react';
 
+import moment from 'moment'
+
 export default function BlockTable() {
+
+  const navigateTo = useNavigate()
   // Component state
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -31,24 +38,29 @@ export default function BlockTable() {
   const [blocksCountLocal, setBlocksCountLocal] = useState(0);
 
   // GraphQL queries
-  const { loading, error, data } = useQuery(GET_BLOCKS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, refetch: refetchBlocks } = useQuery(GET_BLOCKS, { variables: { num: limit, offset: (currentPage - 1) * limit } });
 
   const textColor = useColorModeValue("gray.700", "white");
   const spinnerLabel = "Loading the blocks table";
 
   // When this component mounts, grab a reference to all blocks, reformat the object, and set blocks in state
   useEffect(() => {
+    refetchBlocks()
     if (data) {
       const tempBlocks = data?.blocks.map(block => {
         const miner = block.header.miner;
         let unix_timestamp = block.timestamp;
-        const formattedTime = convertTimeString(unix_timestamp);
+        let converted_unix_timestamp = convertTimeString(unix_timestamp)
+        let differenceOfTime = moment.unix(unix_timestamp).fromNow();
         return {
           ...block.header,
           location: SHARDED_ADDRESS[block.location],
           number: block.number,
           miner,
-          timestamp: formattedTime
+          age: differenceOfTime,
+          timestamp: converted_unix_timestamp,
+          gasLimit: block.gas_limit,
+          gasUsed: block.gas_used
         }
       });
       setBlocks(tempBlocks);
@@ -57,7 +69,7 @@ export default function BlockTable() {
       setTotalPage(parseInt(blocksCount / limit) + 1);
     }
   }, [data])
-  
+
 
   /**
      * Error handling in the event the GQL query fails
@@ -69,7 +81,7 @@ export default function BlockTable() {
       <>
         <Alert status='error' mt={5} >
           <AlertIcon />
-          <Text fontSize='sm'>There was a problem loading this table. We sincerely apologize for any inconvenience this may cause.</Text>
+          <Text fontSize='md'> Sorry! There seems to be a problem with loading this table. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>
         </Alert>
       </>
     )
@@ -79,50 +91,58 @@ export default function BlockTable() {
     <>
       {!loading ?
         <>
-          <Table size="sm" variant="simple" color={textColor}>
-
-            <Thead>
-                <Tr my=".8rem" ps="0px">
-                  <Th color="gray.400"></Th>
+          <Flex flexDir="column">
+            <Table variant="simple" color={textColor}>
+              <Thead>
+                <Tr my=".8rem" pl="0px" color="gray.400">
+                  <Th color="gray.400">Block</Th>
                   <Th color="gray.400">Location</Th>
-                  <Th color="gray.400">Hash</Th>
-                  <Th color="gray.400" isNumeric>Block</Th>
+                  <Th color="gray.400">Age</Th>
+                  {/* <Th color="gray.400">Txn</Th>
+                  <Th color="gray.400">Uncles</Th> */}
                   <Th color="gray.400">Miner</Th>
-                  <Th color="gray.400">Timestamp</Th>
+                  <Th color="gray.400">Gas Used</Th>
+                  <Th color="gray.400">Gas Limit</Th>
                 </Tr>
-            </Thead>
+              </Thead>
 
 
-            <Tbody>
-              {blocks?.map((block, index) => {
-                return (
-                  <BlockTableRow
-                    location={block.location}
-                    blockNumber={block.number}
-                    minerAddress={block.miner}
-                    timestamp={block.timestamp}
-                    hash={block.hash}
-                    key={index}
-                  />
-                );
-              })}
-            </Tbody>
-          </Table>
-          
-          <Flex justifyContent="space-between">
-          {totalPage > 1 ?
-          
-            
-            <Pagination
-            currentPage={currentPage}
-            totalCount={blocksCountLocal != 0 ? blocksCountLocal : 0}
-            pageSize={limit}
-            onPageChange={page => setCurrentPage(page)}
-            textColor={textColor}
-          />
+              <Tbody>
+                {blocks?.map((block, index) => {
+                  return (
+                    <BlockTableRow
+                      location={block.location}
+                      blockNumber={block.number}
+                      minerAddress={block.miner}
+                      timestamp={block.timestamp}
+                      hash={block.hash}
+                      gasUsed={block.gasUsed}
+                      gasLimit={block.gasLimit}
+                      age={block.age}
+                      key={index}
+                    />
+                  );
+                })}
+              </Tbody>
+            </Table>
 
-            : null
-          }
+
+            {totalPage > 1 ? (
+              <Pagination
+                currentPage={currentPage}
+                totalCount={
+                  blocksCountLocal != 0
+                    ? blocksCountLocal
+                    : 0
+                }
+                pageSize={limit}
+                onPageChange={(page) =>
+                  setCurrentPage(page)
+                }
+                textColor={textColor}
+              />
+            ) : null}
+
           </Flex>
         </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>

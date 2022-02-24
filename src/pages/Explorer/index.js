@@ -29,8 +29,6 @@ import TransactionsMiniTable from "../../components/TransactionsMiniTable/index.
 import { BsBox } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
 
-import AppContext from "../../components/AppContext/AppContext.js";
-
 import { GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS, GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION } from "../../utils/queries.js";
 
 export default function Explorer() {
@@ -40,8 +38,6 @@ export default function Explorer() {
 
   const [blocksCount, setBlocksCount] = useState(0);
   const [transactionsCount, setTransactionsCount] = useState(0);
-
-  const globalState = useContext(AppContext);
 
   useEffect(() => {
 
@@ -128,7 +124,7 @@ export default function Explorer() {
         {/* Tables Grid */}
         <SimpleGrid spacing="24px" templateRows="1fr 1fr">
 
-          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}>
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
                 <BlocksMiniTable />
@@ -136,7 +132,7 @@ export default function Explorer() {
             </CardHeader>
           </Card>
 
-          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }}>
+          <Card p="28px 10px 16px 0px" mb={{ sm: "26px", lg: "0px" }} overflowX={{ sm: "scroll", xl: "hidden" }}>
             <CardHeader mb="20px" pl="22px">
               <Flex direction="column" alignSelf="flex-start">
                 <TransactionsMiniTable />

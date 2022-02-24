@@ -28,6 +28,9 @@ import {
     Alert,
     AlertIcon,
     Box,
+    Link,
+    Icon,
+    Divider
 } from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
@@ -39,7 +42,7 @@ import CardHeader from '../../components/Card/CardHeader'
 
 import { CHAIN_SLUGS_2, PORTS, PREFIX } from '../../constants'
 
-import TransactionTableRowAddressPage from '../../components/Tables/TransactionTableRowAddressPage'
+import TransactionTableRow from '../../components/Tables/TransactionTableRow'
 
 import Pagination from '../../components/Pagination'
 
@@ -55,6 +58,7 @@ const chainPort = (chain) => {
 export default function Address() {
     const { hash } = useParams()
     const navigateTo = useNavigate()
+
     const [balance, setBalance] = useState(0)
 
     const [currentPage, setCurrentPage] = useState(1)
@@ -114,7 +118,7 @@ export default function Address() {
                 try {
                     data = await axios.post(
                         'http://45.76.19.78:' +
-                            chainPort(chain(numAddressPrefix)),
+                        chainPort(chain(numAddressPrefix)),
                         JSON.stringify(payload),
                         {
                             headers: {
@@ -128,12 +132,9 @@ export default function Address() {
                         <>
                             {window.innerWidth < 768 ? <Box p={4}></Box> : null}
                             <Box p={4}></Box>
-                            <Alert status="error" mt={20}>
+                            <Alert status='error' mt={5} >
                                 <AlertIcon />
-                                <Text fontSize="sm">
-                                    There was a problem. We sincerely apologize
-                                    for any inconvenience this may cause.
-                                </Text>
+                                <Text fontSize='md'> Sorry! There seems to be a problem with loading this page. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>
                             </Alert>
                         </>
                     )
@@ -160,12 +161,9 @@ export default function Address() {
                         <>
                             {window.innerWidth < 768 ? <Box p={4}></Box> : null}
                             <Box p={4}></Box>
-                            <Alert status="error" mt={20}>
+                            <Alert status='error' mt={5} >
                                 <AlertIcon />
-                                <Text fontSize="sm">
-                                    There was a problem. We sincerely apologize
-                                    for any inconvenience this may cause.
-                                </Text>
+                                <Text fontSize='md'> Sorry! There seems to be a problem with loading this page. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>
                             </Alert>
                         </>
                     )
@@ -181,84 +179,108 @@ export default function Address() {
                 {window.innerWidth < 768 ? <Box p={4}></Box> : null}
                 <Box p={10}></Box>
                 <IconButton
-                    onClick={() => navigateTo('/')}
+                    onClick={() => navigateTo(-1)}
                     icon={<ArrowBackIcon />}
-                    aria-label="Back to the Explorer home page"
+                    aria-label="Back to the previous page"
                     w="24px"
                 />
-                <Alert status="error" mt={7}>
+                <Alert status='error' mt={5} >
                     <AlertIcon />
-                    <Text fontSize="xl">This hash is invalid.</Text>
+                    <Text fontSize='md'> Sorry! There seems to be a problem with loading this page. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>
                 </Alert>
             </>
         )
-    } else {
+    }
+
+    if (loading) {
+
+        return (
+            <Spinner
+                thickness="2px"
+                speed="0.65s"
+                emptyColor="gray.300"
+                color="brand.300"
+                size="md"
+                ml={4}
+                mt={2}
+                label={spinnerLabel}
+            />
+
+        )
+
+    }
+
+    else {
         return (
             <>
                 <Card
-                    mt={{ base: '120px', md: '100px' }}
+                    mt={{ base: '120px', md: '75' }}
                     overflowX={{ sm: 'scroll', xl: 'hidden' }}
                 >
                     <CardBody>
-                        <VStack spacing="12px" align="left">
+                        <Flex direction="column" pb=".8rem" pl="1rem">
                             <IconButton
-                                onClick={() => navigateTo('/')}
+                                onClick={() => navigateTo(-1)}
                                 icon={<ArrowBackIcon />}
-                                aria-label="Back to the Explorer home page"
+                                aria-label="Back to the previous page"
                                 w="24px"
                             />
-                            <Spacer />
-                            <Heading as="h1" size="lg">
+
+                            <Box p={3}> </Box>
+                            <Heading as="h1">
                                 Address{' '}
-                                <CopyToClipboardButton
-                                    innerText={hash}
-                                    copyThisToClipboard={hash}
-                                />
                             </Heading>{' '}
-                            <Heading as="h2" size="md">
+                            <Text fontSize="xl">  {hash} </Text>
+                            <Box p={1}> </Box>
+                            <Heading as="h2" fontSize="lg" >
                                 {' '}
-                                Balance:{' '}
+                                Balance{' '}
                             </Heading>{' '}
                             <Text fontSize="lg"> {balance}</Text>
-                        </VStack>
+                            <Box p={3}> </Box>
+                            {transactions.length === 0 &&
+
+                                <>
+                                    <Divider />
+                                    <Text fontSize='sm' mt={2} as="b"> There are no transactions for this address at this time.</Text>
+                                </>
+
+                            }
+                        </Flex>
                     </CardBody>
                 </Card>
 
                 <Spacer />
 
-                <Card mt={5} overflowX={{ sm: 'scroll', xl: 'hidden' }}>
-                    <CardHeader mb="20px" pl="22px" pt="10px">
-                        <Flex direction="column" alignSelf="flex-start">
-                            <Heading
-                                as="h1"
-                                fontSize="3xl"
-                                color={textColor}
-                                fontWeight="bold"
-                            >
-                                Transactions
-                            </Heading>
-                        </Flex>
-                    </CardHeader>
+                {transactions.length > 0 &&
+                    <Card mt={5} overflowX={{ sm: 'scroll', xl: 'hidden' }}>
+                        <CardHeader mb="20px" pl="22px" pt="10px">
 
-                    {!loading ? (
+                            <Flex direction="column" alignSelf="flex-start">
+                                <Heading
+                                    as="h1"
+                                    fontSize="3xl"
+                                    color={textColor}
+                                    fontWeight="bold"
+                                    mr={2}
+                                >
+                                    Transactions
+                                </Heading>
+                            </Flex>
+                        </CardHeader>
+
+
                         <CardBody>
                             <Flex flexDirection="column">
-                                <Table size="sm" variant="simple" color={textColor}>
+                                <Table size="sm" variant="simple" color={textColor} ml={3}>
                                     <Thead>
                                         <Tr my=".8rem" ps="0px">
-                                            <Th color="gray.400">Tx Hash</Th>
+                                            <Th color="gray.400">TX Hash</Th>
+                                            <Th color="gray.400">Block Number</Th>
+                                            <Th color="gray.400">Age</Th>
+                                            <Th color="gray.400">From</Th>
                                             <Th color="gray.400">To</Th>
-                                            <Th color="gray.400" isNumeric>
-                                                {' '}
-                                                Value
-                                            </Th>
-                                            <Th color="gray.400" isNumeric>
-                                                Gas
-                                            </Th>
-                                            <Th color="gray.400" isNumeric>
-                                                Block Number
-                                            </Th>
-                                            <Th color="gray.400">Block Hash</Th>
+                                            <Th color="gray.400"> Value</Th>
                                         </Tr>
                                     </Thead>
 
@@ -266,35 +288,16 @@ export default function Address() {
                                         {transactions?.map(
                                             (transaction, index) => {
                                                 return (
-                                                    <TransactionTableRowAddressPage
-                                                        transactionHash={
-                                                            transaction.hash
-                                                        }
-                                                        toThisMiner={
-                                                            transaction.to_addr
-                                                        }
-                                                        fromThisMiner={
-                                                            transaction.from_addr
-                                                        }
-                                                        blockNumber={
-                                                            transaction.block_number
-                                                        }
-                                                        quaiSent={
-                                                            transaction.tx_value
-                                                        }
-                                                        timestamp={
-                                                            transaction.tx_time
-                                                        }
-                                                        gas={
-                                                            transaction
-                                                                .full_transaction
-                                                                .gas
-                                                        }
-                                                        blockHash={
-                                                            transaction
-                                                                .full_transaction
-                                                                .blockHash
-                                                        }
+                                                    <TransactionTableRow
+                                                        transactionHash={transaction.hash}
+                                                        toThisMiner={transaction.to_addr}
+                                                        fromThisMiner={transaction.from_addr}
+                                                        blockNumber={transaction.block_number}
+                                                        blockHash={transaction.full_transaction.blockHash}
+                                                        toLocation={transaction.to_location}
+                                                        fromLocation={transaction.from_location}
+                                                        value={transaction.tx_value}
+                                                        timestamp={transaction.tx_time}
                                                         key={index}
                                                     />
                                                 )
@@ -322,19 +325,9 @@ export default function Address() {
                                 </Flex>
                             </Flex>
                         </CardBody>
-                    ) : (
-                        <Spinner
-                            thickness="2px"
-                            speed="0.65s"
-                            emptyColor="gray.300"
-                            color="brand.300"
-                            size="md"
-                            ml={4}
-                            mt={2}
-                            label={spinnerLabel}
-                        />
-                    )}
-                </Card>
+
+                    </Card>}
+
             </>
         )
     }

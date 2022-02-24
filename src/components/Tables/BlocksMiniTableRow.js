@@ -38,45 +38,29 @@ export default function BlocksMiniTableRow(props) {
 
   let minerAddressReduced
   if (minerAddress) {
-    minerAddressReduced = reduceString(minerAddress)
+    minerAddressReduced = reduceStringShowMediumLength(minerAddress)
   }
-
-
-
 
   return (
     <Tr>
 
-      <Td>
-        <HStack>
-          <Icon as={BsBox} color={locationColor} />
-          <Text
-            fontSize="md"
-            color={textColor}
-            fontWeight="bold"
-          >
-            {location}
-          </Text>
-        </HStack>
-
-      </Td>
 
 
       <Td>
-    
+
         <VStack alignItems="left" spacing={0}>
-        <Link onClick={() => navigateTo(`/block/${hash}`)}>
+          <Link onClick={() => navigateTo(`/block/${hash}`)}>
             <Text
               fontSize="md"
-              color={textColor}
+              color={"blue.300"}
               fontWeight="bold"
 
             >
-              {blockNumber} 
+              {blockNumber}
             </Text>
-            </Link>
+          </Link>
 
-        
+
 
 
           <Text
@@ -91,19 +75,41 @@ export default function BlocksMiniTableRow(props) {
       </Td>
 
       <Td>
+        <HStack>
+          <Icon as={BsBox} color={locationColor} />
+          <Text
+            fontSize="md"
+            color={locationColor}
+            fontWeight="bold"
+          >
+            {location}
+          </Text>
+        </HStack>
+
+      </Td>
+
+
+      <Td>
         <VStack alignItems="left" spacing={0}>
-          <Link onClick={() => navigateTo(`/block/${hash}`)}>
-            <Text
-              fontSize="md"
-              color={"blue.300"}
-              fontWeight="bold"
-              as="u"
 
+          <Text
+            fontSize="sm"
+            color={'gray.500'}
 
-            >
-              {hashReduced}
-            </Text>
-          </Link>
+          >
+            Miner:
+          </Text>
+
+          <Text
+            fontSize="md"
+            color={"blue.300"}
+            fontWeight="bold"
+
+          >
+            <Link onClick={() => navigateTo(`/address/${minerAddress}`)}>
+              {minerAddressReduced}
+            </Link>
+          </Text>
 
 
 

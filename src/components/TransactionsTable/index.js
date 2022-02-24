@@ -16,10 +16,13 @@ import {
   Tr,
   Th,
   useColorModeValue,
-  Flex
+  Flex,
+  Link
 } from '@chakra-ui/react';
+import { convertTimeString } from '../../utils';
 
-export default function TransactionTable({ setTransactionsCount }) {
+
+export default function TransactionsTable() {
   // Component state
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -28,7 +31,7 @@ export default function TransactionTable({ setTransactionsCount }) {
   const [txCountLocal, setTxCountLocal] = useState(0);
 
   // GraphQL queries
-  const { loading, error, data, refetch: refetchTransactionData } = useQuery(GET_TRANSACTIONS, { variables: {  fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
+  const { loading, error, data, refetch: refetchTransactionData } = useQuery(GET_TRANSACTIONS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
 
   // Other hooks
   // const navigateTo = useNavigate();
@@ -39,10 +42,11 @@ export default function TransactionTable({ setTransactionsCount }) {
 
   // When this component mounts, grab a reference to all transactions, set the transaction count, and set the totalPageCount to allow for pagination
   useEffect(() => {
+    refetchTransactionData();
+
     if (data) {
       setTransactions(data?.transactions);
       let transactionsCount = data?.transactions_aggregate?.aggregate?.count;
-      setTransactionsCount(transactionsCount);
       setTxCountLocal(transactionsCount);
       setTotalPage(parseInt(transactionsCount / limit) + 1);
     }
@@ -58,7 +62,7 @@ export default function TransactionTable({ setTransactionsCount }) {
       <>
         <Alert status='error' mt={5} >
           <AlertIcon />
-          <Text fontSize='sm'>There was a problem loading this table. We sincerely apologize for any inconvenience this may cause.</Text>
+          <Text fontSize='md'> Sorry! There seems to be a problem with loading this table. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>
         </Alert>
       </>
     )
@@ -68,30 +72,24 @@ export default function TransactionTable({ setTransactionsCount }) {
     <>
       {!loading ?
         <>
-          <Table size="sm" variant="simple" color={textColor} mb={6}>
+           <Flex flexDir="column">
+          <Table variant="simple" color={textColor} mb={6}>
 
-            { window.innerWidth > 768 ?
-            <Thead>
-              <Tr my=".8rem" ps="0px">
-                <Th color="gray.400">TX Hash</Th>
-                <Th color="gray.400" isNumeric>Block</Th>
-                <Th color="gray.400" isNumeric> Value</Th>
-                <Th color="gray.400"></Th>
-              </Tr>
-            </Thead>
-            :
-            <Thead>
-            <Tr my=".8rem" ps="0px">
-              <Th color="gray.400"></Th>
-              <Th color="gray.400">TX Hash</Th>
-              <Th color="gray.400" isNumeric>Block</Th>
-              <Th color="gray.400" isNumeric> Value</Th>
-            </Tr>
-          </Thead>
-
-            }
+          
+              <Thead>
+                <Tr my=".8rem" ps="0px">
+                  <Th color="gray.400">TX Hash</Th>
+                  <Th color="gray.400">Block Number</Th>
+                  <Th color="gray.400">Age</Th>
+                  <Th color="gray.400">From</Th>
+                  <Th color="gray.400">To</Th>
+                  <Th color="gray.400"> Value</Th>
+                </Tr>
+              </Thead>
 
             
+
+
 
 
             <Tbody>
@@ -99,11 +97,14 @@ export default function TransactionTable({ setTransactionsCount }) {
                 return (
                   <TransactionTableRow
                     transactionHash={transaction.hash}
-                    toThisMiner={transaction.to}
-                    fromThisMiner={transaction.from}
+                    toThisMiner={transaction.to_addr}
+                    fromThisMiner={transaction.from_addr}
                     blockNumber={transaction.block_number}
-                    quaiSent={transaction.tx_value}
-                    timestamp={transaction.timestamp}
+                    blockHash={transaction.full_transaction.blockHash}
+                    toLocation={transaction.to_location}
+                    fromLocation={transaction.from_location}
+                    value={transaction.tx_value}
+                    timestamp={transaction.tx_time}
                     key={index}
                   />
                 );
@@ -111,16 +112,15 @@ export default function TransactionTable({ setTransactionsCount }) {
             </Tbody>
 
           </Table>
-          <Flex justifyContent="space-between">
-          {totalPage > 1 ?
-           <Pagination
-           currentPage={currentPage}
-           totalCount={txCountLocal !== 0 ? txCountLocal : 0}
-           pageSize={limit}
-           onPageChange={page => setCurrentPage(page)}
-           textColor={textColor}
-         /> : null}
-         </Flex>
+            {totalPage > 1 ?
+              <Pagination
+                currentPage={currentPage}
+                totalCount={txCountLocal !== 0 ? txCountLocal : 0}
+                pageSize={limit}
+                onPageChange={page => setCurrentPage(page)}
+                textColor={textColor}
+              /> : null}
+          </Flex>
         </>
         : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>
