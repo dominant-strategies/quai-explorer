@@ -376,5 +376,14 @@ export const GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION = gql`
     }
 `
 
+export const GET_TOTAL_NUMBER_OF_TRANSACTIONS_SUBSCRIPTION = gql`
+    subscription GetTotalNumberOfTransactions {
+        transactions_aggregate {
+            aggregate {
+                count
+            }
+        }
+    }
+`
 
 
