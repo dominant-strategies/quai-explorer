@@ -14,13 +14,15 @@ import { QUAI_STATS_BLOCKS_LINKS, BLOCK_COLORS } from '../../constants'
 
 
 export default function BlockTableRow(props) {
-    const { location, blockNumber, minerAddress, age, timestamp, gasUsed, gasLimit, hash } = props
+    const { location, blockNumber, minerAddress, age, timestamp, gasUsed, gasLimit, hash, transactions, uncles } = props
     const textColor = useColorModeValue('gray.700', 'white')
-    const secondaryTextColor = useColorModeValue('gray.700', 'gray.200')
     const navigateTo = useNavigate()
     let linkToQuaiStats = `https://${QUAI_STATS_BLOCKS_LINKS[location]}.quaistats.info/`
 
     let locationColor = BLOCK_COLORS[location];
+
+    let txCount = transactions.length
+    let uncleCount = uncles.length
 
 
     return (
@@ -46,6 +48,18 @@ export default function BlockTableRow(props) {
         <Td>
           <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
            {age} at {timestamp} 
+          </Text>
+        </Td>
+
+        <Td>
+          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+           {txCount} 
+          </Text>
+        </Td>
+
+        <Td>
+          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+           {uncleCount} 
           </Text>
         </Td>
 

@@ -272,6 +272,7 @@ export default function Address() {
 
                         <CardBody>
                             <Flex flexDirection="column">
+                            <Text size="md" fontWeight="bold" ml={7} pb={5} color="gray.400"> {transactionsCount} total transactions </Text>
                                 <Table size="sm" variant="simple" color={textColor} ml={3}>
                                     <Thead>
                                         <Tr my=".8rem" ps="0px">

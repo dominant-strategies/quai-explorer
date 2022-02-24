@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { useParams, useNavigate } from 'react-router-dom'
 import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
-import { SHARDED_ADDRESS, QUAI_STATS_LINKS } from '../../constants'
+import { SHARDED_ADDRESS, QUAI_STATS_LINKS, BLOCK_COLORS } from '../../constants'
 import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
 import {
     Box,
@@ -15,12 +15,16 @@ import {
     Alert,
     AlertIcon,
     Link,
+    Icon,
+    HStack
 } from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
 
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+
+import { BsBox } from "react-icons/bs";
 
 export default function Block() {
     // Component state
@@ -52,6 +56,8 @@ export default function Block() {
     let location = block?.location
     let linkToQuaiStats = `https://${QUAI_STATS_LINKS[location]}.quaistats.info/`
 
+    let locationColor = BLOCK_COLORS[location];
+
     if (location) {
         location = SHARDED_ADDRESS[location]
     }
@@ -70,6 +76,9 @@ export default function Block() {
     if (networkDifficulty) {
         networkDifficulty = parseInt(networkDifficulty, 16)
     }
+
+    const txCount = block?.header.transactions.length
+    const uncleCount = block?.header.uncles.length
 
     /**
      * Error handling in the event the GQL query fails
@@ -130,7 +139,7 @@ export default function Block() {
                                 {' '}
                                 Location:{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg" color="blue.500">
+                            <Text fontSize="lg" color={locationColor}>
                                 {' '}
                                 <Link href={linkToQuaiStats} isExternal>
                                     {' '}
@@ -142,6 +151,16 @@ export default function Block() {
                                 Hash:{' '}
                             </Heading>
                             <Text fontSize="lg"> {blockHash}</Text>
+                            <Heading as="h2" size="md">
+                                {' '}
+                                Number of Txs:{' '}
+                            </Heading>
+                            <Text fontSize="lg"> {txCount}</Text>
+                            <Heading as="h2" size="md">
+                                {' '}
+                                Number of Uncles:{' '}
+                            </Heading>
+                            <Text fontSize="lg"> {uncleCount}</Text>
                             <Heading as="h2" size="md">
                                 {' '}
                                 Timestamp:{' '}
