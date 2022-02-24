@@ -1,29 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider
-} from "@apollo/client";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
-import { split, HttpLink } from '@apollo/client';
-import { getMainDefinition } from '@apollo/client/utilities';
-import { WebSocketLink } from '@apollo/client/link/ws';
-import App from './pages/App';
+import { split, HttpLink } from '@apollo/client'
+import { getMainDefinition } from '@apollo/client/utilities'
+import { WebSocketLink } from '@apollo/client/link/ws'
+import App from './pages/App'
 
 const httpLink = new HttpLink({
-  uri: 'https://quainetworktest.hasura.app/v1/graphql'
-});
+    uri: 'https://quainetworktest.hasura.app/v1/graphql',
+})
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://quainetworktest.hasura.app/v1/graphql',
-  options: {
-    reconnect: true,
-    lazy: true,
-    timeout: 30000,
-    inactivityTimeout: 30000,
-  },
-});
+    uri: 'wss://quainetworktest.hasura.app/v1/graphql',
+    options: {
+        reconnect: true,
+        lazy: true,
+        timeout: 30000,
+        inactivityTimeout: 30000,
+    },
+})
 
 // The split function takes three parameters:
 //
@@ -31,31 +27,29 @@ const wsLink = new WebSocketLink({
 // * The Link to use for an operation if the function returns a "truthy" value
 // * The Link to use for an operation if the function returns a "falsy" value
 const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  httpLink,
-);
-
-
+    ({ query }) => {
+        const definition = getMainDefinition(query)
+        return (
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'subscription'
+        )
+    },
+    wsLink,
+    httpLink
+)
 
 const client = new ApolloClient({
-  // uri: 'https://quainetworktest.hasura.app/v1/graphql',
-  link: splitLink,
-  cache: new InMemoryCache(),
-});
+    // uri: 'https://quainetworktest.hasura.app/v1/graphql',
+    link: splitLink,
+    cache: new InMemoryCache(),
+})
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
-  document.getElementById('root')
-);
+    <ApolloProvider client={client}>
+        <App />
+    </ApolloProvider>,
+    document.getElementById('root')
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
