@@ -25,6 +25,8 @@ export default function TransactionTableRow(props) {
     blockNumber, timestamp, blockHash, toLocation, fromLocation, fromAddressPage } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const navigateTo = useNavigate();
+  
+  console.log("to location", toLocation)
 
   let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[toLocation]
 
