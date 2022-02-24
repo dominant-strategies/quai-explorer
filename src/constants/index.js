@@ -144,7 +144,7 @@ export const PREFIX = {
 }
 
 export const QUAI_STATS_LINKS = {
-    prime: 'prime',
+    'prime': 'prime',
     'region-1': 'cyprus',
     'region-2': 'paxos',
     'region-3': 'hydra',
@@ -160,7 +160,7 @@ export const QUAI_STATS_LINKS = {
 }
 
 export const QUAI_STATS_LINKS_MAPPING_2 = {
-    prime: 'prime',
+    'prime': 'prime',
     'region_1': 'cyprus',
     'region_2': 'paxos',
     'region_3': 'hydra',
@@ -171,7 +171,7 @@ export const QUAI_STATS_LINKS_MAPPING_2 = {
     'zone_2_2': 'paxos2',
     'zone_2_3': 'paxos3',
     'zone_3_1': 'hydra1',
-    'zone_3-2': 'hydra2',
+    'zone_3_2': 'hydra2',
     'zone_3_3': 'hydra3',
 }
 
@@ -208,10 +208,10 @@ export const LINKS_PRESENT = {
 
 
 export const QUAI_STATS_BLOCKS_LINKS = {
-    'Prime': 'prime',
-    'Cyprus': 'cyprus',
-    'Paxos': 'paxos',
-    'Hydra': 'hydra',
+     Prime: 'prime',
+     Cyprus: 'cyprus',
+     Paxos: 'paxos',
+     Hydra: 'hydra',
     'Cyprus One': 'cyprus1',
     'Cyprus Two': 'cyprus2',
     'Cyprus Three': 'cyprus3',
