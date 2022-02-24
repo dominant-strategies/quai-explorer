@@ -119,10 +119,7 @@ export default function Transaction() {
                                 {' '}
                                 Tx Hash:{' '}
                             </Heading>
-                            <CopyToClipboardButton
-                                innerText={transactionHashReduced}
-                                copyThisToClipboard={transactionHash}
-                            />
+                            <Text> {transactionHash} </Text>
                             {blockNumber != null ? (
                                 <>
                                     {' '}

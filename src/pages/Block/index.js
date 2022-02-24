@@ -141,10 +141,7 @@ export default function Block() {
                                 {' '}
                                 Hash:{' '}
                             </Heading>
-                            <CopyToClipboardButton
-                                innerText={blockHashReduced}
-                                copyThisToClipboard={blockHash}
-                            />
+                            <Text fontSize="lg"> {blockHash}</Text>
                             <Heading as="h2" size="md">
                                 {' '}
                                 Timestamp:{' '}
