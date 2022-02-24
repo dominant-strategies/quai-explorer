@@ -114,11 +114,9 @@ const Pagination = props => {
   
 
   return (
-    <Flex direction="column">
-    <Card p="16px" my="24px">
-      <CardBody px="5px">
-          <Flex direction="column">
-              <Flex justifyContent="space-between">
+    <Flex justifyContent="space-between" m={4} alignItems="center">
+
+
                 <ButtonGroup size="lg" spacing="2">
 
                 {paginationRange.map(pageNumber => {
@@ -132,11 +130,9 @@ const Pagination = props => {
                 })}
 
                 </ButtonGroup>
-              </Flex>
+   
  
-          </Flex>
-      </CardBody>
-    </Card>
+
   </Flex>
   )
 
