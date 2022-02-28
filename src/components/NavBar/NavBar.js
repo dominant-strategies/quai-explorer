@@ -1,29 +1,20 @@
+import { useQuery } from '@apollo/client'
+import { MoonIcon, SearchIcon, SmallCloseIcon, SunIcon } from '@chakra-ui/icons'
 import {
-    Box,
-    Button,
-    useColorModeValue,
-    Flex,
-    IconButton,
-    Input,
+    Box, Flex,
+    IconButton, Image, Input,
     InputGroup,
-    InputRightElement,
-    Image,
-    useColorMode,
+    InputRightElement, useColorMode, useColorModeValue
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
-import { SearchIcon, MoonIcon, SunIcon, SmallCloseIcon } from '@chakra-ui/icons'
 import LogoBanner from '../../assets/images/QuaiLogoBanner.svg'
 import LogoBannerGray from '../../assets/images/quaiLogoBannerGray.svg'
-import { FaHouseUser } from 'react-icons/fa'
-
 import {
-    GET_BLOCK_WITH_HASH,
-    GET_TRANSACTION_WITH_HASH,
-    GET_TRANSACTIONS_FOR_FROM_ADDRESS,
-    GET_TRANSACTIONS_FOR_TO_ADDRESS
+    GET_BLOCK_WITH_HASH, GET_TRANSACTIONS_FOR_FROM_ADDRESS,
+    GET_TRANSACTIONS_FOR_TO_ADDRESS, GET_TRANSACTION_WITH_HASH
 } from '../../utils/queries'
+
 
 export default function NavBar(props) {
     const settingsRef = React.useRef()
@@ -121,10 +112,10 @@ export default function NavBar(props) {
             (
                 BlockData?.blocks.length > 0 ||
                 TransactionData?.transactions.length > 0 ||
-                TransactionFromAddressData?.transactions.length > 0 || 
+                TransactionFromAddressData?.transactions.length > 0 ||
                 TransactionToAddressData?.transactions.length > 0
-                
-            ) 
+
+            )
             && searchHash.length !== 0) {
             return (
                 <InputRightElement

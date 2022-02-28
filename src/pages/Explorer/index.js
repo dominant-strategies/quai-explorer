@@ -1,35 +1,24 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useSubscription } from '@apollo/client';
 import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Grid,
-  Icon,
-  HStack,
-  SimpleGrid,
-  Spacer,
-  Spinner,
+  Box, Flex, Icon, SimpleGrid, Spinner,
   Stat,
   StatLabel,
-  StatNumber,
-  Text,
-  useColorModeValue,
+  StatNumber, useColorModeValue
 } from "@chakra-ui/react";
-import { useQuery, useSubscription } from '@apollo/client';
-
+import React, { useEffect, useState } from "react";
+import { BsBox } from "react-icons/bs";
+import { GiMoneyStack } from "react-icons/gi";
+import BlocksMiniTable from "../../components/BlocksMiniTable/index.js";
 import Card from "../../components/Card/Card.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import IconBox from "../../components/Icons/IconBox";
-
-import BlocksMiniTable from "../../components/BlocksMiniTable/index.js";
 import TransactionsMiniTable from "../../components/TransactionsMiniTable/index.js";
+import { GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION, GET_TOTAL_NUMBER_OF_TRANSACTIONS_SUBSCRIPTION } from "../../utils/queries.js";
 
-import { BsBox } from "react-icons/bs";
-import { GiMoneyStack } from "react-icons/gi";
 
-import { GET_TOTAL_NUMBER_OF_TRANSACTIONS_SUBSCRIPTION, GET_TOTAL_NUMBER_OF_BLOCKS_SUBSCRIPTION } from "../../utils/queries.js";
+
+
 
 export default function Explorer() {
 

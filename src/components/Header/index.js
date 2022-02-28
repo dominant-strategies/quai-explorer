@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MENU } from "../../constants/index";
 import LogoIcon from "../../assets/images/quai-rounded-logo.svg";
+import { MENU } from "../../constants/index";
 
 function Header() {
     const { pathname } = useLocation();
-    
+
     return (
         <div className="px-3 py-1 flex justify-between items-center">
             <img src={LogoIcon} alt="logo" width="100" />

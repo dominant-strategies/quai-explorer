@@ -1,6 +1,6 @@
 import React from 'react'
 
-function InfoBox({Icon, title, className, value}) {
+function InfoBox({ Icon, title, className, value }) {
     return (
         <div className="flex items-center justify-center md:justify-start border border-gray-500 p-2">
             <Icon className={`${className} h-28 w-28`} />

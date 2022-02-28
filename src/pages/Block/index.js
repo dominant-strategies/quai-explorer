@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-import { useParams, useNavigate } from 'react-router-dom'
-import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
-import { SHARDED_ADDRESS, QUAI_STATS_LINKS, BLOCK_COLORS } from '../../constants'
-import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
-    Box,
-    Spacer,
+    Alert,
+    AlertIcon, Box, Heading, IconButton, Link, Spacer,
     Spinner,
     Text,
-    VStack,
-    IconButton,
-    Heading,
-    Alert,
-    AlertIcon,
-    Link,
-    Icon,
-    HStack
+    VStack
 } from '@chakra-ui/react'
-import { ArrowBackIcon } from '@chakra-ui/icons'
-import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
-
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+import { BLOCK_COLORS, QUAI_STATS_LINKS, SHARDED_ADDRESS } from '../../constants'
+import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
+import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
 
-import { BsBox } from "react-icons/bs";
+
 
 export default function Block() {
     // Component state

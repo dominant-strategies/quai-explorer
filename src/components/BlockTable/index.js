@@ -1,31 +1,21 @@
-import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { SHARDED_ADDRESS } from "../../constants";
-import { GET_BLOCKS } from "../../utils/queries";
-import { convertTimeString } from "../../utils";
-import BlockTableRow from "../Tables/BlockTableRow";
-import Pagination from '../Pagination';
-
-import { useNavigate } from 'react-router-dom';
-
 import {
   Alert,
-  AlertIcon,
-  Spinner,
-  Table,
-  Text,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  useColorModeValue,
-  Container,
-  VStack,
-  Flex,
-  Link
+  AlertIcon, Flex,
+  Link, Spinner,
+  Table, Tbody, Text, Th, Thead, Tr, useColorModeValue
 } from '@chakra-ui/react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { SHARDED_ADDRESS } from "../../constants";
+import { convertTimeString } from "../../utils";
+import { GET_BLOCKS } from "../../utils/queries";
+import Pagination from '../Pagination';
+import BlockTableRow from "../Tables/BlockTableRow";
 
-import moment from 'moment'
+
+
 
 export default function BlockTable() {
 
@@ -73,7 +63,7 @@ export default function BlockTable() {
       });
       setBlocks(tempBlocks);
       setFirstBlockNumber(tempBlocks[0].number)
-      setLastBlockNumber(tempBlocks[tempBlocks.length-1].number)
+      setLastBlockNumber(tempBlocks[tempBlocks.length - 1].number)
       const blocksCount = data?.blocks_aggregate?.aggregate?.count;
       setBlocksCountLocal(blocksCount);
       setTotalPage(parseInt(blocksCount / limit) + 1);
@@ -102,9 +92,9 @@ export default function BlockTable() {
       {!loading ?
         <>
           <Flex flexDir="column">
-           
+
             <Text size="md" fontWeight="bold" ml={5} pb={5} color="gray.400"> Block {firstBlockNumber} to Block {lastBlockNumber} of {blocksCountLocal} blocks </Text>
-          
+
             <Table variant="simple" color={textColor}>
 
               <Thead>

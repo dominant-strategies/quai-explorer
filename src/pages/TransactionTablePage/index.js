@@ -1,45 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { useQuery } from '@apollo/client'
-import { useParams, useNavigate } from 'react-router-dom'
-import {
-    GET_TRANSACTION_WITH_ADDRESS,
-    GET_TRANSACTIONS_FOR_FROM_ADDRESS,
-} from '../../utils/queries'
-import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from '../../constants'
-import {
-    convertTimeString,
-    numberWithCommas,
-    reduceStringShowMediumLength,
-} from '../../utils'
-import {
-    Spacer,
-    Text,
-    VStack,
-    IconButton,
-    Heading,
-    useColorModeValue,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Spinner,
-    Flex,
-    Alert,
-    AlertIcon,
-    Box,
-} from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
-
-
+import {
+    Box, Flex, Heading, IconButton
+} from '@chakra-ui/react'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CardHeader from '../../components/Card/CardHeader'
-
 import TransactionsTable from "../../components/TransactionsTable"
 
-import Pagination from '../../components/Pagination'
+
+
+
 
 
 export default function TransactionTablePage() {
@@ -62,7 +34,7 @@ export default function TransactionTablePage() {
                     </Flex>
                 </CardHeader>
                 <CardBody>
-                     <TransactionsTable />
+                    <TransactionsTable />
                 </CardBody>
             </Card>
         </Flex>

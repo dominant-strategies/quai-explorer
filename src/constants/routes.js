@@ -1,8 +1,8 @@
+import Address from "../pages/Address";
+import Block from "../pages/Block";
+import BlockTable from "../pages/BlockTablePage";
 import Explorer from "../pages/Explorer";
 import Transaction from "../pages/Transaction";
-import Block from "../pages/Block";
-import Address from "../pages/Address";
-import BlockTable from "../pages/BlockTablePage";
 import TransactionTablePage from "../pages/TransactionTablePage";
 
 export const routes = [

@@ -1,10 +1,8 @@
+import { Button, ButtonGroup, Flex } from "@chakra-ui/react";
 import React, { useMemo } from 'react';
 
-import { Grid, Flex, Button, ButtonGroup, Text, useColorModeValue } from "@chakra-ui/react"
 
 
-import Card from "../Card/Card.js";
-import CardBody from "../Card/CardBody.js";
 
 
 const DOTS = '...';
@@ -111,29 +109,29 @@ const Pagination = props => {
 
   let lastPage = paginationRange[paginationRange.length - 1];
 
-  
+
 
   return (
     <Flex justifyContent="space-between" m={4} alignItems="center">
 
 
-                <ButtonGroup size="lg" spacing="2">
+      <ButtonGroup size="lg" spacing="2">
 
-                {paginationRange.map(pageNumber => {
-                    if (pageNumber === DOTS) {
-                    return <Button>...</Button>;
-                    }
+        {paginationRange.map(pageNumber => {
+          if (pageNumber === DOTS) {
+            return <Button>...</Button>;
+          }
 
-                    return (
-                    <Button onClick={() => onPageChange(pageNumber)}> {pageNumber}</Button>
-                    );
-                })}
+          return (
+            <Button onClick={() => onPageChange(pageNumber)}> {pageNumber}</Button>
+          );
+        })}
 
-                </ButtonGroup>
-   
- 
+      </ButtonGroup>
 
-  </Flex>
+
+
+    </Flex>
   )
 
 };

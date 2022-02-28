@@ -1,4 +1,4 @@
-import React from "react";
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import {
   Button,
   Drawer,
@@ -6,19 +6,17 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  Flex,
-  Text,
-  useColorMode,
-  HStack
+  Flex, HStack, Text,
+  useColorMode
 } from "@chakra-ui/react";
-import { SunIcon, MoonIcon } from '@chakra-ui/icons'
+import React from "react";
 import { Divider } from "../Divider/Divider";
 
 export default function PopOutMenu(props) {
   const { secondary, isOpen, onClose, fixed, ...otherProps } = props;
   const { colorMode, toggleColorMode } = useColorMode();
   const settingsRef = React.useRef();
-  
+
   return (
     <>
       <Drawer
@@ -39,10 +37,10 @@ export default function PopOutMenu(props) {
           <DrawerBody w="340px" ps="24px" pe="40px">
             <Flex flexDirection="column">
               <Button onClick={toggleColorMode}>
-                <HStack>   
-                  {colorMode === "light" ? < MoonIcon /> : <SunIcon /> } 
+                <HStack>
+                  {colorMode === "light" ? < MoonIcon /> : <SunIcon />}
                   <Text>Toggle</Text>
-                  {colorMode === "light" ? <Text> Dark </Text> : <Text>Light</Text> }
+                  {colorMode === "light" ? <Text> Dark </Text> : <Text>Light</Text>}
                 </HStack>
               </Button>
             </Flex>

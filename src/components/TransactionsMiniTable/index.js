@@ -1,28 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useQuery, useSubscription } from '@apollo/client';
-import { SHARDED_ADDRESS } from "../../constants";
-import { GET_LATEST_TRANSACTIONS_SUBSCRIPTION } from "../../utils/queries";
-import TransactionsMiniTableRow from "../Tables/TransactionsMiniTableRow";
-import { RepeatIcon } from '@chakra-ui/icons';
-import { useNavigate } from 'react-router-dom'
-
+import { useSubscription } from '@apollo/client';
 import {
   Alert,
-  AlertIcon,
-  Spinner,
-  Table,
-  Text,
-  Button,
-  Tbody,
-  Tr,
-  Th,
-  useColorModeValue,
-  VStack,
-  Box,
-  Link
+  AlertIcon, Button, Link, Spinner,
+  Table, Tbody, Text, useColorModeValue
 } from '@chakra-ui/react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { GET_LATEST_TRANSACTIONS_SUBSCRIPTION } from "../../utils/queries";
+import TransactionsMiniTableRow from "../Tables/TransactionsMiniTableRow";
 
-import moment from 'moment'
+
 
 export default function TransactionsMiniTable() {
   // Component state

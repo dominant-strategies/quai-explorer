@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-import { useParams, useNavigate } from 'react-router-dom'
-import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
-import {
-    Box,
-    Heading,
-    Text,
-    Spinner,
-    IconButton,
-    VStack,
-    Spacer,
-    Alert,
-    AlertIcon,
-    Link,
-    Icon,
-    HStack
-} from '@chakra-ui/react'
-import { reduceStringShowMediumLength, convertTimeString } from '../../utils'
-
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { BsBox } from "react-icons/bs";
-
+import {
+    Alert,
+    AlertIcon, Box,
+    Heading, HStack, Icon, IconButton, Link, Spacer, Spinner, Text, VStack
+} from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { BsBox } from "react-icons/bs"
+import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+import { BLOCK_COLORS_MAPPING_2, LINKS_PRESENT, QUAI_STATS_LINKS_MAPPING_2 } from '../../constants'
+import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
+import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
 
-import { QUAI_STATS_BLOCKS_LINKS, BLOCK_COLORS, QUAI_STATS_LINKS_MAPPING_2, BLOCK_COLORS_MAPPING_2, LINKS_PRESENT } from '../../constants'
+
+
 
 export default function Transaction() {
     // Component state
@@ -134,7 +125,7 @@ export default function Transaction() {
                                 Tx Hash:{' '}
                             </Heading>
                             <Text> {transactionHash} </Text>
-                            
+
                             {blockNumber != null ? (
                                 <>
                                     {' '}
@@ -148,7 +139,7 @@ export default function Transaction() {
                                     </Text>{' '}
                                 </>
                             ) : null}
-                            
+
                             {timestamp !== null ? (
                                 <>
                                     {' '}
@@ -159,7 +150,7 @@ export default function Transaction() {
                                     <Text fontSize="lg"> {convertTimeString(timestamp)}</Text>{' '}
                                 </>
                             ) : null}
-                            
+
                             {from_addr !== null ? (
                                 <>
                                     <Heading as="h2" size="md">
@@ -185,7 +176,7 @@ export default function Transaction() {
                                     </HStack>
                                 </>
                             ) : null}
-                            
+
                             {to_addr !== null ? (
                                 <>
                                     <Heading as="h2" size="md">

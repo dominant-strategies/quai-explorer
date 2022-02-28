@@ -1,32 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useQuery, useSubscription } from '@apollo/client';
-import { SHARDED_ADDRESS } from "../../constants";
-import { GET_BLOCKS, GET_LATEST_BLOCKS_SUBSCRIPTION } from "../../utils/queries";
-import { convertTimeString } from "../../utils";
-import BlocksMiniTableRow from "../Tables/BlocksMiniTableRow";
-import Pagination from '../Pagination';
-import { useNavigate } from 'react-router-dom'
-import AppContext from '../AppContext/AppContext'
-
+import { useSubscription } from '@apollo/client';
 import {
   Alert,
-  AlertIcon,
-  Spinner,
-  Table,
-  Text,
-  Button,
-  Tbody,
-  Tr,
-  Th,
-  useColorModeValue,
-  VStack,
-  Box,
-  Flex,
-  Link
+  AlertIcon, Button, Link, Spinner,
+  Table, Tbody, Text, useColorModeValue
 } from '@chakra-ui/react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { SHARDED_ADDRESS } from "../../constants";
+import { GET_LATEST_BLOCKS_SUBSCRIPTION } from "../../utils/queries";
+import BlocksMiniTableRow from "../Tables/BlocksMiniTableRow";
 
-import moment from 'moment'
-import { RepeatIcon } from '@chakra-ui/icons';
+
 
 export default function BlocksMiniTable() {
   // Component state
@@ -68,7 +53,7 @@ export default function BlocksMiniTable() {
     return (
       <Alert status='error' mt={5} >
         <AlertIcon />
-        <Text fontSize='md'> Sorry! There seems to be a problem with loading this table. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>   
+        <Text fontSize='md'> Sorry! There seems to be a problem with loading this table. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>
       </Alert>
     )
   }
@@ -87,16 +72,16 @@ export default function BlocksMiniTable() {
                     minerAddress={block.miner}
                     timestamp={block.timestamp}
                     hash={block.hash}
-                    numberOfTxs={Math.round(100*Math.random())}
+                    numberOfTxs={Math.round(100 * Math.random())}
                     key={index}
                   />
                 );
               })}
-           
+
             </Tbody>
-           
+
           </Table>
-          <Button mt={2} alignContent="center" onClick={() => navigateTo("/blocks")}> View All </Button> 
+          <Button mt={2} alignContent="center" onClick={() => navigateTo("/blocks")}> View All </Button>
 
         </> : <Spinner thickness='2px' speed='0.65s' emptyColor='gray.300' color='brand.300' size='md' ml={4} mt={2} label={spinnerLabel} />}
     </>

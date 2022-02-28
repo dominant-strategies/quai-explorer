@@ -1,25 +1,14 @@
-import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { useNavigate } from "react-router-dom";
-import Pagination from "../Pagination";
-import { GET_TRANSACTIONS } from "../../utils/queries";
-import TransactionTableRow from "../Tables/TransactionTableRow";
-
 import {
   Alert,
-  AlertIcon,
-  Spinner,
-  Text,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  useColorModeValue,
-  Flex,
-  Link
+  AlertIcon, Flex,
+  Link, Spinner, Table, Tbody, Text, Th, Thead, Tr, useColorModeValue
 } from '@chakra-ui/react';
-import { convertTimeString } from '../../utils';
+import React, { useEffect, useState } from 'react';
+import { GET_TRANSACTIONS } from "../../utils/queries";
+import Pagination from "../Pagination";
+import TransactionTableRow from "../Tables/TransactionTableRow";
+
 
 
 export default function TransactionsTable() {
@@ -72,11 +61,11 @@ export default function TransactionsTable() {
     <>
       {!loading ?
         <>
-           <Flex flexDir="column">
-           <Text size="md" fontWeight="bold" ml={5} pb={5} color="gray.400"> {txCountLocal} total transactions </Text>
-          <Table variant="simple" color={textColor} mb={6}>
+          <Flex flexDir="column">
+            <Text size="md" fontWeight="bold" ml={5} pb={5} color="gray.400"> {txCountLocal} total transactions </Text>
+            <Table variant="simple" color={textColor} mb={6}>
 
-          
+
               <Thead>
                 <Tr my=".8rem" ps="0px">
                   <Th color="gray.400">TX Hash</Th>
@@ -88,31 +77,31 @@ export default function TransactionsTable() {
                 </Tr>
               </Thead>
 
-            
 
 
 
 
-            <Tbody>
-              {transactions?.map((transaction, index) => {
-                return (
-                  <TransactionTableRow
-                    transactionHash={transaction.hash}
-                    toThisMiner={transaction.to_addr}
-                    fromThisMiner={transaction.from_addr}
-                    blockNumber={transaction.block_number}
-                    blockHash={transaction.full_transaction.blockHash}
-                    toLocation={transaction.to_location}
-                    fromLocation={transaction.from_location}
-                    value={transaction.tx_value}
-                    timestamp={transaction.tx_time}
-                    key={index}
-                  />
-                );
-              })}
-            </Tbody>
 
-          </Table>
+              <Tbody>
+                {transactions?.map((transaction, index) => {
+                  return (
+                    <TransactionTableRow
+                      transactionHash={transaction.hash}
+                      toThisMiner={transaction.to_addr}
+                      fromThisMiner={transaction.from_addr}
+                      blockNumber={transaction.block_number}
+                      blockHash={transaction.full_transaction.blockHash}
+                      toLocation={transaction.to_location}
+                      fromLocation={transaction.from_location}
+                      value={transaction.tx_value}
+                      timestamp={transaction.tx_time}
+                      key={index}
+                    />
+                  );
+                })}
+              </Tbody>
+
+            </Table>
             {totalPage > 1 ?
               <Pagination
                 currentPage={currentPage}
