@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
     GET_TRANSACTION_WITH_ADDRESS,
-    GET_TRANSACTION_WITH_ADDRESS_2,
+    GET_TRANSACTIONS_FOR_FROM_ADDRESS,
 } from '../../utils/queries'
 import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from '../../constants'
 import {

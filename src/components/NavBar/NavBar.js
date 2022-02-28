@@ -21,7 +21,8 @@ import { FaHouseUser } from 'react-icons/fa'
 import {
     GET_BLOCK_WITH_HASH,
     GET_TRANSACTION_WITH_HASH,
-    GET_TRANSACTION_WITH_ADDRESS_2,
+    GET_TRANSACTIONS_FOR_FROM_ADDRESS,
+    GET_TRANSACTIONS_FOR_TO_ADDRESS
 } from '../../utils/queries'
 
 export default function NavBar(props) {
@@ -39,11 +40,19 @@ export default function NavBar(props) {
         { variables: { hash: searchHash } }
     )
     const {
-        data: TransactionAddressData,
-        refetch: refetchTransactionAddressData,
-    } = useQuery(GET_TRANSACTION_WITH_ADDRESS_2, {
+        data: TransactionFromAddressData,
+        refetch: refetchTransactionFromAddressData,
+    } = useQuery(GET_TRANSACTIONS_FOR_FROM_ADDRESS, {
         variables: { num: 1, offset: 1, hash: searchHash },
     })
+
+    const {
+        data: TransactionToAddressData,
+        refetch: refetchTransactionToAddressData,
+    } = useQuery(GET_TRANSACTIONS_FOR_TO_ADDRESS, {
+        variables: { num: 1, offset: 1, hash: searchHash },
+    })
+
 
     let mainTextColor = useColorModeValue('gray.700', 'gray.200')
     let inputBgColor = useColorModeValue('white', 'gray.800')
@@ -70,9 +79,10 @@ export default function NavBar(props) {
     const searchHashEvent = () => {
         refetchBlockData()
         refetchTransactionData()
-        refetchTransactionAddressData()
+        refetchTransactionFromAddressData()
+        refetchTransactionToAddressData()
 
-        if (BlockData || TransactionData || TransactionAddressData) {
+        if (BlockData || TransactionData || TransactionFromAddressData || TransactionToAddressData) {
             if (BlockData?.blocks.length > 0) {
                 navigateTo(`/block/${searchHash}`)
                 setSearchHash('')
@@ -83,7 +93,12 @@ export default function NavBar(props) {
                 setSearchHash('')
             }
 
-            if (TransactionAddressData?.transactions.length > 0) {
+            if (TransactionFromAddressData?.transactions.length > 0) {
+                navigateTo(`/address/${searchHash}`)
+                setSearchHash('')
+            }
+
+            if (TransactionToAddressData?.transactions.length > 0) {
                 navigateTo(`/address/${searchHash}`)
                 setSearchHash('')
             }
@@ -103,11 +118,14 @@ export default function NavBar(props) {
 
     const showSearchIconInSearchBar = () => {
         if (
-            (BlockData?.blocks.length > 0 ||
+            (
+                BlockData?.blocks.length > 0 ||
                 TransactionData?.transactions.length > 0 ||
-                TransactionAddressData?.transactions.length > 0) &&
-            searchHash.length != 0
-        ) {
+                TransactionFromAddressData?.transactions.length > 0 || 
+                TransactionToAddressData?.transactions.length > 0
+                
+            ) 
+            && searchHash.length !== 0) {
             return (
                 <InputRightElement
                     children={
@@ -138,7 +156,7 @@ export default function NavBar(props) {
                 />
             )
         } else {
-            if (searchHash.length != 0) {
+            if (searchHash.length !== 0) {
                 return (
                     <InputRightElement
                         children={
