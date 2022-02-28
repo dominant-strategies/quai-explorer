@@ -116,7 +116,10 @@ export default function Transaction() {
                     />
                 </>
             ) : (
-                <Card mt={{ base: '120px', md: '100px' }}>
+                <Card
+                    mt={{ base: '120px', md: '75px' }}
+                    overflowX={{ sm: 'scroll', xl: 'hidden' }}
+                >
                     <CardBody>
                         <VStack spacing="12px" align="left">
                             <IconButton
@@ -131,6 +134,7 @@ export default function Transaction() {
                                 Tx Hash:{' '}
                             </Heading>
                             <Text> {transactionHash} </Text>
+                            
                             {blockNumber != null ? (
                                 <>
                                     {' '}
@@ -144,6 +148,7 @@ export default function Transaction() {
                                     </Text>{' '}
                                 </>
                             ) : null}
+                            
                             {timestamp !== null ? (
                                 <>
                                     {' '}
@@ -154,6 +159,7 @@ export default function Transaction() {
                                     <Text fontSize="lg"> {convertTimeString(timestamp)}</Text>{' '}
                                 </>
                             ) : null}
+                            
                             {from_addr !== null ? (
                                 <>
                                     <Heading as="h2" size="md">
@@ -179,7 +185,8 @@ export default function Transaction() {
                                     </HStack>
                                 </>
                             ) : null}
-                            {from_addr !== null ? (
+                            
+                            {to_addr !== null ? (
                                 <>
                                     <Heading as="h2" size="md">
                                         {' '}
@@ -201,11 +208,13 @@ export default function Transaction() {
                                     </HStack>
                                 </>
                             ) : null}
+
                             <Heading as="h2" size="md">
                                 {' '}
                                 Value:{' '}
                             </Heading>{' '}
                             <Text fontSize="lg"> {value} </Text>
+
                         </VStack>
                     </CardBody>
                 </Card>

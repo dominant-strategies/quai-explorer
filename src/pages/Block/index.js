@@ -56,11 +56,11 @@ export default function Block() {
     let location = block?.location
     let linkToQuaiStats = `https://${QUAI_STATS_LINKS[location]}.quaistats.info/`
 
-    let locationColor = BLOCK_COLORS[location];
-
     if (location) {
         location = SHARDED_ADDRESS[location]
     }
+
+    let locationColor = BLOCK_COLORS[location];
 
     let timestamp = block?.timestamp
     if (timestamp) {
@@ -79,6 +79,14 @@ export default function Block() {
 
     const txCount = block?.header.transactions.length
     const uncleCount = block?.header.uncles.length
+
+    let minerAddress = block?.header.miner
+    let minerAddressReduced
+    if (minerAddress) {
+        minerAddressReduced = reduceStringShowMediumLength(minerAddress)
+    }
+
+    console.log("color: ", locationColor, minerAddress)
 
     /**
      * Error handling in the event the GQL query fails
@@ -120,7 +128,7 @@ export default function Block() {
                     />
                 </>
             ) : (
-                <Card mt={{ base: '120px', md: '100px' }}>
+                <Card mt={{ base: '120px', md: '75px' }} overflowX={{ sm: 'scroll', xl: 'hidden' }}>
                     <CardBody>
                         <VStack spacing="12px" align="left">
                             <IconButton
@@ -135,17 +143,35 @@ export default function Block() {
                                 Block Number:{' '}
                             </Heading>{' '}
                             <Text fontSize="lg"> {blockNumber} </Text>
+
                             <Heading as="h2" size="md">
                                 {' '}
                                 Location:{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg" color={locationColor}>
+                            <Text fontSize="lg" textColor={locationColor} fontWeight="bold">
                                 {' '}
                                 <Link href={linkToQuaiStats} isExternal>
                                     {' '}
                                     {location}{' '}
                                 </Link>{' '}
                             </Text>
+
+                            <Heading as="h2" size="md">
+                                {' '}
+                                Miner:{' '}
+                            </Heading>{' '}
+
+
+                            <Text fontSize="lg" color={"blue.300"} fontWeight="bold" pb=".5rem">
+
+                                <Link onClick={() => navigateTo(`/address/${minerAddress}`)}>
+                                    {minerAddress}
+                                </Link>
+
+
+                            </Text>
+
+
                             <Heading as="h2" size="md">
                                 {' '}
                                 Hash:{' '}

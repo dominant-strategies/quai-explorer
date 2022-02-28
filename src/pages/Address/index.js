@@ -146,7 +146,6 @@ export default function Address() {
             }
             load()
                 .then(() => {
-                    console.log('address data: ', data)
                     if (data) {
                         setTransactions(data?.transactions)
                         let transactionsCount =
@@ -210,11 +209,11 @@ export default function Address() {
 
     }
 
-    else {
-        return (
+    if(transactions.length === 0){
+        return(
             <>
                 <Card
-                    mt={{ base: '120px', md: '75' }}
+                    mt={{ base: '120px', md: '75px' }}
                     overflowX={{ sm: 'scroll', xl: 'hidden' }}
                 >
                     <CardBody>
@@ -238,21 +237,61 @@ export default function Address() {
                             </Heading>{' '}
                             <Text fontSize="lg"> {balance}</Text>
                             <Box p={3}> </Box>
-                            {transactions.length === 0 &&
+                            
 
-                                <>
+                             
                                     <Divider />
                                     <Text fontSize='sm' mt={2} as="b"> There are no transactions for this address at this time.</Text>
-                                </>
+                                
 
-                            }
+                            
+                        </Flex>
+                    </CardBody>
+                </Card>
+
+               
+
+            </>
+        )
+
+    }
+
+    else {
+        return (
+            <>
+                <Card
+                    mt={{ base: '120px', md: '75px' }}
+                    overflowX={{ sm: 'scroll', xl: 'hidden' }}
+                >
+                    <CardBody>
+                        <Flex direction="column" pb=".8rem" pl="1rem">
+                            <IconButton
+                                onClick={() => navigateTo(-1)}
+                                icon={<ArrowBackIcon />}
+                                aria-label="Back to the previous page"
+                                w="24px"
+                            />
+
+                            <Box p={3}> </Box>
+                            <Heading as="h1">
+                                Address{' '}
+                            </Heading>{' '}
+                            <Text fontSize="xl">  {hash} </Text>
+                            <Box p={1}> </Box>
+                            <Heading as="h2" fontSize="lg" >
+                                {' '}
+                                Balance{' '}
+                            </Heading>{' '}
+                            <Text fontSize="lg"> {balance}</Text>
+                            <Box p={3}> </Box>
+                           
                         </Flex>
                     </CardBody>
                 </Card>
 
                 <Spacer />
 
-                {transactions.length > 0 &&
+          
                     <Card mt={5} overflowX={{ sm: 'scroll', xl: 'hidden' }}>
                         <CardHeader mb="20px" pl="22px" pt="10px">
 
@@ -328,7 +367,7 @@ export default function Address() {
                             </Flex>
                         </CardBody>
 
-                    </Card>}
+                    </Card>
 
             </>
         )
