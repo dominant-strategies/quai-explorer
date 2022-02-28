@@ -12,7 +12,7 @@ import { SHARDED_ADDRESS } from "../../constants";
 import { convertTimeString } from "../../utils";
 import { GET_BLOCKS } from "../../utils/queries";
 import Pagination from '../Pagination';
-import BlockTableRow from "../Tables/BlockTableRow";
+import BlockTableRow from "../TableRows/BlockTableRow";
 
 
 

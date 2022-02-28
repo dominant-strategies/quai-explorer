@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SHARDED_ADDRESS } from "../../constants";
 import { GET_LATEST_BLOCKS_SUBSCRIPTION } from "../../utils/queries";
-import BlocksMiniTableRow from "../Tables/BlocksMiniTableRow";
+import BlocksMiniTableRow from "../TableRows/BlocksMiniTableRow";
 
 
 

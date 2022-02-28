@@ -8,7 +8,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GET_LATEST_TRANSACTIONS_SUBSCRIPTION } from "../../utils/queries";
-import TransactionsMiniTableRow from "../Tables/TransactionsMiniTableRow";
+import TransactionsMiniTableRow from "../TableRows/TransactionsMiniTableRow";
 
 
 

@@ -7,7 +7,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { GET_TRANSACTIONS } from "../../utils/queries";
 import Pagination from "../Pagination";
-import TransactionTableRow from "../Tables/TransactionTableRow";
+import TransactionTableRow from "../TableRows/TransactionTableRow";
 
 
 
