@@ -86,8 +86,6 @@ export default function Block() {
         minerAddressReduced = reduceStringShowMediumLength(minerAddress)
     }
 
-    console.log("color: ", locationColor, minerAddress)
-
     /**
      * Error handling in the event the GQL query fails
      */
