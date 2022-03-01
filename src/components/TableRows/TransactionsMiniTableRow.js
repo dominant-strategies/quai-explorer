@@ -70,6 +70,7 @@ export default function TransactionsMiniTableRow(props) {
               fontSize="md"
               color={"blue.300"}
               fontWeight="bold"
+              whiteSpace={"nowrap"}
 
 
             >
@@ -82,7 +83,7 @@ export default function TransactionsMiniTableRow(props) {
               fontSize="md"
               color={"blue.300"}
               fontWeight="bold"
-
+              whiteSpace={"nowrap"}
 
             >
               To: {toAddressReduced}
