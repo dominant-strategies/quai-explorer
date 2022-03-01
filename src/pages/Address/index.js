@@ -79,7 +79,7 @@ export default function Address() {
 
     let jsonPayload = JSON.stringify(payload)
 
-    const url = 'https://45.76.19.78:' + chainPort(chain(numAddressPrefix))
+    const url = 'http://45.76.19.78:' + chainPort(chain(numAddressPrefix))
 
     useEffect(() => {
         //valid address
