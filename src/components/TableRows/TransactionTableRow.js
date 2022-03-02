@@ -22,7 +22,6 @@ export default function TransactionTableRow(props) {
   const navigateTo = useNavigate();
 
   let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[toLocation]
-
   let fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[fromLocation]
 
   let linkToQuaiStatsToLocation = `https://${toLocationConverted}.quaistats.info/`
@@ -51,9 +50,6 @@ export default function TransactionTableRow(props) {
   }
 
   let differenceOfTime = moment.unix(timestamp).fromNow();
-
-  let truncatedValue = Number(gweiValue)
-
 
   return (
     <Tr>
@@ -97,9 +93,13 @@ export default function TransactionTableRow(props) {
               </Text>
             </>
           }
-          <Text fontSize="md" color={locationColorFromLocation} fontWeight="bold" pb=".5rem">
-            <Link href={linkToQuaiStatsFromLocation} isExternal> <Icon pt={1} as={BsBox} color={locationColorFromLocation} />  {LINKS_PRESENT[fromLocationConverted]} </Link>
-          </Text>
+
+          {
+            fromLocation !== null &&
+            <Text fontSize="md" color={locationColorFromLocation} fontWeight="bold" pb=".5rem">
+              <Link href={linkToQuaiStatsFromLocation} isExternal> <Icon pt={1} as={BsBox} color={locationColorFromLocation} />  {LINKS_PRESENT[fromLocationConverted]} </Link>
+            </Text>
+          }
 
 
         </VStack>
@@ -114,9 +114,12 @@ export default function TransactionTableRow(props) {
             </Link>
 
           </Text>
-          <Text fontSize="md" color={locationColorToLocation} fontWeight="bold" pb=".5rem">
-            <Link href={linkToQuaiStatsToLocation} isExternal>  <Icon pt={1} as={BsBox} color={locationColorToLocation} />  {LINKS_PRESENT[toLocationConverted]} </Link>
-          </Text>
+
+          {toLocation !== null &&
+            <Text fontSize="md" color={locationColorToLocation} fontWeight="bold" pb=".5rem">
+              <Link href={linkToQuaiStatsToLocation} isExternal>  <Icon pt={1} as={BsBox} color={locationColorToLocation} />  {LINKS_PRESENT[toLocationConverted]} </Link>
+            </Text>
+          }
         </VStack>
       </Td>
 

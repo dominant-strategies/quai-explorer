@@ -107,8 +107,6 @@ const Pagination = props => {
 
   let lastPage = paginationRange[paginationRange.length - 1];
 
-  console.log("props: ", props)
-  console.log("pagination range: ", paginationRange)
 
   return (
     <Flex justifyContent="space-between" m={4} alignItems="center">
