@@ -19,6 +19,15 @@ export default function TransactionsTable() {
   const [transactions, setTransactions] = useState([]);
   const [txCountLocal, setTxCountLocal] = useState(0);
 
+  function toQuai(gweiValue) {
+    return gweiValue / Math.pow(10, 18)
+  }
+
+  function toGwei(quaiValue) {
+    return quaiValue * Math.pow(10, 18)
+  }
+
+
   // GraphQL queries
   const { loading, error, data, refetch: refetchTransactionData } = useQuery(GET_TRANSACTIONS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
 
@@ -73,7 +82,8 @@ export default function TransactionsTable() {
                   <Th color="gray.400">Age</Th>
                   <Th color="gray.400">From</Th>
                   <Th color="gray.400">To</Th>
-                  <Th color="gray.400"> Value</Th>
+                  <Th color="gray.400"> Value (QUAI) </Th>
+                  <Th color="gray.400"> Value (GWEI) </Th>
                 </Tr>
               </Thead>
 
@@ -84,6 +94,7 @@ export default function TransactionsTable() {
 
               <Tbody>
                 {transactions?.map((transaction, index) => {
+                  let value = toQuai(transaction.tx_value)
                   return (
                     <TransactionTableRow
                       transactionHash={transaction.hash}
@@ -93,7 +104,8 @@ export default function TransactionsTable() {
                       blockHash={transaction.full_transaction.blockHash}
                       toLocation={transaction.to_location}
                       fromLocation={transaction.from_location}
-                      value={transaction.tx_value}
+                      value={value}
+                      gweiValue={transaction.tx_value}
                       timestamp={transaction.tx_time}
                       key={index}
                     />

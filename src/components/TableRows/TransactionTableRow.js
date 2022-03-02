@@ -16,7 +16,7 @@ import { convertTimeString, reduceStringShowMediumLength } from "../../utils";
 
 
 export default function TransactionTableRow(props) {
-  const { transactionHash, value, toThisMiner, fromThisMiner,
+  const { transactionHash, value, gweiValue, toThisMiner, fromThisMiner,
     blockNumber, timestamp, blockHash, toLocation, fromLocation, fromAddressPage } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const navigateTo = useNavigate();
@@ -52,6 +52,7 @@ export default function TransactionTableRow(props) {
 
   let differenceOfTime = moment.unix(timestamp).fromNow();
 
+  let truncatedValue = Number(gweiValue)
 
 
   return (
@@ -122,6 +123,12 @@ export default function TransactionTableRow(props) {
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
           {value}
+        </Text>
+      </Td>
+
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {truncatedValue}
         </Text>
       </Td>
 

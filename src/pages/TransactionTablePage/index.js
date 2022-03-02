@@ -9,11 +9,6 @@ import CardBody from '../../components/Card/CardBody'
 import CardHeader from '../../components/Card/CardHeader'
 import TransactionsTable from "../../components/TransactionsTable"
 
-
-
-
-
-
 export default function TransactionTablePage() {
     const navigateTo = useNavigate()
     return (

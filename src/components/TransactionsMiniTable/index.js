@@ -32,6 +32,15 @@ export default function TransactionsMiniTable() {
   }, [data])
 
 
+  function toQuai(gweiValue) {
+    let quaiValue = gweiValue / Math.pow(10, 18)
+    return quaiValue
+  }
+
+  function toGwei(quaiValue) {
+    return quaiValue * Math.pow(10, 18)
+  }
+
   /**
    * Error handling in the event the GQL query fails
    * Shows an alert
@@ -56,9 +65,10 @@ export default function TransactionsMiniTable() {
             <Tbody>
               {transactions?.map((transaction, index) => {
                 const timeDisplay = moment.unix(transaction.tx_time).fromNow();
+                const quaiValue = toQuai(transaction.tx_value)
                 return (
                   <TransactionsMiniTableRow
-                    value={transaction.tx_value}
+                    value={quaiValue}
                     blockNumber={transaction.block_number}
                     fromAddress={transaction.from_addr}
                     toAddress={transaction.to_addr}
