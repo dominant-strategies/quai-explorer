@@ -104,7 +104,7 @@ export default function TransactionsMiniTableRow(props) {
 
 
         >
-          {value} QUAI
+          {value.toFixed(3)} QUAI
         </Text>
 
 

@@ -9,8 +9,6 @@ import { GET_TRANSACTIONS } from "../../utils/queries";
 import Pagination from "../Pagination";
 import TransactionTableRow from "../TableRows/TransactionTableRow";
 
-
-
 export default function TransactionsTable() {
   // Component state
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,7 +91,7 @@ export default function TransactionsTable() {
 
               <Tbody>
                 {transactions?.map((transaction, index) => {
-                  let value = toQuai(transaction.tx_value)
+                  let value = toQuai(transaction.tx_value).toFixed(3)
                   return (
                     <TransactionTableRow
                       transactionHash={transaction.hash}
