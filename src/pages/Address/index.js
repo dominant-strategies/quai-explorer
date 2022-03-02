@@ -33,6 +33,7 @@ export default function Address() {
     const navigateTo = useNavigate()
 
     const [balance, setBalance] = useState(0)
+    const [quaiBalance, setQuaiBalance] = useState(0)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [limit, setLimit] = useState(10)
@@ -116,7 +117,9 @@ export default function Address() {
                 }
 
                 if (balance != null) {
-                    setBalance(parseInt(data.data.result), 10)
+                    let parsedBalance = (parseInt(data.data.result), 10)
+                    setBalance(parsedBalance)
+                    setQuaiBalance(toQuai(data.data.result))
                 }
             }
             load()
@@ -210,7 +213,7 @@ export default function Address() {
                                 {' '}
                                 Balance{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg"> {balance}</Text>
+                            <Text fontSize="lg"> {balance} GWEI ( {quaiBalance} QUAI )</Text>
                             <Box p={3}> </Box>
 
 
@@ -257,7 +260,7 @@ export default function Address() {
                                 {' '}
                                 Balance{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg"> {balance}</Text>
+                            <Text fontSize="lg"> {balance} GWEI ( {quaiBalance} QUAI )</Text>
                             <Box p={3}> </Box>
 
                         </Flex>
