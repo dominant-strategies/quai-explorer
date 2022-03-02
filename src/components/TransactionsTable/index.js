@@ -83,7 +83,6 @@ export default function TransactionsTable() {
                   <Th color="gray.400">From</Th>
                   <Th color="gray.400">To</Th>
                   <Th color="gray.400"> Value (QUAI) </Th>
-                  <Th color="gray.400"> Value (GWEI) </Th>
                 </Tr>
               </Thead>
 

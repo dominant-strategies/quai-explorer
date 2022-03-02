@@ -81,6 +81,10 @@ export default function Address() {
 
     const url = 'http://45.76.19.78:' + chainPort(chain(numAddressPrefix))
 
+    function toQuai(gweiValue) {
+        return gweiValue / Math.pow(10, 18)
+    }
+
     useEffect(() => {
         //valid address
         if (hash.length === 42) {
@@ -291,13 +295,14 @@ export default function Address() {
                                         <Th color="gray.400">Age</Th>
                                         <Th color="gray.400">From</Th>
                                         <Th color="gray.400">To</Th>
-                                        <Th color="gray.400"> Value</Th>
+                                        <Th color="gray.400"> Value (QUAI) </Th>
                                     </Tr>
                                 </Thead>
 
                                 <Tbody>
                                     {transactions?.map(
                                         (transaction, index) => {
+                                            let value = toQuai(transaction.tx_value)
                                             return (
                                                 <TransactionTableRow
                                                     transactionHash={transaction.hash}
@@ -307,7 +312,8 @@ export default function Address() {
                                                     blockHash={transaction.full_transaction.blockHash}
                                                     toLocation={transaction.to_location}
                                                     fromLocation={transaction.from_location}
-                                                    value={transaction.tx_value}
+                                                    value={value}
+                                                    gweiValue={transaction.tx_value}
                                                     timestamp={transaction.tx_time}
                                                     key={index}
                                                     fromAddressPage={true}

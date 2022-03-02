@@ -126,11 +126,6 @@ export default function TransactionTableRow(props) {
         </Text>
       </Td>
 
-      <Td>
-        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {truncatedValue}
-        </Text>
-      </Td>
 
     </Tr>
   );
