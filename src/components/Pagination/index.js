@@ -1,6 +1,6 @@
-import { Button, ButtonGroup, Flex } from "@chakra-ui/react";
+import { ArrowBackIcon, ArrowForwardIcon, ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
+import { Button, Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useMemo } from 'react';
-
 
 
 const DOTS = '...';
@@ -107,26 +107,21 @@ const Pagination = props => {
 
   let lastPage = paginationRange[paginationRange.length - 1];
 
+  console.log('paginationRange: ', paginationRange)
+
 
   return (
     <Flex justifyContent="space-between" m={4} alignItems="center">
 
+      <Button leftIcon={<ArrowLeftIcon />} disabled={currentPage < 2} onClick={() => onPageChange(1)}> First  </Button>
 
-      <ButtonGroup size="lg" spacing="2">
+      <Button leftIcon={<ArrowBackIcon />} disabled={currentPage < 2} onClick={() => onPrevious()}> Back  </Button>
 
-        {paginationRange.map(pageNumber => {
-          if (pageNumber === DOTS) {
-            return <Button>...</Button>;
-          }
+      <Text size="sm"> Page  </Text> <Heading size="md" fontWeight="bold" as="u"> {currentPage} </Heading>
 
-          return (
-            <Button isActive={pageNumber === currentPage} onClick={() => onPageChange(pageNumber)}> {pageNumber}</Button>
-          );
-        })}
+      <Button rightIcon={<ArrowForwardIcon />} disabled={currentPage === lastPage} onClick={() => onNext()}> Next  </Button>
 
-      </ButtonGroup>
-
-
+      <Button leftIcon={<ArrowRightIcon />} disabled={currentPage === lastPage} onClick={() => onPageChange(lastPage)}> Last  </Button>
 
     </Flex>
   )

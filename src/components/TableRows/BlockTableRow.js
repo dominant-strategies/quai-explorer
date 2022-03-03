@@ -11,14 +11,18 @@ import { BLOCK_COLORS, QUAI_STATS_BLOCKS_LINKS } from '../../constants'
 
 export default function BlockTableRow(props) {
   const { location, blockNumber, minerAddress, age, timestamp, gasUsed, gasLimit, hash, transactions, uncles } = props
+
+  console.log(transactions)
   const textColor = useColorModeValue('gray.700', 'white')
   const navigateTo = useNavigate()
   let linkToQuaiStats = `https://${QUAI_STATS_BLOCKS_LINKS[location]}.quaistats.info/`
 
   let locationColor = BLOCK_COLORS[location];
 
-  let txCount = transactions.length
-  let uncleCount = uncles.length
+  let txCount = transactions ? transactions.length : 0
+  let uncleCount = uncles ? uncles.length : 0
+
+
 
 
   return (
