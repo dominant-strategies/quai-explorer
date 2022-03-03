@@ -259,7 +259,7 @@ export default function Address() {
                             {' '}
                             Balance{' '}
                         </Heading>{' '}
-                        <Text fontSize="lg"> {quaiBalance.toFixed(4)} QUAI</Text>
+                        <Text fontSize="lg"> {quaiBalance.toPrecision(4)} QUAI</Text>
                         <Box p={3}> </Box>
 
                     </Flex>

@@ -97,7 +97,7 @@ export default function TransactionsMiniTableRow(props) {
 
 
       <Td>
-        <Badge variant='solid' colorScheme='green'>  {value.toFixed(2)} QUAI </Badge>
+        <Badge variant='solid' colorScheme='green'>  {value.toPrecision(2)} QUAI </Badge>
       </Td>
 
 

@@ -83,7 +83,7 @@ export default function TransactionsTable() {
 
               <Tbody>
                 {transactions?.map((transaction, index) => {
-                  let value = toQuai(transaction.tx_value).toFixed(4)
+                  let value = toQuai(transaction.tx_value).toPrecision(4)
                   return (
                     <TransactionTableRow
                       transactionHash={transaction.hash}

@@ -61,7 +61,7 @@ export default function Transaction() {
     }
 
     const value = transaction?.tx_value
-    let valueInQuai = toQuai(value).toFixed(18)
+    let valueInQuai = toQuai(value).toPrecision(18)
 
     let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[toLocation]
     let fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[fromLocation]
