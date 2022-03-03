@@ -5,6 +5,7 @@ import {
   Link, Spinner, Table, Tbody, Text, Th, Thead, Tr, useColorModeValue
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { toQuai } from '../../utils';
 import { GET_TRANSACTIONS } from "../../utils/queries";
 import Pagination from "../Pagination";
 import TransactionTableRow from "../TableRows/TransactionTableRow";
@@ -16,15 +17,6 @@ export default function TransactionsTable() {
   const [totalPage, setTotalPage] = useState(1);
   const [transactions, setTransactions] = useState([]);
   const [txCountLocal, setTxCountLocal] = useState(0);
-
-  function toQuai(gweiValue) {
-    return gweiValue / Math.pow(10, 18)
-  }
-
-  function toGwei(quaiValue) {
-    return quaiValue * Math.pow(10, 18)
-  }
-
 
   // GraphQL queries
   const { loading, error, data, refetch: refetchTransactionData } = useQuery(GET_TRANSACTIONS, { variables: { fetchPolicy: "cache-and-network", num: limit, offset: (currentPage - 1) * limit } });
@@ -80,7 +72,7 @@ export default function TransactionsTable() {
                   <Th color="gray.400">Age</Th>
                   <Th color="gray.400">From</Th>
                   <Th color="gray.400">To</Th>
-                  <Th color="gray.400"> Value (QUAI) </Th>
+                  <Th color="gray.400"> Value </Th>
                 </Tr>
               </Thead>
 
@@ -91,7 +83,7 @@ export default function TransactionsTable() {
 
               <Tbody>
                 {transactions?.map((transaction, index) => {
-                  let value = toQuai(transaction.tx_value).toFixed(3)
+                  let value = toQuai(transaction.tx_value).toFixed(4)
                   return (
                     <TransactionTableRow
                       transactionHash={transaction.hash}

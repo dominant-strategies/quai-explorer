@@ -1,8 +1,9 @@
 import {
-  Link, Td,
+  Badge, Link, Td,
   Text,
   Tr,
-  useColorModeValue, VStack
+  useColorModeValue,
+  VStack
 } from '@chakra-ui/react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -94,24 +95,9 @@ export default function TransactionsMiniTableRow(props) {
 
       </Td>
 
+
       <Td>
-
-        <Text
-          fontSize="md"
-          color={textColor}
-          fontWeight="bold"
-
-
-
-        >
-          {value.toFixed(3)} QUAI
-        </Text>
-
-
-
-
-
-
+        <Badge variant='solid' colorScheme='green'>  {value.toFixed(2)} QUAI </Badge>
       </Td>
 
 

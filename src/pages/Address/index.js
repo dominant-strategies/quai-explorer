@@ -14,6 +14,7 @@ import CardHeader from '../../components/Card/CardHeader'
 import Pagination from '../../components/Pagination'
 import TransactionTableRow from '../../components/TableRows//TransactionTableRow'
 import { CHAIN_SLUGS_2, PORTS, PREFIX } from '../../constants'
+import { toQuai } from '../../utils'
 import {
     GET_TRANSACTIONS_FOR_FROM_ADDRESS
 } from '../../utils/queries'
@@ -82,10 +83,6 @@ export default function Address() {
     let jsonPayload = JSON.stringify(payload)
 
     const url = 'http://45.76.19.78:' + chainPort(chain(numAddressPrefix))
-
-    function toQuai(gweiValue) {
-        return gweiValue / Math.pow(10, 18)
-    }
 
     useEffect(() => {
         //valid address
@@ -262,7 +259,7 @@ export default function Address() {
                             {' '}
                             Balance{' '}
                         </Heading>{' '}
-                        <Text fontSize="lg"> {quaiBalance.toFixed(3)} QUAI</Text>
+                        <Text fontSize="lg"> {quaiBalance.toFixed(4)} QUAI</Text>
                         <Box p={3}> </Box>
 
                     </Flex>
@@ -300,7 +297,7 @@ export default function Address() {
                                     <Th color="gray.400">Age</Th>
                                     <Th color="gray.400">From</Th>
                                     <Th color="gray.400">To</Th>
-                                    <Th color="gray.400"> Value (QUAI) </Th>
+                                    <Th color="gray.400"> Value </Th>
                                 </Tr>
                             </Thead>
 

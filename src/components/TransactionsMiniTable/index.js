@@ -7,9 +7,9 @@ import {
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toQuai } from '../../utils';
 import { GET_LATEST_TRANSACTIONS_SUBSCRIPTION } from "../../utils/queries";
 import TransactionsMiniTableRow from "../TableRows/TransactionsMiniTableRow";
-
 
 
 export default function TransactionsMiniTable() {
@@ -31,15 +31,6 @@ export default function TransactionsMiniTable() {
     }
   }, [data])
 
-
-  function toQuai(gweiValue) {
-    let quaiValue = gweiValue / Math.pow(10, 18)
-    return quaiValue
-  }
-
-  function toGwei(quaiValue) {
-    return quaiValue * Math.pow(10, 18)
-  }
 
   /**
    * Error handling in the event the GQL query fails

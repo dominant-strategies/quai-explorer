@@ -125,7 +125,7 @@ export default function TransactionTableRow(props) {
 
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {value}
+          {value} QUAI
         </Text>
       </Td>
 

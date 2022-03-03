@@ -11,9 +11,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import { BLOCK_COLORS_MAPPING_2, LINKS_PRESENT, QUAI_STATS_LINKS_MAPPING_2 } from '../../constants'
-import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
+import { convertTimeString, reduceStringShowMediumLength, toQuai } from '../../utils'
 import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
-
 
 
 
@@ -62,6 +61,7 @@ export default function Transaction() {
     }
 
     const value = transaction?.tx_value
+    let valueInQuai = toQuai(value).toFixed(18)
 
     let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[toLocation]
     let fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[fromLocation]
@@ -211,7 +211,7 @@ export default function Transaction() {
                                 {' '}
                                 Value:{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg"> {value} </Text>
+                            <Text fontSize="lg"> {valueInQuai} QUAI </Text>
 
                         </VStack>
                     </CardBody>
