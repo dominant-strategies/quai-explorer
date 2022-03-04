@@ -10,7 +10,7 @@ export const reduceStringShowMore = (string) => {
     return string.slice(0, 14) + "..." + string.slice(-14)
 }
 
-export const convertTimeString =  (string) => {
+export const convertTimeString = (string) => {
     let date = new Date(string * 1000)
     let hours = date.getHours()
     let minutes = '0' + date.getMinutes()
@@ -21,4 +21,8 @@ export const convertTimeString =  (string) => {
 
 export const numberWithCommas = (number = "0") => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export const toQuai = (gweiValue) => {
+    return gweiValue / Math.pow(10, 18)
 }

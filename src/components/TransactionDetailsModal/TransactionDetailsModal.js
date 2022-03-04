@@ -1,26 +1,11 @@
-import React, { useState, useEffect } from "react";
 import { useQuery } from '@apollo/client';
-import { GET_TRANSACTION_WITH_HASH } from "../../utils/queries";
-import {
-  Button,
-  ButtonGroup,
-  Box,
-  IconButton,
-  VStack,
-  useColorModeValue,
-  useDisclosure,
-  Heading,
-  Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react';
 import { InfoOutlineIcon } from "@chakra-ui/icons";
-import { reduceString } from "../../utils";
+import {
+  Button, Heading, IconButton, Modal, ModalBody,
+  ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure, VStack
+} from '@chakra-ui/react';
+import React, { useEffect, useState } from "react";
+import { GET_TRANSACTION_WITH_HASH } from "../../utils/queries";
 
 
 export default function TransactionDetailsModal(props) {

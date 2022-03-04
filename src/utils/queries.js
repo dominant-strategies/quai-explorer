@@ -280,9 +280,9 @@ export const GET_TRANSACTION_WITH_ADDRESS = gql`
     }
 `
 
-export const GET_TRANSACTION_WITH_ADDRESS_2 = gql`
+export const GET_TRANSACTIONS_FOR_FROM_ADDRESS = gql`
     query Transaction($num: Int!, $offset: Int!, $hash: String!) {
-        transactions_aggregate {
+        transactions_aggregate( where: { from_addr: { _eq: $hash }}) {
             aggregate {
                 count
             }
@@ -306,6 +306,34 @@ export const GET_TRANSACTION_WITH_ADDRESS_2 = gql`
         }
     }
 `
+
+export const GET_TRANSACTIONS_FOR_TO_ADDRESS = gql`
+   query Transaction($num: Int!, $offset: Int!, $hash: String!) {
+        transactions_aggregate( where: { to_addr: { _eq: $hash }}) {
+            aggregate {
+                count
+            }
+        }
+        transactions(
+            limit: $num
+            offset: $offset
+            order_by: { tx_time: desc }
+            where: { to_addr: { _eq: $hash }}
+        ) {
+            block_number
+            to_addr
+            from_addr
+            tx_time
+            tx_value
+            hash
+            contract_code
+            full_transaction
+            to_location
+            from_location
+        }
+    }
+`
+
 
 export const GET_NUMBER_OF_TRANSASCTIONS_FOR_BLOCK = gql`
     query GetTransactionsForAddress($block_number: String!) {

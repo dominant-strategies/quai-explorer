@@ -1,15 +1,10 @@
-import React from 'react'
 import {
-  Box,
-  Container,
+  Box, Button, Container,
   Stack,
-  Text,
-  Link,
-  VisuallyHidden,
-  Button,
-  useColorModeValue,
+  Text, useColorModeValue, VisuallyHidden
 } from '@chakra-ui/react';
-import { FaTwitter, FaYoutube, FaDiscord, FaMedium, FaGlobe } from 'react-icons/fa';
+import React from 'react';
+import { FaDiscord, FaGlobe, FaMedium, FaTwitter, FaYoutube } from 'react-icons/fa';
 
 export default function Footer() {
 
@@ -33,10 +28,10 @@ export default function Footer() {
           spacing={4}
           justify={{ md: 'space-between' }}
           align={{ md: 'center' }}
-          >
+        >
 
           <Text pl={{ xl: '10', lg: '10', md: '0', sm: '0' }}>© 2022 Dominant Strategies. All rights reserved</Text>
-    
+
           <Stack direction={'row'} spacing={4}>
             <Button
               bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}

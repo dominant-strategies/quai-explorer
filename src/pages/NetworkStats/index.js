@@ -67,8 +67,6 @@ function Stats({ location }) {
         variables: { location },
     })
 
-    console.log({transactionData})
-
     useEffect(() => {
         setLatestBlock(
             blockData?.blocks[0]?.number.split(',')[

@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-import { useParams, useNavigate } from 'react-router-dom'
-import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
-import {
-    Box,
-    Heading,
-    Text,
-    Spinner,
-    IconButton,
-    VStack,
-    Spacer,
-    Alert,
-    AlertIcon,
-    Link,
-    Icon,
-    HStack
-} from '@chakra-ui/react'
-import { reduceStringShowMediumLength, convertTimeString } from '../../utils'
-
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { BsBox } from "react-icons/bs";
-
+import {
+    Alert,
+    AlertIcon, Box,
+    Heading, HStack, Icon, IconButton, Link, Spacer, Spinner, Text, VStack
+} from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { BsBox } from "react-icons/bs"
+import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+import { BLOCK_COLORS_MAPPING_2, LINKS_PRESENT, QUAI_STATS_LINKS_MAPPING_2 } from '../../constants'
+import { convertTimeString, reduceStringShowMediumLength, toQuai } from '../../utils'
+import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
 
-import { QUAI_STATS_BLOCKS_LINKS, BLOCK_COLORS, QUAI_STATS_LINKS_MAPPING_2, BLOCK_COLORS_MAPPING_2, LINKS_PRESENT } from '../../constants'
+
 
 export default function Transaction() {
     // Component state
@@ -56,6 +46,8 @@ export default function Transaction() {
 
     const blockNumber = transaction?.block_number
     const timestamp = transaction?.tx_time
+    const fromLocation = transaction?.from_location
+    const toLocation = transaction?.to_location
 
     let from_addr = transaction?.from_addr
     let fromHashReduced
@@ -69,9 +61,10 @@ export default function Transaction() {
     }
 
     const value = transaction?.tx_value
+    let valueInQuai = toQuai(value).toPrecision(18)
 
-    let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[transaction?.to_location]
-    let fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[transaction?.from_location]
+    let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[toLocation]
+    let fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[fromLocation]
     let linkToQuaiStatsToLocation = `https://${toLocationConverted}.quaistats.info/`
     let locationColorToLocation = BLOCK_COLORS_MAPPING_2[toLocationConverted];
     let linkToQuaiStatsFromLocation = `https://${fromLocationConverted}.quaistats.info/`
@@ -116,7 +109,10 @@ export default function Transaction() {
                     />
                 </>
             ) : (
-                <Card mt={{ base: '120px', md: '100px' }}>
+                <Card
+                    mt={{ base: '120px', md: '75px' }}
+                    overflowX={{ sm: 'scroll', xl: 'hidden' }}
+                >
                     <CardBody>
                         <VStack spacing="12px" align="left">
                             <IconButton
@@ -131,6 +127,7 @@ export default function Transaction() {
                                 Tx Hash:{' '}
                             </Heading>
                             <Text> {transactionHash} </Text>
+
                             {blockNumber != null ? (
                                 <>
                                     {' '}
@@ -144,6 +141,7 @@ export default function Transaction() {
                                     </Text>{' '}
                                 </>
                             ) : null}
+
                             {timestamp !== null ? (
                                 <>
                                     {' '}
@@ -154,6 +152,7 @@ export default function Transaction() {
                                     <Text fontSize="lg"> {convertTimeString(timestamp)}</Text>{' '}
                                 </>
                             ) : null}
+
                             {from_addr !== null ? (
                                 <>
                                     <Heading as="h2" size="md">
@@ -172,14 +171,17 @@ export default function Transaction() {
 
                                         </Text>
 
-                                        <Text fontSize="md" color={locationColorFromLocation} fontWeight="bold" pb=".5rem">
-                                            <Link href={linkToQuaiStatsFromLocation} isExternal> <Icon pt={1} as={BsBox} color={locationColorFromLocation} />  {LINKS_PRESENT[fromLocationConverted]} </Link>
-                                        </Text>
+                                        {fromLocation !== null &&
+                                            <Text fontSize="md" color={locationColorFromLocation} fontWeight="bold" pb=".5rem">
+                                                <Link href={linkToQuaiStatsFromLocation} isExternal> <Icon pt={1} as={BsBox} color={locationColorFromLocation} />  {LINKS_PRESENT[fromLocationConverted]} </Link>
+                                            </Text>
+                                        }
 
                                     </HStack>
                                 </>
                             ) : null}
-                            {from_addr !== null ? (
+
+                            {to_addr !== null ? (
                                 <>
                                     <Heading as="h2" size="md">
                                         {' '}
@@ -195,17 +197,22 @@ export default function Transaction() {
 
                                         </Text>
 
-                                        <Text fontSize="md" color={locationColorToLocation} fontWeight="bold" pb=".5rem">
-                                            <Link href={linkToQuaiStatsToLocation} isExternal>  <Icon pt={1} as={BsBox} color={locationColorToLocation} />  {LINKS_PRESENT[toLocationConverted]} </Link>
-                                        </Text>
+                                        {toLocation !== null &&
+
+                                            <Text fontSize="md" color={locationColorToLocation} fontWeight="bold" pb=".5rem">
+                                                <Link href={linkToQuaiStatsToLocation} isExternal>  <Icon pt={1} as={BsBox} color={locationColorToLocation} />  {LINKS_PRESENT[toLocationConverted]} </Link>
+                                            </Text>
+                                        }
                                     </HStack>
                                 </>
                             ) : null}
+
                             <Heading as="h2" size="md">
                                 {' '}
                                 Value:{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg"> {value} </Text>
+                            <Text fontSize="lg"> {valueInQuai} QUAI </Text>
+
                         </VStack>
                     </CardBody>
                 </Card>

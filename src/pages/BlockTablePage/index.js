@@ -1,46 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { useQuery } from '@apollo/client'
-import { useParams, useNavigate } from 'react-router-dom'
-import {
-    GET_TRANSACTION_WITH_ADDRESS,
-    GET_TRANSACTION_WITH_ADDRESS_2,
-} from '../../utils/queries'
-import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from '../../constants'
-import {
-    convertTimeString,
-    numberWithCommas,
-    reduceStringShowMediumLength,
-} from '../../utils'
-import {
-    Spacer,
-    Text,
-    VStack,
-    IconButton,
-    Heading,
-    useColorModeValue,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Spinner,
-    Flex,
-    Alert,
-    AlertIcon,
-    Box,
-} from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
-
-
+import {
+    Box, Flex, Heading, IconButton
+} from '@chakra-ui/react'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import BlockTable from "../../components/BlockTable"
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CardHeader from '../../components/Card/CardHeader'
-
-import BlockTable from "../../components/BlockTable"
-
-import Pagination from '../../components/Pagination'
-
 
 export default function BlockTablePage() {
     const navigateTo = useNavigate()

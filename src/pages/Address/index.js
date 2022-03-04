@@ -1,50 +1,24 @@
-import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-import { useParams, useNavigate } from 'react-router-dom'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
-    GET_TRANSACTION_WITH_ADDRESS,
-    GET_TRANSACTION_WITH_ADDRESS_2,
-} from '../../utils/queries'
-import { POSITIONS, CHAIN_SLUGS, SHARDED_ADDRESS } from '../../constants'
-import {
-    convertTimeString,
-    numberWithCommas,
-    reduceStringShowMediumLength,
-} from '../../utils'
-import {
-    Spacer,
-    Text,
-    VStack,
-    IconButton,
-    Heading,
-    useColorModeValue,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Spinner,
-    Flex,
     Alert,
     AlertIcon,
-    Box,
-    Link,
-    Icon,
-    Divider
+    Box, Divider, Flex, Heading, IconButton, Link, Spacer, Spinner, Table, Tbody, Text, Th, Thead, Tr, useColorModeValue
 } from '@chakra-ui/react'
-import { ArrowBackIcon } from '@chakra-ui/icons'
-import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
 import axios from 'axios'
-
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CardHeader from '../../components/Card/CardHeader'
-
-import { CHAIN_SLUGS_2, PORTS, PREFIX } from '../../constants'
-
-import TransactionTableRow from '../../components/Tables/TransactionTableRow'
-
 import Pagination from '../../components/Pagination'
+import TransactionTableRow from '../../components/TableRows//TransactionTableRow'
+import { CHAIN_SLUGS_2, PORTS, PREFIX } from '../../constants'
+import { toQuai } from '../../utils'
+import {
+    GET_TRANSACTIONS_FOR_FROM_ADDRESS
+} from '../../utils/queries'
+
 
 const hexToDec = (value) => {
     return parseInt(value.substring(2), 16)
@@ -60,21 +34,19 @@ export default function Address() {
     const navigateTo = useNavigate()
 
     const [balance, setBalance] = useState(0)
+    const [quaiBalance, setQuaiBalance] = useState(0)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [limit, setLimit] = useState(10)
     const [totalPage, setTotalPage] = useState(1)
     const [transactions, setTransactions] = useState([])
     const [transactionsCount, setTransactionsCount] = useState(0)
+    const [errorWithHash, setShowErrorWithHash] = useState(false)
 
-    const {
-        loading,
-        error,
-        data,
-        refetch: refetchTransactionData,
-    } = useQuery(GET_TRANSACTION_WITH_ADDRESS_2, {
+
+    const { loading, error, data } = useQuery(GET_TRANSACTIONS_FOR_FROM_ADDRESS, {
         variables: {
-            fetchPolicy: 'cache-and-network',
+            fetchPolicy: "cache-and-network",
             num: limit,
             offset: (currentPage - 1) * limit,
             hash: hash,
@@ -87,7 +59,6 @@ export default function Address() {
     const addressPrefix = hash.substring(0, 4)
     const numAddressPrefix = hexToDec(addressPrefix)
 
-    const [errorWithHash, setShowErrorWithHash] = useState(false)
 
     const chain = (numAddressPrefix) => {
         var chainName = ''
@@ -102,24 +73,27 @@ export default function Address() {
         return chainName
     }
 
+    const payload = {
+        jsonrpc: 2.0,
+        method: 'eth_getBalance',
+        params: [hash, 'latest'],
+        id: 1,
+    }
+
+    let jsonPayload = JSON.stringify(payload)
+
+    const url = 'http://45.76.19.78:' + chainPort(chain(numAddressPrefix))
+
     useEffect(() => {
         //valid address
         if (hash.length === 42) {
             const load = async () => {
                 var data
 
-                const payload = {
-                    jsonrpc: 2.0,
-                    method: 'eth_getBalance',
-                    params: [hash, 'latest'],
-                    id: 1,
-                }
-
                 try {
                     data = await axios.post(
-                        'http://45.76.19.78:' +
-                        chainPort(chain(numAddressPrefix)),
-                        JSON.stringify(payload),
+                        url,
+                        jsonPayload,
                         {
                             headers: {
                                 'Content-Type': 'application/json',
@@ -141,13 +115,15 @@ export default function Address() {
                 }
 
                 if (balance != null) {
-                    setBalance(parseInt(data.data.result), 10)
+                    let parsedBalance = (parseInt(data.data.result), 10)
+                    setBalance(parsedBalance)
+                    setQuaiBalance(toQuai(data.data.result))
                 }
             }
             load()
                 .then(() => {
-                    console.log('address data: ', data)
                     if (data) {
+                        console.log(data)
                         setTransactions(data?.transactions)
                         let transactionsCount =
                             data?.transactions_aggregate?.aggregate?.count
@@ -186,7 +162,7 @@ export default function Address() {
                 />
                 <Alert status='error' mt={5} >
                     <AlertIcon />
-                    <Text fontSize='md'> Sorry! There seems to be a problem with loading this page. Please try to <Link bgColor="transparent" size="sm" textColor="blue.300" fontWeight="bold" onClick={() => window.location.reload()}> refresh the page. </Link></Text>
+                    <Text fontSize='md'> Sorry! There was a problem loading the page. The hash may be invalid.</Text>
                 </Alert>
             </>
         )
@@ -210,11 +186,11 @@ export default function Address() {
 
     }
 
-    else {
+    if (transactions.length === 0) {
         return (
             <>
                 <Card
-                    mt={{ base: '120px', md: '75' }}
+                    mt={{ base: '120px', md: '75px' }}
                     overflowX={{ sm: 'scroll', xl: 'hidden' }}
                 >
                     <CardBody>
@@ -236,101 +212,143 @@ export default function Address() {
                                 {' '}
                                 Balance{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg"> {balance}</Text>
+                            <Text fontSize="lg"> {quaiBalance} QUAI </Text>
                             <Box p={3}> </Box>
-                            {transactions.length === 0 &&
 
-                                <>
-                                    <Divider />
-                                    <Text fontSize='sm' mt={2} as="b"> There are no transactions for this address at this time.</Text>
-                                </>
 
-                            }
+
+                            <Divider />
+                            <Text fontSize='sm' mt={2} as="b"> There are no transactions for this address at this time.</Text>
+
+
+
                         </Flex>
                     </CardBody>
                 </Card>
 
-                <Spacer />
 
-                {transactions.length > 0 &&
-                    <Card mt={5} overflowX={{ sm: 'scroll', xl: 'hidden' }}>
-                        <CardHeader mb="20px" pl="22px" pt="10px">
-
-                            <Flex direction="column" alignSelf="flex-start">
-                                <Heading
-                                    as="h1"
-                                    fontSize="3xl"
-                                    color={textColor}
-                                    fontWeight="bold"
-                                    mr={2}
-                                >
-                                    Transactions
-                                </Heading>
-                            </Flex>
-                        </CardHeader>
-
-
-                        <CardBody>
-                            <Flex flexDirection="column">
-                            <Text size="md" fontWeight="bold" ml={7} pb={5} color="gray.400"> {transactionsCount} total transactions </Text>
-                                <Table size="sm" variant="simple" color={textColor} ml={3}>
-                                    <Thead>
-                                        <Tr my=".8rem" ps="0px">
-                                            <Th color="gray.400">TX Hash</Th>
-                                            <Th color="gray.400">Block Number</Th>
-                                            <Th color="gray.400">Age</Th>
-                                            <Th color="gray.400">From</Th>
-                                            <Th color="gray.400">To</Th>
-                                            <Th color="gray.400"> Value</Th>
-                                        </Tr>
-                                    </Thead>
-
-                                    <Tbody>
-                                        {transactions?.map(
-                                            (transaction, index) => {
-                                                return (
-                                                    <TransactionTableRow
-                                                        transactionHash={transaction.hash}
-                                                        toThisMiner={transaction.to_addr}
-                                                        fromThisMiner={transaction.from_addr}
-                                                        blockNumber={transaction.block_number}
-                                                        blockHash={transaction.full_transaction.blockHash}
-                                                        toLocation={transaction.to_location}
-                                                        fromLocation={transaction.from_location}
-                                                        value={transaction.tx_value}
-                                                        timestamp={transaction.tx_time}
-                                                        key={index}
-                                                        fromAddressPage={true}
-                                                    />
-                                                )
-                                            }
-                                        )}
-                                    </Tbody>
-                                </Table>
-
-                                <Flex>
-                                    {totalPage > 1 ? (
-                                        <Pagination
-                                            currentPage={currentPage}
-                                            totalCount={
-                                                transactionsCount != 0
-                                                    ? transactionsCount
-                                                    : 0
-                                            }
-                                            pageSize={limit}
-                                            onPageChange={(page) =>
-                                                setCurrentPage(page)
-                                            }
-                                            textColor={textColor}
-                                        />
-                                    ) : null}
-                                </Flex>
-                            </Flex>
-                        </CardBody>
-
-                    </Card>}
 
             </>
         )
+
     }
+
+
+    return (
+        <>
+            <Card
+                mt={{ base: '120px', md: '75px' }}
+                overflowX={{ sm: 'scroll', xl: 'hidden' }}
+            >
+                <CardBody>
+                    <Flex direction="column" pb=".8rem" pl="1rem">
+                        <IconButton
+                            onClick={() => navigateTo(-1)}
+                            icon={<ArrowBackIcon />}
+                            aria-label="Back to the previous page"
+                            w="24px"
+                        />
+
+                        <Box p={3}> </Box>
+                        <Heading as="h1">
+                            Address{' '}
+                        </Heading>{' '}
+                        <Text fontSize="xl">  {hash} </Text>
+                        <Box p={1}> </Box>
+                        <Heading as="h2" fontSize="lg" >
+                            {' '}
+                            Balance{' '}
+                        </Heading>{' '}
+                        <Text fontSize="lg"> {quaiBalance.toPrecision(4)} QUAI</Text>
+                        <Box p={3}> </Box>
+
+                    </Flex>
+                </CardBody>
+            </Card>
+
+            <Spacer />
+
+
+            <Card mt={5} overflowX={{ sm: 'scroll', xl: 'hidden' }}>
+                <CardHeader mb="20px" pl="22px" pt="10px">
+
+                    <Flex direction="column" alignSelf="flex-start">
+                        <Heading
+                            as="h1"
+                            fontSize="3xl"
+                            color={textColor}
+                            fontWeight="bold"
+                            mr={2}
+                        >
+                            Transactions
+                        </Heading>
+                    </Flex>
+                </CardHeader>
+
+
+                <CardBody>
+                    <Flex flexDirection="column">
+                        <Text size="md" fontWeight="bold" ml={7} pb={5} color="gray.400"> {transactionsCount} total transactions </Text>
+                        <Table size="sm" variant="simple" color={textColor} ml={3}>
+                            <Thead>
+                                <Tr my=".8rem" ps="0px">
+                                    <Th color="gray.400">TX Hash</Th>
+                                    <Th color="gray.400">Block Number</Th>
+                                    <Th color="gray.400">Age</Th>
+                                    <Th color="gray.400">From</Th>
+                                    <Th color="gray.400">To</Th>
+                                    <Th color="gray.400"> Value </Th>
+                                </Tr>
+                            </Thead>
+
+                            <Tbody>
+                                {transactions?.map(
+                                    (transaction, index) => {
+                                        let value = toQuai(transaction.tx_value)
+                                        return (
+                                            <TransactionTableRow
+                                                transactionHash={transaction.hash}
+                                                toThisMiner={transaction.to_addr}
+                                                fromThisMiner={transaction.from_addr}
+                                                blockNumber={transaction.block_number}
+                                                blockHash={transaction.full_transaction.blockHash}
+                                                toLocation={transaction.to_location}
+                                                fromLocation={transaction.from_location}
+                                                value={value}
+                                                gweiValue={transaction.tx_value}
+                                                timestamp={transaction.tx_time}
+                                                key={index}
+                                                fromAddressPage={true}
+                                            />
+                                        )
+                                    }
+                                )}
+                            </Tbody>
+                        </Table>
+
+                        <Flex>
+                            {totalPage > 1 ? (
+                                <Pagination
+                                    currentPage={currentPage}
+                                    totalCount={
+                                        transactionsCount != 0
+                                            ? transactionsCount
+                                            : 0
+                                    }
+                                    pageSize={limit}
+                                    onPageChange={(page) =>
+                                        setCurrentPage(page)
+                                    }
+                                    textColor={textColor}
+                                />
+                            ) : null}
+                        </Flex>
+                    </Flex>
+                </CardBody>
+
+            </Card>
+
+        </>
+    )
+
 }

@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-import { useParams, useNavigate } from 'react-router-dom'
-import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
-import { SHARDED_ADDRESS, QUAI_STATS_LINKS, BLOCK_COLORS } from '../../constants'
-import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
-    Box,
-    Spacer,
+    Alert,
+    AlertIcon, Box, Heading, IconButton, Link, Spacer,
     Spinner,
     Text,
-    VStack,
-    IconButton,
-    Heading,
-    Alert,
-    AlertIcon,
-    Link,
-    Icon,
-    HStack
+    VStack
 } from '@chakra-ui/react'
-import { ArrowBackIcon } from '@chakra-ui/icons'
-import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
-
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+import { BLOCK_COLORS, QUAI_STATS_LINKS, SHARDED_ADDRESS } from '../../constants'
+import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
+import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
 
-import { BsBox } from "react-icons/bs";
+
 
 export default function Block() {
     // Component state
@@ -56,11 +47,11 @@ export default function Block() {
     let location = block?.location
     let linkToQuaiStats = `https://${QUAI_STATS_LINKS[location]}.quaistats.info/`
 
-    let locationColor = BLOCK_COLORS[location];
-
     if (location) {
         location = SHARDED_ADDRESS[location]
     }
+
+    let locationColor = BLOCK_COLORS[location];
 
     let timestamp = block?.timestamp
     if (timestamp) {
@@ -79,6 +70,12 @@ export default function Block() {
 
     const txCount = block?.header.transactions.length
     const uncleCount = block?.header.uncles.length
+
+    let minerAddress = block?.header.miner
+    let minerAddressReduced
+    if (minerAddress) {
+        minerAddressReduced = reduceStringShowMediumLength(minerAddress)
+    }
 
     /**
      * Error handling in the event the GQL query fails
@@ -120,7 +117,7 @@ export default function Block() {
                     />
                 </>
             ) : (
-                <Card mt={{ base: '120px', md: '100px' }}>
+                <Card mt={{ base: '120px', md: '75px' }} overflowX={{ sm: 'scroll', xl: 'hidden' }}>
                     <CardBody>
                         <VStack spacing="12px" align="left">
                             <IconButton
@@ -135,17 +132,35 @@ export default function Block() {
                                 Block Number:{' '}
                             </Heading>{' '}
                             <Text fontSize="lg"> {blockNumber} </Text>
+
                             <Heading as="h2" size="md">
                                 {' '}
                                 Location:{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg" color={locationColor}>
+                            <Text fontSize="lg" textColor={locationColor} fontWeight="bold">
                                 {' '}
                                 <Link href={linkToQuaiStats} isExternal>
                                     {' '}
                                     {location}{' '}
                                 </Link>{' '}
                             </Text>
+
+                            <Heading as="h2" size="md">
+                                {' '}
+                                Miner:{' '}
+                            </Heading>{' '}
+
+
+                            <Text fontSize="lg" color={"blue.300"} fontWeight="bold" pb=".5rem">
+
+                                <Link onClick={() => navigateTo(`/address/${minerAddress}`)}>
+                                    {minerAddress}
+                                </Link>
+
+
+                            </Text>
+
+
                             <Heading as="h2" size="md">
                                 {' '}
                                 Hash:{' '}

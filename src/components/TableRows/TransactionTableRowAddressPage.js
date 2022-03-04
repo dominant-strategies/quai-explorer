@@ -1,16 +1,12 @@
-import React from "react";
 import {
-  Icon,
   Td,
   Text,
   Tr,
-  useColorModeValue,
-  IconButton,
+  useColorModeValue
 } from "@chakra-ui/react";
-import { reduceString, reduceStringShowMediumLength } from "../../utils";
-import { BsThreeDots } from "react-icons/bs"
-import { InfoOutlineIcon } from "@chakra-ui/icons";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { reduceStringShowMediumLength } from "../../utils";
 import CopyToClipboardButton from "../CopyToClipboardButton/CopyToClipboardButton";
 
 // converts hexadecimal string with a 0x PREFIX to a integer value

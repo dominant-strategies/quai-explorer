@@ -1,28 +1,20 @@
+import { useQuery } from '@apollo/client'
+import { MoonIcon, SearchIcon, SmallCloseIcon, SunIcon } from '@chakra-ui/icons'
 import {
-    Box,
-    Button,
-    useColorModeValue,
-    Flex,
-    IconButton,
-    Input,
+    Box, Flex,
+    IconButton, Image, Input,
     InputGroup,
-    InputRightElement,
-    Image,
-    useColorMode,
+    InputRightElement, useColorMode, useColorModeValue
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
-import { SearchIcon, MoonIcon, SunIcon, SmallCloseIcon } from '@chakra-ui/icons'
 import LogoBanner from '../../assets/images/QuaiLogoBanner.svg'
 import LogoBannerGray from '../../assets/images/quaiLogoBannerGray.svg'
-import { FaHouseUser } from 'react-icons/fa'
-
 import {
-    GET_BLOCK_WITH_HASH,
-    GET_TRANSACTION_WITH_HASH,
-    GET_TRANSACTION_WITH_ADDRESS_2,
+    GET_BLOCK_WITH_HASH, GET_TRANSACTIONS_FOR_FROM_ADDRESS,
+    GET_TRANSACTIONS_FOR_TO_ADDRESS, GET_TRANSACTION_WITH_HASH
 } from '../../utils/queries'
+
 
 export default function NavBar(props) {
     const settingsRef = React.useRef()
@@ -39,11 +31,19 @@ export default function NavBar(props) {
         { variables: { hash: searchHash } }
     )
     const {
-        data: TransactionAddressData,
-        refetch: refetchTransactionAddressData,
-    } = useQuery(GET_TRANSACTION_WITH_ADDRESS_2, {
+        data: TransactionFromAddressData,
+        refetch: refetchTransactionFromAddressData,
+    } = useQuery(GET_TRANSACTIONS_FOR_FROM_ADDRESS, {
         variables: { num: 1, offset: 1, hash: searchHash },
     })
+
+    const {
+        data: TransactionToAddressData,
+        refetch: refetchTransactionToAddressData,
+    } = useQuery(GET_TRANSACTIONS_FOR_TO_ADDRESS, {
+        variables: { num: 1, offset: 1, hash: searchHash },
+    })
+
 
     let mainTextColor = useColorModeValue('gray.700', 'gray.200')
     let inputBgColor = useColorModeValue('white', 'gray.800')
@@ -70,9 +70,10 @@ export default function NavBar(props) {
     const searchHashEvent = () => {
         refetchBlockData()
         refetchTransactionData()
-        refetchTransactionAddressData()
+        refetchTransactionFromAddressData()
+        refetchTransactionToAddressData()
 
-        if (BlockData || TransactionData || TransactionAddressData) {
+        if (BlockData || TransactionData || TransactionFromAddressData || TransactionToAddressData) {
             if (BlockData?.blocks.length > 0) {
                 navigateTo(`/block/${searchHash}`)
                 setSearchHash('')
@@ -83,7 +84,12 @@ export default function NavBar(props) {
                 setSearchHash('')
             }
 
-            if (TransactionAddressData?.transactions.length > 0) {
+            if (TransactionFromAddressData?.transactions.length > 0) {
+                navigateTo(`/address/${searchHash}`)
+                setSearchHash('')
+            }
+
+            if (TransactionToAddressData?.transactions.length > 0) {
                 navigateTo(`/address/${searchHash}`)
                 setSearchHash('')
             }
@@ -103,11 +109,14 @@ export default function NavBar(props) {
 
     const showSearchIconInSearchBar = () => {
         if (
-            (BlockData?.blocks.length > 0 ||
+            (
+                BlockData?.blocks.length > 0 ||
                 TransactionData?.transactions.length > 0 ||
-                TransactionAddressData?.transactions.length > 0) &&
-            searchHash.length != 0
-        ) {
+                TransactionFromAddressData?.transactions.length > 0 ||
+                TransactionToAddressData?.transactions.length > 0
+
+            )
+            && searchHash.length !== 0) {
             return (
                 <InputRightElement
                     children={
@@ -138,7 +147,7 @@ export default function NavBar(props) {
                 />
             )
         } else {
-            if (searchHash.length != 0) {
+            if (searchHash.length !== 0) {
                 return (
                     <InputRightElement
                         children={

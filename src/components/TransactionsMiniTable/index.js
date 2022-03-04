@@ -1,28 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useQuery, useSubscription } from '@apollo/client';
-import { SHARDED_ADDRESS } from "../../constants";
-import { GET_LATEST_TRANSACTIONS_SUBSCRIPTION } from "../../utils/queries";
-import TransactionsMiniTableRow from "../Tables/TransactionsMiniTableRow";
-import { RepeatIcon } from '@chakra-ui/icons';
-import { useNavigate } from 'react-router-dom'
-
+import { useSubscription } from '@apollo/client';
 import {
   Alert,
-  AlertIcon,
-  Spinner,
-  Table,
-  Text,
-  Button,
-  Tbody,
-  Tr,
-  Th,
-  useColorModeValue,
-  VStack,
-  Box,
-  Link
+  AlertIcon, Button, Link, Spinner,
+  Table, Tbody, Text, useColorModeValue
 } from '@chakra-ui/react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toQuai } from '../../utils';
+import { GET_LATEST_TRANSACTIONS_SUBSCRIPTION } from "../../utils/queries";
+import TransactionsMiniTableRow from "../TableRows/TransactionsMiniTableRow";
 
-import moment from 'moment'
 
 export default function TransactionsMiniTable() {
   // Component state
@@ -68,9 +56,10 @@ export default function TransactionsMiniTable() {
             <Tbody>
               {transactions?.map((transaction, index) => {
                 const timeDisplay = moment.unix(transaction.tx_time).fromNow();
+                const quaiValue = toQuai(transaction.tx_value)
                 return (
                   <TransactionsMiniTableRow
-                    value={transaction.tx_value}
+                    value={quaiValue}
                     blockNumber={transaction.block_number}
                     fromAddress={transaction.from_addr}
                     toAddress={transaction.to_addr}

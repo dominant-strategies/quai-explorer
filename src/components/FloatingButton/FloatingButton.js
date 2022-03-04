@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { ChevronUpIcon } from '@chakra-ui/icons';
 import { Button, useColorModeValue } from "@chakra-ui/react";
-import { ChevronUpIcon } from '@chakra-ui/icons'
+import React, { useState } from "react";
 
 export default function FloatingButton(props) {
   let settingsIconColor = useColorModeValue("gray.800", "gray.200");
@@ -10,25 +10,25 @@ export default function FloatingButton(props) {
   const [visible, setVisible] = useState(false)
 
   let documentHeight = document.body.clientHeight;
-  
+
   const toggleVisible = () => {
     const scrolled = document.documentElement.scrollTop;
-    if (scrolled > documentHeight - 700){
+    if (scrolled > documentHeight - 700) {
       setVisible(true)
-    } 
-    else if (scrolled <= 100){
+    }
+    else if (scrolled <= 100) {
       setVisible(false)
-    } 
-   
+    }
+
   };
-  
-  const scrollToTop = () =>{
+
+  const scrollToTop = () => {
     window.scrollTo({
-      top: 0, 
+      top: 0,
       behavior: 'smooth'
     });
   };
-  
+
   window.addEventListener('scroll', toggleVisible);
 
   return (
@@ -44,7 +44,7 @@ export default function FloatingButton(props) {
         bottom="70px"
         borderRadius="50px"
         boxShadow="0 2px 12px 0 rgb(0 0 0 / 16%)"
-        display={ visible ? 'inline' : 'none'} 
+        display={visible ? 'inline' : 'none'}
       >
         <ChevronUpIcon
           cursor="pointer"

@@ -1,21 +1,14 @@
-import React from 'react'
 import {
-  Icon,
-  Td,
+  HStack, Icon, Link, Td,
   Text,
   Tr,
-  useColorModeValue,
-  Button,
-  Link,
-  VStack,
-  Stack,
-  HStack
-
-} from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
-import { reduceString, reduceStringShowMediumLength } from '../../utils'
+  useColorModeValue, VStack
+} from '@chakra-ui/react';
+import React from 'react';
 import { BsBox } from "react-icons/bs";
-import { BLOCK_COLORS } from "../../constants"
+import { useNavigate } from 'react-router-dom';
+import { BLOCK_COLORS } from "../../constants";
+import { reduceStringShowMediumLength } from '../../utils';
 
 export default function BlocksMiniTableRow(props) {
 

@@ -1,19 +1,13 @@
-import React from 'react'
 import {
-  Box,
-  Td,
+  Badge, Link, Td,
   Text,
   Tr,
   useColorModeValue,
-  Button,
-  Link,
-  VStack,
-  Stack,
-  HStack
-
+  VStack
 } from '@chakra-ui/react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { reduceString, reduceStringShowMediumLength } from '../../utils'
+import { reduceStringShowMediumLength } from '../../utils'
 
 export default function TransactionsMiniTableRow(props) {
 
@@ -48,7 +42,7 @@ export default function TransactionsMiniTableRow(props) {
               fontSize="md"
               color={"blue.300"}
               fontWeight="bold"
-              
+
             >
               {hashReduced}
             </Text>
@@ -77,7 +71,7 @@ export default function TransactionsMiniTableRow(props) {
               fontSize="md"
               color={"blue.300"}
               fontWeight="bold"
-              
+
 
             >
               From: {fromAddressReduced}
@@ -89,7 +83,6 @@ export default function TransactionsMiniTableRow(props) {
               fontSize="md"
               color={"blue.300"}
               fontWeight="bold"
-              
 
             >
               To: {toAddressReduced}
@@ -102,24 +95,9 @@ export default function TransactionsMiniTableRow(props) {
 
       </Td>
 
+
       <Td>
-
-        <Text
-          fontSize="md"
-          color={textColor}
-          fontWeight="bold"
-
-
-
-        >
-          {value} QUAI
-        </Text>
-
-
-
-
-
-
+        <Badge variant='solid' colorScheme='green'>  {value.toPrecision(2)} QUAI </Badge>
       </Td>
 
 
