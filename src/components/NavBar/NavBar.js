@@ -1,12 +1,17 @@
 import { useQuery } from '@apollo/client'
-import { MoonIcon, SearchIcon, SmallCloseIcon, SunIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, MoonIcon, SearchIcon, SmallCloseIcon, SunIcon } from '@chakra-ui/icons'
 import {
     Box, Flex,
+    Icon,
     IconButton, Image, Input,
     InputGroup,
-    InputRightElement, useColorMode, useColorModeValue
+    InputRightElement, Menu,
+    MenuButton, MenuItem, MenuList, useColorMode, useColorModeValue
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { BiHomeAlt } from "react-icons/bi"
+import { BsBox } from "react-icons/bs"
+import { GiMoneyStack } from "react-icons/gi"
 import { useNavigate } from 'react-router-dom'
 import LogoBanner from '../../assets/images/QuaiLogoBanner.svg'
 import LogoBannerGray from '../../assets/images/quaiLogoBannerGray.svg'
@@ -322,23 +327,37 @@ export default function NavBar(props) {
                             />
                         </InputGroup>
 
-                        <IconButton
-                            cursor="pointer"
-                            ms={{ base: '16px', xl: '0px' }}
-                            me="16px"
-                            ref={settingsRef}
-                            onClick={props.onOpen}
-                            w="40px"
-                            h="40px"
-                            icon={
-                                colorMode === 'light' ? (
-                                    <MoonIcon />
-                                ) : (
-                                    <SunIcon />
-                                )
-                            }
-                            onClick={toggleColorMode}
-                        />
+                        <Menu>
+                            <MenuButton
+                                as={IconButton}
+                                aria-label='Options'
+                                icon={<HamburgerIcon />}
+                                variant='outline'
+                                cursor="pointer"
+                                ms={{ base: '16px', xl: '0px' }}
+                                me="16px"
+                            />
+                            <MenuList>
+                                <MenuItem icon={<Icon as={BiHomeAlt} />} onClick={() => navigateTo("/")}>
+                                    Home
+                                </MenuItem>
+                                <MenuItem icon={<Icon as={BsBox} />} onClick={() => navigateTo("/blocks")}>
+                                    All Blocks
+                                </MenuItem>
+                                <MenuItem icon={<Icon as={GiMoneyStack} />} onClick={() => navigateTo("/transactions")}>
+                                    All Transactions
+                                </MenuItem>
+                                <MenuItem icon={
+                                    colorMode === 'light' ? (
+                                        <MoonIcon />
+                                    ) : (
+                                        <SunIcon />
+                                    )
+                                } onClick={toggleColorMode}>
+                                    {colorMode === 'light' ? 'Dark Mode' : 'Light Mode'}
+                                </MenuItem>
+                            </MenuList>
+                        </Menu>
                     </Flex>
                 </Box>
             </Flex>
