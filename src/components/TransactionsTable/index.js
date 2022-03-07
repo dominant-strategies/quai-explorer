@@ -30,10 +30,6 @@ export default function TransactionsTable(props) {
           </Thead>
 
 
-
-
-
-
           <Tbody>
             {transactions?.map((transaction, index) => {
               let value = toQuai(transaction.tx_value).toPrecision(4)

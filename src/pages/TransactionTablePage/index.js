@@ -37,7 +37,7 @@ export default function TransactionTablePage() {
    * Error handling in the event the GQL query fails
    * Shows an alert
    */
-    if (!error) {
+    if (error) {
         console.log(error)
         return (
             <>
