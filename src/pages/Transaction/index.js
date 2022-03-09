@@ -48,6 +48,7 @@ export default function Transaction() {
     const timestamp = transaction?.tx_time
     const fromLocation = transaction?.from_location
     const toLocation = transaction?.to_location
+    const blockHash = transaction?.full_transaction.blockHash
 
     let from_addr = transaction?.from_addr
     let fromHashReduced
@@ -137,7 +138,7 @@ export default function Transaction() {
                                     </Heading>{' '}
                                     <Text fontSize="lg">
                                         {' '}
-                                        {blockNumber}{' '}
+                                        <Link color={"blue.300"} fontWeight="bold" onClick={() => navigateTo(`/block/${blockHash}`)}> {blockNumber}{' '} </Link>
                                     </Text>{' '}
                                 </>
                             ) : null}
