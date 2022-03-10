@@ -10,6 +10,7 @@ import { BsBox } from "react-icons/bs"
 import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
 import { BLOCK_COLORS_MAPPING_2, LINKS_PRESENT, QUAI_STATS_LINKS_MAPPING_2 } from '../../constants'
 import { convertTimeString, reduceStringShowMediumLength, toQuai } from '../../utils'
 import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
@@ -127,7 +128,7 @@ export default function Transaction() {
                                 {' '}
                                 Tx Hash:{' '}
                             </Heading>
-                            <Text> {transactionHash} </Text>
+                            <Text> {transactionHash} <CopyToClipboardButton copyThisToClipboard={transactionHash} size={'xs'} /></Text>
 
                             {blockNumber != null ? (
                                 <>
