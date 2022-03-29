@@ -11,10 +11,10 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
 import { BLOCK_COLORS, QUAI_STATS_LINKS, SHARDED_ADDRESS } from '../../constants'
 import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
 import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
-
 
 
 export default function Block() {
@@ -165,7 +165,7 @@ export default function Block() {
                                 {' '}
                                 Hash:{' '}
                             </Heading>
-                            <Text fontSize="lg"> {blockHash}</Text>
+                            <Text fontSize="lg"> {blockHash} <CopyToClipboardButton copyThisToClipboard={blockHash} size={'xs'} /> </Text>
                             <Heading as="h2" size="md">
                                 {' '}
                                 Number of Txs:{' '}

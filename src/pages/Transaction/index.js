@@ -10,6 +10,7 @@ import { BsBox } from "react-icons/bs"
 import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
+import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
 import { BLOCK_COLORS_MAPPING_2, LINKS_PRESENT, QUAI_STATS_LINKS_MAPPING_2 } from '../../constants'
 import { convertTimeString, reduceStringShowMediumLength, toQuai } from '../../utils'
 import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
@@ -48,6 +49,7 @@ export default function Transaction() {
     const timestamp = transaction?.tx_time
     const fromLocation = transaction?.from_location
     const toLocation = transaction?.to_location
+    const blockHash = transaction?.full_transaction.blockHash
 
     let from_addr = transaction?.from_addr
     let fromHashReduced
@@ -126,7 +128,7 @@ export default function Transaction() {
                                 {' '}
                                 Tx Hash:{' '}
                             </Heading>
-                            <Text> {transactionHash} </Text>
+                            <Text> {transactionHash} <CopyToClipboardButton copyThisToClipboard={transactionHash} size={'xs'} /></Text>
 
                             {blockNumber != null ? (
                                 <>
@@ -137,7 +139,7 @@ export default function Transaction() {
                                     </Heading>{' '}
                                     <Text fontSize="lg">
                                         {' '}
-                                        {blockNumber}{' '}
+                                        <Link color={"blue.300"} fontWeight="bold" onClick={() => navigateTo(`/block/${blockHash}`)}> {blockNumber}{' '} </Link>
                                     </Text>{' '}
                                 </>
                             ) : null}

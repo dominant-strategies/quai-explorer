@@ -326,23 +326,23 @@ export default function Address() {
                             </Tbody>
                         </Table>
 
-                        <Flex>
-                            {totalPage > 1 ? (
-                                <Pagination
-                                    currentPage={currentPage}
-                                    totalCount={
-                                        transactionsCount != 0
-                                            ? transactionsCount
-                                            : 0
-                                    }
-                                    pageSize={limit}
-                                    onPageChange={(page) =>
-                                        setCurrentPage(page)
-                                    }
-                                    textColor={textColor}
-                                />
-                            ) : null}
-                        </Flex>
+
+                        {totalPage > 1 ? (
+                            <Pagination
+                                currentPage={currentPage}
+                                totalCount={
+                                    transactionsCount != 0
+                                        ? transactionsCount
+                                        : 0
+                                }
+                                pageSize={limit}
+                                onPageChange={(page) =>
+                                    setCurrentPage(page)
+                                }
+                                textColor={textColor}
+                            />
+                        ) : null}
+
                     </Flex>
                 </CardBody>
 
