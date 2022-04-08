@@ -1,3 +1,3 @@
 export const font = {
-    body: 'Roboto'
-};
+    body: 'Roboto',
+}

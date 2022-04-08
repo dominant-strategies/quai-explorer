@@ -256,16 +256,20 @@ export const GET_LATEST_TRANSACTIONS = gql`
 
 export const GET_NETWORK_DIFFICULTY_FROM_LATEST_PRIME_BLOCK_FOR_ONE_CHAIN = gql`
     query GetNetworkDifficultyFromLatestPrimeBlockForOneChain {
-        blocks(limit: 1, where: {location: {_eq: "prime"}}, order_by: {timestamp: desc}) {
-        difficulty
-        location
+        blocks(
+            limit: 1
+            where: { location: { _eq: "prime" } }
+            order_by: { timestamp: desc }
+        ) {
+            difficulty
+            location
         }
     }
 `
 
 export const GET_TRANSACTION_WITH_ADDRESS = gql`
     query Transaction($num: Int!, $offset: Int!, $hash: String!) {
-        transactions(where: { from_addr: { _eq: $hash }}, limit: 10) {
+        transactions(where: { from_addr: { _eq: $hash } }, limit: 10) {
             block_number
             to_addr
             from_addr
@@ -282,7 +286,7 @@ export const GET_TRANSACTION_WITH_ADDRESS = gql`
 
 export const GET_TRANSACTIONS_FOR_FROM_ADDRESS = gql`
     query Transaction($num: Int!, $offset: Int!, $hash: String!) {
-        transactions_aggregate( where: { from_addr: { _eq: $hash }}) {
+        transactions_aggregate(where: { from_addr: { _eq: $hash } }) {
             aggregate {
                 count
             }
@@ -291,7 +295,7 @@ export const GET_TRANSACTIONS_FOR_FROM_ADDRESS = gql`
             limit: $num
             offset: $offset
             order_by: { tx_time: desc }
-            where: { from_addr: { _eq: $hash }}
+            where: { from_addr: { _eq: $hash } }
         ) {
             block_number
             to_addr
@@ -308,8 +312,8 @@ export const GET_TRANSACTIONS_FOR_FROM_ADDRESS = gql`
 `
 
 export const GET_TRANSACTIONS_FOR_TO_ADDRESS = gql`
-   query Transaction($num: Int!, $offset: Int!, $hash: String!) {
-        transactions_aggregate( where: { to_addr: { _eq: $hash }}) {
+    query Transaction($num: Int!, $offset: Int!, $hash: String!) {
+        transactions_aggregate(where: { to_addr: { _eq: $hash } }) {
             aggregate {
                 count
             }
@@ -318,7 +322,7 @@ export const GET_TRANSACTIONS_FOR_TO_ADDRESS = gql`
             limit: $num
             offset: $offset
             order_by: { tx_time: desc }
-            where: { to_addr: { _eq: $hash }}
+            where: { to_addr: { _eq: $hash } }
         ) {
             block_number
             to_addr
@@ -334,37 +338,38 @@ export const GET_TRANSACTIONS_FOR_TO_ADDRESS = gql`
     }
 `
 
-
 export const GET_NUMBER_OF_TRANSASCTIONS_FOR_BLOCK = gql`
     query GetTransactionsForAddress($block_number: String!) {
-        transactions_aggregate(where: {block_number: {_eq: $block_number}}) {
-        aggregate {
-            count
+        transactions_aggregate(
+            where: { block_number: { _eq: $block_number } }
+        ) {
+            aggregate {
+                count
+            }
         }
     }
- }
 `
 
 export const GET_LATEST_BLOCKS_SUBSCRIPTION = gql`
     subscription GetLatestBlocks {
-        blocks(limit: 7, order_by: {timestamp: desc}) {
-        context
-        difficulty
-        gas_limit
-        timestamp
-        number
-        network_difficulty
-        location
-        header
-        hash
-        gas_used
+        blocks(limit: 7, order_by: { timestamp: desc }) {
+            context
+            difficulty
+            gas_limit
+            timestamp
+            number
+            network_difficulty
+            location
+            header
+            hash
+            gas_used
         }
-    }  
+    }
 `
 
 export const GET_LATEST_TRANSACTIONS_SUBSCRIPTION = gql`
     subscription GetLatestTransactions {
-        transactions(limit: 7, order_by: {tx_time: desc}) {
+        transactions(limit: 7, order_by: { tx_time: desc }) {
             block_number
             to_addr
             from_addr
@@ -376,7 +381,7 @@ export const GET_LATEST_TRANSACTIONS_SUBSCRIPTION = gql`
             to_location
             from_location
         }
-    }  
+    }
 `
 
 export const GET_TOTAL_NUMBER_OF_BLOCKS_AND_TRANSACTIONS = gql`
@@ -413,5 +418,3 @@ export const GET_TOTAL_NUMBER_OF_TRANSACTIONS_SUBSCRIPTION = gql`
         }
     }
 `
-
-

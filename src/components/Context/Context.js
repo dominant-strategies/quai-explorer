@@ -1,4 +1,5 @@
-import React from "react";
-const ReactGlobalContext = React.createContext();
+import React from 'react'
 
-export default ReactGlobalContext;
+const ReactGlobalContext = React.createContext()
+
+export default ReactGlobalContext

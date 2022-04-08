@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
 
 function GraphBox({ title, color, data }) {
+    // eslint-disable-next-line
     const [options, setOptions] = useState({
         chart: {
             id: 'basic-bar',
@@ -45,29 +46,29 @@ function GraphBox({ title, color, data }) {
             enabled: false,
         },
         fill: {
-            colors: color
+            colors: color,
         },
         tooltip: {
             style: {
-                color: color
+                color,
             },
             marker: {
                 show: false,
             },
             // fillSeriesColor: true,
-            theme: false
-        }
+            theme: false,
+        },
     })
 
     const [series, setSeries] = useState([
         {
             name: 'series',
-            data: data,
+            data,
         },
     ])
 
     useEffect(() => {
-        setSeries([{ name: 'series', data: data }])
+        setSeries([{ name: 'series', data }])
     }, [data])
 
     return (
