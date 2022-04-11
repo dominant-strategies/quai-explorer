@@ -2,35 +2,20 @@ import { useQuery } from '@apollo/client'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
     Alert,
-    AlertIcon,
-    Box,
-    Heading,
-    HStack,
-    Icon,
-    IconButton,
-    Link,
-    Spacer,
-    Spinner,
-    Text,
-    VStack,
+    AlertIcon, Box,
+    Heading, HStack, Icon, IconButton, Link, Spacer, Spinner, Text, VStack
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
-import { BsBox } from 'react-icons/bs'
+import React, { useEffect, useState } from 'react'
+import { BsBox } from "react-icons/bs"
 import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
-import {
-    BLOCK_COLORS_MAPPING_2,
-    LINKS_PRESENT,
-    QUAI_STATS_LINKS_MAPPING_2,
-} from '../../constants'
-import {
-    convertTimeString,
-    reduceStringShowMediumLength,
-    toQuai,
-} from '../../utils'
+import { BLOCK_COLORS_MAPPING_2, LINKS_PRESENT, QUAI_STATS_LINKS_MAPPING_2 } from '../../constants'
+import { convertTimeString, reduceStringShowMediumLength, toQuai } from '../../utils'
 import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
+
+
 
 export default function Transaction() {
     // Component state
@@ -51,14 +36,12 @@ export default function Transaction() {
         } else {
             setShowErrorAlert(true)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data])
 
     // Transaction details to display
-    const transactionHash = transaction?.hash
+    let transactionHash = transaction?.hash
     let transactionHashReduced
     if (transactionHash) {
-        // eslint-disable-next-line no-unused-vars
         transactionHashReduced = reduceStringShowMediumLength(transactionHash)
     }
 
@@ -68,27 +51,26 @@ export default function Transaction() {
     const toLocation = transaction?.to_location
     const blockHash = transaction?.full_transaction.blockHash
 
-    const fromAddr = transaction?.from_addr
+    let from_addr = transaction?.from_addr
     let fromHashReduced
-    const toAddr = transaction?.to_addr
+    let to_addr = transaction?.to_addr
     let toHashReduced
-    if (fromAddr) {
-        fromHashReduced = reduceStringShowMediumLength(fromAddr)
+    if (from_addr) {
+        fromHashReduced = reduceStringShowMediumLength(from_addr)
     }
-    if (toAddr) {
-        toHashReduced = reduceStringShowMediumLength(toAddr)
+    if (to_addr) {
+        toHashReduced = reduceStringShowMediumLength(to_addr)
     }
 
     const value = transaction?.tx_value
-    const valueInQuai = toQuai(value).toPrecision(18)
+    let valueInQuai = toQuai(value).toPrecision(18)
 
-    const toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[toLocation]
-    const fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[fromLocation]
-    const linkToQuaiStatsToLocation = `https://${toLocationConverted}.quaistats.info/`
-    const locationColorToLocation = BLOCK_COLORS_MAPPING_2[toLocationConverted]
-    const linkToQuaiStatsFromLocation = `https://${fromLocationConverted}.quaistats.info/`
-    const locationColorFromLocation =
-        BLOCK_COLORS_MAPPING_2[fromLocationConverted]
+    let toLocationConverted = QUAI_STATS_LINKS_MAPPING_2[toLocation]
+    let fromLocationConverted = QUAI_STATS_LINKS_MAPPING_2[fromLocation]
+    let linkToQuaiStatsToLocation = `https://${toLocationConverted}.quaistats.info/`
+    let locationColorToLocation = BLOCK_COLORS_MAPPING_2[toLocationConverted];
+    let linkToQuaiStatsFromLocation = `https://${fromLocationConverted}.quaistats.info/`
+    let locationColorFromLocation = BLOCK_COLORS_MAPPING_2[fromLocationConverted];
 
     /**
      * Error handling in the event the GQL query fails
@@ -97,8 +79,8 @@ export default function Transaction() {
         console.log(error)
         return (
             <>
-                {window.innerWidth < 768 ? <Box p={4} /> : null}
-                <Box p={10} />
+                {window.innerWidth < 768 ? <Box p={4}></Box> : null}
+                <Box p={10}></Box>
                 <IconButton
                     onClick={() => navigateTo(-1)}
                     icon={<ArrowBackIcon />}
@@ -107,199 +89,136 @@ export default function Transaction() {
                 />
                 <Alert status="error" mt={7}>
                     <AlertIcon />
-                    <Text fontSize="xl">
-                        Sorry! There was a problem loading the page. The hash
-                        may be invalid.
-                    </Text>
+                    <Text fontSize="xl">Sorry! There was a problem loading the page. The hash may be invalid.</Text>
                 </Alert>
             </>
         )
     }
-    return loading ? (
+    return (
         <>
-            <Box p={5} />
-            <Spinner
-                thickness="2px"
-                speed="0.65s"
-                emptyColor="gray.300"
-                color="brand.300"
-                size="xl"
-                ml={5}
-                mt={20}
-                label="Loading details for this transaction"
-            />
-        </>
-    ) : (
-        <Card
-            mt={{ base: '120px', md: '75px' }}
-            overflowX={{ sm: 'scroll', xl: 'hidden' }}
-        >
-            <CardBody>
-                <VStack spacing="12px" align="left">
-                    <IconButton
-                        onClick={() => navigateTo(-1)}
-                        icon={<ArrowBackIcon />}
-                        aria-label="Back to the previous page"
-                        w="24px"
+            {loading ? (
+                <>
+                    <Box p={5}></Box>
+                    <Spinner
+                        thickness="2px"
+                        speed="0.65s"
+                        emptyColor="gray.300"
+                        color="brand.300"
+                        size="xl"
+                        ml={5}
+                        mt={20}
+                        label="Loading details for this transaction"
                     />
-                    <Spacer />
-                    <Heading as="h2" size="md">
-                        {' '}
-                        Tx Hash:{' '}
-                    </Heading>
-                    <Text>
-                        {' '}
-                        {transactionHash}{' '}
-                        <CopyToClipboardButton
-                            copyThisToClipboard={transactionHash}
-                            size="xs"
-                        />
-                    </Text>
-                    {blockNumber != null ? (
-                        <>
-                            {' '}
+                </>
+            ) : (
+                <Card
+                    mt={{ base: '120px', md: '75px' }}
+                    overflowX={{ sm: 'scroll', xl: 'hidden' }}
+                >
+                    <CardBody>
+                        <VStack spacing="12px" align="left">
+                            <IconButton
+                                onClick={() => navigateTo(-1)}
+                                icon={<ArrowBackIcon />}
+                                aria-label="Back to the previous page"
+                                w="24px"
+                            />
+                            <Spacer />
                             <Heading as="h2" size="md">
                                 {' '}
-                                Block:{' '}
-                            </Heading>{' '}
-                            <Text fontSize="lg">
-                                {' '}
-                                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                                <Link
-                                    color="blue.300"
-                                    fontWeight="bold"
-                                    onClick={() =>
-                                        navigateTo(`/block/${blockHash}`)
-                                    }
-                                >
+                                Tx Hash:{' '}
+                            </Heading>
+                            <Text> {transactionHash} <CopyToClipboardButton copyThisToClipboard={transactionHash} size={'xs'} /></Text>
+
+                            {blockNumber != null ? (
+                                <>
                                     {' '}
-                                    {blockNumber}{' '}
-                                </Link>
-                            </Text>{' '}
-                        </>
-                    ) : null}
-                    {timestamp !== null ? (
-                        <>
-                            {' '}
+                                    <Heading as="h2" size="md">
+                                        {' '}
+                                        Block:{' '}
+                                    </Heading>{' '}
+                                    <Text fontSize="lg">
+                                        {' '}
+                                        <Link color={"blue.300"} fontWeight="bold" onClick={() => navigateTo(`/block/${blockHash}`)}> {blockNumber}{' '} </Link>
+                                    </Text>{' '}
+                                </>
+                            ) : null}
+
+                            {timestamp !== null ? (
+                                <>
+                                    {' '}
+                                    <Heading as="h2" size="md">
+                                        {' '}
+                                        Timestamp:{' '}
+                                    </Heading>{' '}
+                                    <Text fontSize="lg"> {convertTimeString(timestamp)}</Text>{' '}
+                                </>
+                            ) : null}
+
+                            {from_addr !== null ? (
+                                <>
+                                    <Heading as="h2" size="md">
+                                        {' '}
+                                        From:{' '}
+                                    </Heading>
+
+                                    <HStack>
+
+                                        <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
+
+                                            <Link onClick={() => navigateTo(`/address/${from_addr}`)}>
+                                                {fromHashReduced}
+                                            </Link>
+
+
+                                        </Text>
+
+                                        {fromLocation !== null &&
+                                            <Text fontSize="md" color={locationColorFromLocation} fontWeight="bold" pb=".5rem">
+                                                <Link href={linkToQuaiStatsFromLocation} isExternal> <Icon pt={1} as={BsBox} color={locationColorFromLocation} />  {LINKS_PRESENT[fromLocationConverted]} </Link>
+                                            </Text>
+                                        }
+
+                                    </HStack>
+                                </>
+                            ) : null}
+
+                            {to_addr !== null ? (
+                                <>
+                                    <Heading as="h2" size="md">
+                                        {' '}
+                                        To:{' '}
+                                    </Heading>
+
+                                    <HStack>
+                                        <Text fontSize="md" color={"blue.300"} fontWeight="bold" pb=".5rem">
+
+                                            <Link onClick={() => navigateTo(`/address/${to_addr}`)}>
+                                                {toHashReduced}
+                                            </Link>
+
+                                        </Text>
+
+                                        {toLocation !== null &&
+
+                                            <Text fontSize="md" color={locationColorToLocation} fontWeight="bold" pb=".5rem">
+                                                <Link href={linkToQuaiStatsToLocation} isExternal>  <Icon pt={1} as={BsBox} color={locationColorToLocation} />  {LINKS_PRESENT[toLocationConverted]} </Link>
+                                            </Text>
+                                        }
+                                    </HStack>
+                                </>
+                            ) : null}
+
                             <Heading as="h2" size="md">
                                 {' '}
-                                Timestamp:{' '}
+                                Value:{' '}
                             </Heading>{' '}
-                            <Text fontSize="lg">
-                                {' '}
-                                {convertTimeString(timestamp)}
-                            </Text>{' '}
-                        </>
-                    ) : null}
-                    {fromAddr !== null ? (
-                        <>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                From:{' '}
-                            </Heading>
+                            <Text fontSize="lg"> {valueInQuai} QUAI </Text>
 
-                            <HStack>
-                                <Text
-                                    fontSize="md"
-                                    color="blue.300"
-                                    fontWeight="bold"
-                                    pb=".5rem"
-                                >
-                                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                                    <Link
-                                        onClick={() =>
-                                            navigateTo(`/address/${fromAddr}`)
-                                        }
-                                    >
-                                        {fromHashReduced}
-                                    </Link>
-                                </Text>
-
-                                {fromLocation !== null && (
-                                    <Text
-                                        fontSize="md"
-                                        color={locationColorFromLocation}
-                                        fontWeight="bold"
-                                        pb=".5rem"
-                                    >
-                                        <Link
-                                            href={linkToQuaiStatsFromLocation}
-                                            isExternal
-                                        >
-                                            {' '}
-                                            <Icon
-                                                pt={1}
-                                                as={BsBox}
-                                                color={
-                                                    locationColorFromLocation
-                                                }
-                                            />{' '}
-                                            {
-                                                LINKS_PRESENT[
-                                                    fromLocationConverted
-                                                ]
-                                            }{' '}
-                                        </Link>
-                                    </Text>
-                                )}
-                            </HStack>
-                        </>
-                    ) : null}
-                    {toAddr !== null ? (
-                        <>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                To:{' '}
-                            </Heading>
-
-                            <HStack>
-                                <Text
-                                    fontSize="md"
-                                    color="blue.300"
-                                    fontWeight="bold"
-                                    pb=".5rem"
-                                >
-                                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                                    <Link
-                                        onClick={() =>
-                                            navigateTo(`/address/${toAddr}`)
-                                        }
-                                    >
-                                        {toHashReduced}
-                                    </Link>
-                                </Text>
-
-                                {toLocation !== null && (
-                                    <Text
-                                        fontSize="md"
-                                        color={locationColorToLocation}
-                                        fontWeight="bold"
-                                        pb=".5rem"
-                                    >
-                                        <Link
-                                            href={linkToQuaiStatsToLocation}
-                                            isExternal
-                                        >
-                                            {' '}
-                                            <Icon
-                                                pt={1}
-                                                as={BsBox}
-                                                color={locationColorToLocation}
-                                            />{' '}
-                                            {LINKS_PRESENT[toLocationConverted]}{' '}
-                                        </Link>
-                                    </Text>
-                                )}
-                            </HStack>
-                        </>
-                    ) : null}
-                    <Heading as="h2" size="md">
-                        {' '}
-                        Value:{' '}
-                    </Heading>{' '}
-                    <Text fontSize="lg"> {valueInQuai} QUAI </Text>
-                </VStack>
-            </CardBody>
-        </Card>
+                        </VStack>
+                    </CardBody>
+                </Card>
+            )}
+        </>
     )
 }
