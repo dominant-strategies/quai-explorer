@@ -1,5 +1,3 @@
-import React from 'react'
-
 function InfoBox({ Icon, title, className, value }) {
     return (
         <div className="flex items-center justify-center md:justify-start border border-gray-500 p-2">

@@ -2,20 +2,28 @@ import { useQuery } from '@apollo/client'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
     Alert,
-    AlertIcon, Box, Heading, IconButton, Link, Spacer,
+    AlertIcon,
+    Box,
+    Heading,
+    IconButton,
+    Link,
+    Spacer,
     Spinner,
     Text,
-    VStack
+    VStack,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CopyToClipboardButton from '../../components/CopyToClipboardButton/CopyToClipboardButton'
-import { BLOCK_COLORS, QUAI_STATS_LINKS, SHARDED_ADDRESS } from '../../constants'
+import {
+    BLOCK_COLORS,
+    QUAI_STATS_LINKS,
+    SHARDED_ADDRESS,
+} from '../../constants'
 import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
 import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
-
 
 export default function Block() {
     // Component state
@@ -36,22 +44,24 @@ export default function Block() {
         } else {
             setShowErrorAlert(true)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data])
 
-    let blockHash = block?.hash
+    const blockHash = block?.hash
     let blockHashReduced
     if (blockHash) {
+        // eslint-disable-next-line no-unused-vars
         blockHashReduced = reduceStringShowMediumLength(blockHash)
     }
 
     let location = block?.location
-    let linkToQuaiStats = `https://${QUAI_STATS_LINKS[location]}.quaistats.info/`
+    const linkToQuaiStats = `https://${QUAI_STATS_LINKS[location]}.quaistats.info/`
 
     if (location) {
         location = SHARDED_ADDRESS[location]
     }
 
-    let locationColor = BLOCK_COLORS[location];
+    const locationColor = BLOCK_COLORS[location]
 
     let timestamp = block?.timestamp
     if (timestamp) {
@@ -71,9 +81,10 @@ export default function Block() {
     const txCount = block?.header.transactions.length
     const uncleCount = block?.header.uncles.length
 
-    let minerAddress = block?.header.miner
+    const minerAddress = block?.header.miner
     let minerAddressReduced
     if (minerAddress) {
+        // eslint-disable-next-line no-unused-vars
         minerAddressReduced = reduceStringShowMediumLength(minerAddress)
     }
 
@@ -84,8 +95,8 @@ export default function Block() {
         console.log(error)
         return (
             <>
-                {window.innerWidth < 768 ? <Box p={4}></Box> : null}
-                <Box p={10}></Box>
+                {window.innerWidth < 768 ? <Box p={4} /> : null}
+                <Box p={10} />
                 <IconButton
                     onClick={() => navigateTo(-1)}
                     icon={<ArrowBackIcon />}
@@ -94,117 +105,131 @@ export default function Block() {
                 />
                 <Alert status="error" mt={7}>
                     <AlertIcon />
-                    <Text fontSize="xl">Sorry! There was a problem loading the page. The hash may be invalid.</Text>
+                    <Text fontSize="xl">
+                        Sorry! There was a problem loading the page. The hash
+                        may be invalid.
+                    </Text>
                 </Alert>
             </>
         )
     }
 
-    return (
+    return loading ? (
         <>
-            {loading ? (
-                <>
-                    <Box p={5}></Box>
-                    <Spinner
-                        thickness="2px"
-                        speed="0.65s"
-                        emptyColor="gray.300"
-                        color="brand.300"
-                        size="xl"
-                        ml={5}
-                        mt={20}
-                        label="Loading details for this block"
-                    />
-                </>
-            ) : (
-                <Card mt={{ base: '120px', md: '75px' }} overflowX={{ sm: 'scroll', xl: 'hidden' }}>
-                    <CardBody>
-                        <VStack spacing="12px" align="left">
-                            <IconButton
-                                onClick={() => navigateTo(-1)}
-                                icon={<ArrowBackIcon />}
-                                aria-label="Back to the previous page"
-                                w="24px"
-                            />
-                            <Spacer />
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Block Number:{' '}
-                            </Heading>{' '}
-                            <Text fontSize="lg"> {blockNumber} </Text>
-
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Location:{' '}
-                            </Heading>{' '}
-                            <Text fontSize="lg" textColor={locationColor} fontWeight="bold">
-                                {' '}
-                                <Link href={linkToQuaiStats} isExternal>
-                                    {' '}
-                                    {location}{' '}
-                                </Link>{' '}
-                            </Text>
-
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Miner:{' '}
-                            </Heading>{' '}
-
-
-                            <Text fontSize="lg" color={"blue.300"} fontWeight="bold" pb=".5rem">
-
-                                <Link onClick={() => navigateTo(`/address/${minerAddress}`)}>
-                                    {minerAddress}
-                                </Link>
-
-
-                            </Text>
-
-
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Hash:{' '}
-                            </Heading>
-                            <Text fontSize="lg"> {blockHash} <CopyToClipboardButton copyThisToClipboard={blockHash} size={'xs'} /> </Text>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Number of Txs:{' '}
-                            </Heading>
-                            <Text fontSize="lg"> {txCount}</Text>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Number of Uncles:{' '}
-                            </Heading>
-                            <Text fontSize="lg"> {uncleCount}</Text>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Timestamp:{' '}
-                            </Heading>{' '}
-                            <Text fontSize="lg"> {timestamp}</Text>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Gas Used:{' '}
-                            </Heading>{' '}
-                            <Text fontSize="lg"> {gasUsed} </Text>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Gas Limit:{' '}
-                            </Heading>{' '}
-                            <Text fontSize="lg"> {gasLimit} </Text>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Difficulty:{' '}
-                            </Heading>{' '}
-                            <Text fontSize="lg"> {difficulty} </Text>
-                            <Heading as="h2" size="md">
-                                {' '}
-                                Network Difficulty:{' '}
-                            </Heading>{' '}
-                            <Text fontSize="lg"> {networkDifficulty} </Text>
-                        </VStack>
-                    </CardBody>
-                </Card>
-            )}
+            <Box p={5} />
+            <Spinner
+                thickness="2px"
+                speed="0.65s"
+                emptyColor="gray.300"
+                color="brand.300"
+                size="xl"
+                ml={5}
+                mt={20}
+                label="Loading details for this block"
+            />
         </>
+    ) : (
+        <Card
+            mt={{ base: '120px', md: '75px' }}
+            overflowX={{ sm: 'scroll', xl: 'hidden' }}
+        >
+            <CardBody>
+                <VStack spacing="12px" align="left">
+                    <IconButton
+                        onClick={() => navigateTo(-1)}
+                        icon={<ArrowBackIcon />}
+                        aria-label="Back to the previous page"
+                        w="24px"
+                    />
+                    <Spacer />
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Block Number:{' '}
+                    </Heading>{' '}
+                    <Text fontSize="lg"> {blockNumber} </Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Location:{' '}
+                    </Heading>{' '}
+                    <Text
+                        fontSize="lg"
+                        textColor={locationColor}
+                        fontWeight="bold"
+                    >
+                        {' '}
+                        <Link href={linkToQuaiStats} isExternal>
+                            {' '}
+                            {location}{' '}
+                        </Link>{' '}
+                    </Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Miner:{' '}
+                    </Heading>{' '}
+                    <Text
+                        fontSize="lg"
+                        color="blue.300"
+                        fontWeight="bold"
+                        pb=".5rem"
+                    >
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                        <Link
+                            onClick={() =>
+                                navigateTo(`/address/${minerAddress}`)
+                            }
+                        >
+                            {minerAddress}
+                        </Link>
+                    </Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Hash:{' '}
+                    </Heading>
+                    <Text fontSize="lg">
+                        {' '}
+                        {blockHash}{' '}
+                        <CopyToClipboardButton
+                            copyThisToClipboard={blockHash}
+                            size="xs"
+                        />{' '}
+                    </Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Number of Txs:{' '}
+                    </Heading>
+                    <Text fontSize="lg"> {txCount}</Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Number of Uncles:{' '}
+                    </Heading>
+                    <Text fontSize="lg"> {uncleCount}</Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Timestamp:{' '}
+                    </Heading>{' '}
+                    <Text fontSize="lg"> {timestamp}</Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Gas Used:{' '}
+                    </Heading>{' '}
+                    <Text fontSize="lg"> {gasUsed} </Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Gas Limit:{' '}
+                    </Heading>{' '}
+                    <Text fontSize="lg"> {gasLimit} </Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Difficulty:{' '}
+                    </Heading>{' '}
+                    <Text fontSize="lg"> {difficulty} </Text>
+                    <Heading as="h2" size="md">
+                        {' '}
+                        Network Difficulty:{' '}
+                    </Heading>{' '}
+                    <Text fontSize="lg"> {networkDifficulty} </Text>
+                </VStack>
+            </CardBody>
+        </Card>
     )
 }
