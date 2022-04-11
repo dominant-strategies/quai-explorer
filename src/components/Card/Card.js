@@ -1,12 +1,12 @@
-import { Box, useStyleConfig } from '@chakra-ui/react'
+import { Box, useStyleConfig } from "@chakra-ui/react";
 
 export default function Card(props) {
-    const { variant, children, ...otherProps } = props
-    const styles = useStyleConfig('Card', { variant })
+  const { variant, children, ...otherProps } = props;
+  const styles = useStyleConfig("Card", { variant });
 
-    return (
-        <Box __css={styles} {...otherProps}>
-            {children}
-        </Box>
-    )
+  return (
+    <Box __css={styles} {...otherProps}>
+      {children}
+    </Box>
+  );
 }

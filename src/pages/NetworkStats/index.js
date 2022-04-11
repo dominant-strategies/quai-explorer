@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     CubeIcon,
     ShareIcon,
@@ -12,12 +11,12 @@ import {
     LightningBoltIcon,
     LightBulbIcon,
 } from '@heroicons/react/outline'
-import { useQuery } from '@apollo/client'
 import GraphBox from '../../components/GraphBox'
 import InfoBox from '../../components/InfoBox'
 import { StatsInfoBox } from '../../components/StatsInfoBox'
-import { CHAIN_SLUGS, POSITIONS } from '../../constants'
+import { CHAIN_SLUGS, POSITIONS } from '../../constants/'
 import { GET_LATEST_BLOCK, GET_LATEST_TRANSACTIONS } from '../../utils/queries'
+import { useQuery } from '@apollo/client'
 
 function NetworkStats() {
     const [chain, setChain] = useState(CHAIN_SLUGS[0])
@@ -29,12 +28,8 @@ function NetworkStats() {
         <div>
             <div className="tabs flex flex-wrap justify-between">
                 {CHAIN_SLUGS.map((slug) => (
-                    // eslint-disable-next-line
                     <a
-                        className={`tab tab-bordered ${
-                            slug === chain &&
-                            'text-white font-semibold border-white'
-                        }`}
+                        className={`tab tab-bordered ${slug === chain && 'text-white font-semibold border-white'}`}
                         key={slug}
                         onClick={() => handleClick(slug)}
                     >
@@ -64,21 +59,11 @@ function Stats({ location }) {
         30, 40, 45, 50, 49, 60, 70, 91, 90, 78, 12, 23, 45, 56, 67, 78, 45, 34,
         89, 29, 23,
     ])
-    const {
-        loadingBlock,
-        error: errorBlock,
-        data: blockData,
-        isSuccess: isSuccessBlock,
-    } = useQuery(GET_LATEST_BLOCK, {
+    const { loadingBlock, error : errorBlock, data : blockData, isSuccess: isSuccessBlock } = useQuery(GET_LATEST_BLOCK, {
         variables: { location },
     })
 
-    const {
-        loadingTransaction,
-        error: errorTransaction,
-        data: transactionData,
-        isSuccessTransaction,
-    } = useQuery(GET_LATEST_TRANSACTIONS, {
+    const { loadingTransaction, error: errorTransaction, data : transactionData, isSuccessTransaction } = useQuery(GET_LATEST_TRANSACTIONS, {
         variables: { location },
     })
 
@@ -86,17 +71,17 @@ function Stats({ location }) {
         setLatestBlock(
             blockData?.blocks[0]?.number.split(',')[
                 POSITIONS[CHAIN_SLUGS.indexOf(location)]
-            ],
+            ]
         )
         setGasLimit(
             blockData?.blocks[0]?.gas_limit.split(',')[
                 POSITIONS[CHAIN_SLUGS.indexOf(location)]
-            ],
+            ]
         )
         setDifficulty(
             blockData?.blocks[0]?.difficulty.split(',')[
                 POSITIONS[CHAIN_SLUGS.indexOf(location)]
-            ],
+            ]
         )
         setUncles(blockData?.blocks[0]?.header.uncles.length)
 
@@ -105,13 +90,12 @@ function Stats({ location }) {
                 parseInt(
                     block?.difficulty.split(',')[
                         POSITIONS[CHAIN_SLUGS.indexOf(location)]
-                    ],
-                    10,
-                ),
-            ),
+                    ]
+                )
+            )
         )
         setUncleCountArr(
-            blockData?.blocks.map((block) => block?.header.uncles.length),
+            blockData?.blocks.map((block) => block?.header.uncles.length)
         )
 
         setGasUsedArr(
@@ -119,10 +103,9 @@ function Stats({ location }) {
                 parseInt(
                     block?.gas_used.split(',')[
                         POSITIONS[CHAIN_SLUGS.indexOf(location)]
-                    ],
-                    10,
-                ),
-            ),
+                    ]
+                )
+            )
         )
 
         setGasLimitArr(
@@ -130,12 +113,10 @@ function Stats({ location }) {
                 parseInt(
                     block?.difficulty.split(',')[
                         POSITIONS[CHAIN_SLUGS.indexOf(location)]
-                    ],
-                    10,
-                ),
-            ),
+                    ]
+                )
+            )
         )
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [blockData])
 
     return (
@@ -155,6 +136,7 @@ function Stats({ location }) {
                         value={loadingBlock ? 0 : gasLimit}
                         className="text-blue-400"
                     />
+                    
                 </div>
                 {/* <div>
                     <InfoBox
@@ -171,7 +153,7 @@ function Stats({ location }) {
                         value={loadingBlock ? 0 : uncles}
                         className="text-blue-400"
                     />
-
+                    
                     <StatsInfoBox
                         Icon={CashIcon}
                         title="GAS PRICE"
@@ -232,19 +214,11 @@ function Stats({ location }) {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <GraphBox title="BLOCK TIME" data={value} />
-                <GraphBox
-                    title="DIFFICULTY"
-                    color="#ff0000"
-                    data={difficultyArr}
-                />
+                <GraphBox title="DIFFICULTY" color="#ff0000" data={difficultyArr} />
                 <GraphBox title="UNCLE COUNT" data={uncleCountArr} />
                 <GraphBox title="TRANSACTIONS" data={value} />
                 <GraphBox title="GAS SPENDING" data={gasUsedArr} />
-                <GraphBox
-                    title="GAS LIMIT"
-                    color="#00ff00"
-                    data={gasLimitArr}
-                />
+                <GraphBox title="GAS LIMIT" color="#00ff00" data={gasLimitArr} />
             </div>
         </div>
     )

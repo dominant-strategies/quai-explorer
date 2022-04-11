@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function StatsInfoBox({ Icon, title, value, className }) {
     return (
         <div className="flex justify-between px-4 py-2 border border-gray-500 items-center">

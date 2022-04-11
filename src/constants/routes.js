@@ -1,39 +1,40 @@
-import Address from '../pages/Address'
-import Block from '../pages/Block'
-import BlockTable from '../pages/BlockTablePage'
-import Explorer from '../pages/Explorer'
-import Transaction from '../pages/Transaction'
-import TransactionTablePage from '../pages/TransactionTablePage'
+import Address from "../pages/Address";
+import Block from "../pages/Block";
+import BlockTable from "../pages/BlockTablePage";
+import Explorer from "../pages/Explorer";
+import Transaction from "../pages/Transaction";
+import TransactionTablePage from "../pages/TransactionTablePage";
 
 export const routes = [
     {
         id: 1,
         component: <Explorer />,
-        path: '/',
+        path: "/"
     },
     {
         id: 2,
         component: <Transaction />,
-        path: '/tx/:hash',
+        path: "/tx/:hash"
     },
     {
         id: 3,
         component: <Block />,
-        path: '/block/:hash',
+        path: "/block/:hash"
     },
     {
         id: 4,
         component: <Address />,
-        path: '/address/:hash',
+        path: "/address/:hash"
     },
     {
         id: 5,
         component: <BlockTable />,
-        path: '/blocks',
+        path: "/blocks"
     },
     {
         id: 5,
         component: <TransactionTablePage />,
-        path: '/transactions',
-    },
+        path: "/transactions"
+    }
+
 ]
