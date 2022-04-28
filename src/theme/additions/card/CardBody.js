@@ -1,12 +1,12 @@
 const CardBody = {
-  baseStyle: {
-    display: "flex",
-    width: "100%",
-  },
-};
+    baseStyle: {
+        display: 'flex',
+        width: '100%',
+    },
+}
 
 export const CardBodyStyle = {
-  components: {
-    CardBody,
-  },
-};
+    components: {
+        CardBody,
+    },
+}
