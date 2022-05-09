@@ -1,15 +1,15 @@
 export const linkStyles = {
-  components: {
-    Link: {
-      decoration: "none",
-      baseStyle: {
-        _hover: {
-          textDecoration: "none",
+    components: {
+        Link: {
+            decoration: 'none',
+            baseStyle: {
+                _hover: {
+                    textDecoration: 'none',
+                },
+                _focus: {
+                    boxShadow: 'none',
+                },
+            },
         },
-        _focus: {
-          boxShadow: "none",
-        },
-      },
     },
-  },
-};
+}

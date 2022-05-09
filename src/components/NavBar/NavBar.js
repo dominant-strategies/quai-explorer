@@ -1,39 +1,55 @@
 import { useQuery } from '@apollo/client'
-import { HamburgerIcon, MoonIcon, SearchIcon, SmallCloseIcon, SunIcon } from '@chakra-ui/icons'
 import {
-    Box, Flex,
+    HamburgerIcon,
+    MoonIcon,
+    SearchIcon,
+    SmallCloseIcon,
+    SunIcon,
+} from '@chakra-ui/icons'
+import {
+    Box,
+    Flex,
     Icon,
-    IconButton, Image, Input,
+    IconButton,
+    Image,
+    Input,
     InputGroup,
-    InputRightElement, Menu,
-    MenuButton, MenuItem, MenuList, useColorMode, useColorModeValue
+    InputRightElement,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    useColorMode,
+    useColorModeValue,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { BiHomeAlt } from "react-icons/bi"
-import { BsBox } from "react-icons/bs"
-import { GiMoneyStack } from "react-icons/gi"
+import { useState, useRef } from 'react'
+import { BiHomeAlt } from 'react-icons/bi'
+import { BsBox } from 'react-icons/bs'
+import { GiMoneyStack } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
 import LogoBanner from '../../assets/images/QuaiLogoBanner.svg'
 import LogoBannerGray from '../../assets/images/quaiLogoBannerGray.svg'
 import {
-    GET_BLOCK_WITH_HASH, GET_TRANSACTIONS_FOR_FROM_ADDRESS,
-    GET_TRANSACTIONS_FOR_TO_ADDRESS, GET_TRANSACTION_WITH_HASH
+    GET_BLOCK_WITH_HASH,
+    GET_TRANSACTIONS_FOR_FROM_ADDRESS,
+    GET_TRANSACTIONS_FOR_TO_ADDRESS,
+    GET_TRANSACTION_WITH_HASH,
 } from '../../utils/queries'
 
-
-export default function NavBar(props) {
-    const settingsRef = React.useRef()
+export default function NavBar() {
+    // eslint-disable-next-line no-unused-vars
+    const settingsRef = useRef()
     const { colorMode, toggleColorMode } = useColorMode()
     const [searchHash, setSearchHash] = useState('')
     const navigateTo = useNavigate()
 
     const { data: BlockData, refetch: refetchBlockData } = useQuery(
         GET_BLOCK_WITH_HASH,
-        { variables: { hash: searchHash } }
+        { variables: { hash: searchHash } },
     )
     const { data: TransactionData, refetch: refetchTransactionData } = useQuery(
         GET_TRANSACTION_WITH_HASH,
-        { variables: { hash: searchHash } }
+        { variables: { hash: searchHash } },
     )
     const {
         data: TransactionFromAddressData,
@@ -49,24 +65,26 @@ export default function NavBar(props) {
         variables: { num: 1, offset: 1, hash: searchHash },
     })
 
-
-    let mainTextColor = useColorModeValue('gray.700', 'gray.200')
-    let inputBgColor = useColorModeValue('white', 'gray.800')
-    let quaiOrangeColor = useColorModeValue('brand.300', 'brand.300')
-    let searchIconColor = useColorModeValue('gray.700', 'gray.200')
-    let navbarFilter = useColorModeValue(
+    const mainTextColor = useColorModeValue('gray.700', 'gray.200')
+    const inputBgColor = useColorModeValue('white', 'gray.800')
+    const quaiOrangeColor = useColorModeValue('brand.300', 'brand.300')
+    const searchIconColor = useColorModeValue('gray.700', 'gray.200')
+    const navbarFilter = useColorModeValue(
         'none',
-        'drop-shadow(0px 7px 23px rgba(0, 0, 0, 0.05))'
+        'drop-shadow(0px 7px 23px rgba(0, 0, 0, 0.05))',
     )
-    let navbarShadow = useColorModeValue(
+    const navbarShadow = useColorModeValue(
         '0px 7px 23px rgba(0, 0, 0, 0.05)',
-        'none'
+        'none',
     )
-    let navbarBg = useColorModeValue(
+    const navbarBg = useColorModeValue(
         'linear-gradient(112.83deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.8) 110.84%)',
-        'linear-gradient(112.83deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0) 110.84%)'
+        'linear-gradient(112.83deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0) 110.84%)',
     )
-    let navbarBorder = useColorModeValue('#FFFFFF', 'rgba(255, 255, 255, 0.31)')
+    const navbarBorder = useColorModeValue(
+        '#FFFFFF',
+        'rgba(255, 255, 255, 0.31)',
+    )
 
     /**
      * Given a block/transaction hash, this handles navigating to the deatils page of the hash
@@ -78,7 +96,12 @@ export default function NavBar(props) {
         refetchTransactionFromAddressData()
         refetchTransactionToAddressData()
 
-        if (BlockData || TransactionData || TransactionFromAddressData || TransactionToAddressData) {
+        if (
+            BlockData ||
+            TransactionData ||
+            TransactionFromAddressData ||
+            TransactionToAddressData
+        ) {
             if (BlockData?.blocks.length > 0) {
                 navigateTo(`/block/${searchHash}`)
                 setSearchHash('')
@@ -114,16 +137,15 @@ export default function NavBar(props) {
 
     const showSearchIconInSearchBar = () => {
         if (
-            (
-                BlockData?.blocks.length > 0 ||
+            (BlockData?.blocks.length > 0 ||
                 TransactionData?.transactions.length > 0 ||
                 TransactionFromAddressData?.transactions.length > 0 ||
-                TransactionToAddressData?.transactions.length > 0
-
-            )
-            && searchHash.length !== 0) {
+                TransactionToAddressData?.transactions.length > 0) &&
+            searchHash.length !== 0
+        ) {
             return (
                 <InputRightElement
+                    // eslint-disable-next-line react/no-children-prop
                     children={
                         <IconButton
                             aria-label="Click to search"
@@ -147,43 +169,45 @@ export default function NavBar(props) {
                                     aria-label="Click to Search"
                                 />
                             }
-                        ></IconButton>
+                        />
                     }
                 />
             )
-        } else {
-            if (searchHash.length !== 0) {
-                return (
-                    <InputRightElement
-                        children={
-                            <IconButton
-                                aria-label="Invalid query"
-                                onClick={() => setSearchHash('')}
-                                bg="inherit"
-                                borderRadius="inherit"
-                                _hover="none"
-                                _active={{
-                                    bg: 'inherit',
-                                    transform: 'none',
-                                    borderColor: 'transparent',
-                                }}
-                                _focus={{
-                                    boxShadow: 'none',
-                                }}
-                                icon={
-                                    <SmallCloseIcon
-                                        color="red.600"
-                                        w="15px"
-                                        h="15px"
-                                        aria-label="Invalid query"
-                                    />
-                                }
-                            ></IconButton>
-                        }
-                    />
-                )
-            }
         }
+        if (searchHash.length !== 0) {
+            return (
+                <InputRightElement
+                    // eslint-disable-next-line react/no-children-prop
+                    children={
+                        <IconButton
+                            aria-label="Invalid query"
+                            onClick={() => setSearchHash('')}
+                            bg="inherit"
+                            borderRadius="inherit"
+                            _hover="none"
+                            _active={{
+                                bg: 'inherit',
+                                transform: 'none',
+                                borderColor: 'transparent',
+                            }}
+                            _focus={{
+                                boxShadow: 'none',
+                            }}
+                            icon={
+                                <SmallCloseIcon
+                                    color="red.600"
+                                    w="15px"
+                                    h="15px"
+                                    aria-label="Invalid query"
+                                />
+                            }
+                        />
+                    }
+                />
+            )
+        }
+
+        return null
     }
 
     return (
@@ -239,6 +263,7 @@ export default function NavBar(props) {
                             lg: '100px',
                             xl: '100px',
                         }}
+                        // eslint-disable-next-line react/jsx-no-duplicate-props
                         w={{
                             sm: '50px',
                             md: '50px',
@@ -264,6 +289,7 @@ export default function NavBar(props) {
                             lg: '100px',
                             xl: '100px',
                         }}
+                        // eslint-disable-next-line react/jsx-no-duplicate-props
                         w={{
                             sm: '50px',
                             md: '50px',
@@ -330,31 +356,45 @@ export default function NavBar(props) {
                         <Menu>
                             <MenuButton
                                 as={IconButton}
-                                aria-label='Options'
+                                aria-label="Options"
                                 icon={<HamburgerIcon />}
-                                variant='outline'
+                                variant="outline"
                                 cursor="pointer"
                                 ms={{ base: '16px', xl: '0px' }}
                                 me="16px"
                             />
                             <MenuList>
-                                <MenuItem icon={<Icon as={BiHomeAlt} />} onClick={() => navigateTo("/")}>
+                                <MenuItem
+                                    icon={<Icon as={BiHomeAlt} />}
+                                    onClick={() => navigateTo('/')}
+                                >
                                     Home
                                 </MenuItem>
-                                <MenuItem icon={<Icon as={BsBox} />} onClick={() => navigateTo("/blocks")}>
+                                <MenuItem
+                                    icon={<Icon as={BsBox} />}
+                                    onClick={() => navigateTo('/blocks')}
+                                >
                                     All Blocks
                                 </MenuItem>
-                                <MenuItem icon={<Icon as={GiMoneyStack} />} onClick={() => navigateTo("/transactions")}>
+                                <MenuItem
+                                    icon={<Icon as={GiMoneyStack} />}
+                                    onClick={() => navigateTo('/transactions')}
+                                >
                                     All Transactions
                                 </MenuItem>
-                                <MenuItem icon={
-                                    colorMode === 'light' ? (
-                                        <MoonIcon />
-                                    ) : (
-                                        <SunIcon />
-                                    )
-                                } onClick={toggleColorMode}>
-                                    {colorMode === 'light' ? 'Dark Mode' : 'Light Mode'}
+                                <MenuItem
+                                    icon={
+                                        colorMode === 'light' ? (
+                                            <MoonIcon />
+                                        ) : (
+                                            <SunIcon />
+                                        )
+                                    }
+                                    onClick={toggleColorMode}
+                                >
+                                    {colorMode === 'light'
+                                        ? 'Dark Mode'
+                                        : 'Light Mode'}
                                 </MenuItem>
                             </MenuList>
                         </Menu>
