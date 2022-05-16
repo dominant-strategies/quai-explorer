@@ -15,11 +15,11 @@ const range = (start, end) => {
 }
 
 const usePagination = ({
-                           totalCount,
-                           pageSize,
-                           siblingCount = 1,
-                           currentPage,
-                       }) => {
+    totalCount,
+    pageSize,
+    siblingCount = 1,
+    currentPage,
+}) => {
     const paginationRange = useMemo(() => {
         const totalPageCount = Math.ceil(totalCount / pageSize)
 
