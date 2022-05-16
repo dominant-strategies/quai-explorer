@@ -132,8 +132,18 @@ function Pagination(props) {
             </Button>
             <Text size="sm"> Page </Text>{' '}
             <Heading size="md" fontWeight="bold" as="u">
-                {' '}
-                {currentPage}{' '}
+                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                <div
+                    contentEditable="true"
+                    onKeyPress={(e) => {
+                        if (e.which === 13) {
+                            onPageChange(Number(e.currentTarget.textContent))
+                            e.preventDefault()
+                        }
+                    }}
+                >
+                    {currentPage}
+                </div>
             </Heading>
             <Button
                 rightIcon={<ArrowForwardIcon />}
