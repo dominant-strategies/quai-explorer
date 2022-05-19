@@ -10,13 +10,7 @@ import {
     IconButton,
     Link,
     Spacer,
-    Spinner,
-    Table,
-    Tbody,
     Text,
-    Th,
-    Thead,
-    Tr,
     useColorModeValue,
 } from '@chakra-ui/react'
 import axios from 'axios'
@@ -25,11 +19,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CardHeader from '../../components/Card/CardHeader'
-import Pagination from '../../components/Pagination'
-import TransactionTableRow from '../../components/TableRows/TransactionTableRow'
 import { CHAIN_SLUGS_2, PORTS, PREFIX } from '../../constants'
 import { toQuai } from '../../utils'
 import { GET_TRANSACTIONS_FOR_FROM_ADDRESS } from '../../utils/queries'
+import { columns } from '../TransactionTablePage/constants'
+import ChakraTable from '../../components/ChakraTable'
 
 const hexToDec = (value) => parseInt(value.substring(2), 16)
 
@@ -44,8 +38,7 @@ export default function Address() {
     const [quaiBalance, setQuaiBalance] = useState(0)
 
     const [currentPage, setCurrentPage] = useState(1)
-    // eslint-disable-next-line no-unused-vars
-    const [limit, setLimit] = useState(10)
+    const limit = 10
     const [totalPage, setTotalPage] = useState(1)
     const [transactions, setTransactions] = useState([])
     const [transactionsCount, setTransactionsCount] = useState(0)
@@ -64,7 +57,6 @@ export default function Address() {
     )
 
     const textColor = useColorModeValue('gray.700', 'white')
-    const spinnerLabel = 'Loading the transactions table'
 
     const addressPrefix = hash.substring(0, 4)
     const numAddressPrefix = hexToDec(addressPrefix)
@@ -205,21 +197,6 @@ export default function Address() {
         )
     }
 
-    if (loading) {
-        return (
-            <Spinner
-                thickness="2px"
-                speed="0.65s"
-                emptyColor="gray.300"
-                color="brand.300"
-                size="md"
-                ml={4}
-                mt={2}
-                label={spinnerLabel}
-            />
-        )
-    }
-
     if (transactions.length === 0) {
         return (
             <Card
@@ -306,79 +283,22 @@ export default function Address() {
 
                 <CardBody>
                     <Flex flexDirection="column">
-                        <Text
-                            size="md"
-                            fontWeight="bold"
-                            ml={7}
-                            pb={5}
-                            color="gray.400"
-                        >
-                            {' '}
-                            {transactionsCount} total transactions{' '}
-                        </Text>
-                        <Table
-                            size="sm"
-                            variant="simple"
-                            color={textColor}
-                            ml={3}
-                        >
-                            <Thead>
-                                <Tr my=".8rem" ps="0px">
-                                    <Th color="gray.400">TX Hash</Th>
-                                    <Th color="gray.400">Block Number</Th>
-                                    <Th color="gray.400">Age</Th>
-                                    <Th color="gray.400">From</Th>
-                                    <Th color="gray.400">To</Th>
-                                    <Th color="gray.400"> Value </Th>
-                                </Tr>
-                            </Thead>
-
-                            <Tbody>
-                                {transactions?.map((transaction, index) => {
-                                    const value = toQuai(transaction.tx_value)
-                                    return (
-                                        <TransactionTableRow
-                                            transactionHash={transaction.hash}
-                                            toThisMiner={transaction.to_addr}
-                                            fromThisMiner={
-                                                transaction.from_addr
-                                            }
-                                            blockNumber={
-                                                transaction.block_number
-                                            }
-                                            blockHash={
-                                                transaction.full_transaction
-                                                    .blockHash
-                                            }
-                                            toLocation={transaction.to_location}
-                                            fromLocation={
-                                                transaction.from_location
-                                            }
-                                            value={value}
-                                            gweiValue={transaction.tx_value}
-                                            timestamp={transaction.tx_time}
-                                            // eslint-disable-next-line react/no-array-index-key
-                                            key={index}
-                                            fromAddressPage
-                                        />
-                                    )
-                                })}
-                            </Tbody>
-                        </Table>
-
-                        {totalPage > 1 ? (
-                            <Pagination
-                                currentPage={currentPage}
-                                totalCount={
-                                    transactionsCount !== 0
-                                        ? transactionsCount
-                                        : 0
-                                }
-                                pageSize={limit}
-                                onPageChange={(page) => setCurrentPage(page)}
-                                textColor={textColor}
-                            />
-                        ) : null}
+                        <ChakraTable
+                            headerText={`${transactionsCount} total transactions`}
+                            tableColor={textColor}
+                            columns={columns}
+                            data={transactions}
+                            rowProps={{ textColor }}
+                            currentPage={currentPage}
+                            totalCount={
+                                transactionsCount !== 0 ? transactionsCount : 0
+                            }
+                            pageSize={limit}
+                            onPageChange={(page) => setCurrentPage(page)}
+                            totalPage={totalPage}
+                            wireframe={loading}
+                            wireframeRows={10}
+                        />
                     </Flex>
                 </CardBody>
             </Card>

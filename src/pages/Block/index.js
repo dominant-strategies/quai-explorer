@@ -8,7 +8,6 @@ import {
     IconButton,
     Link,
     Spacer,
-    Spinner,
     Text,
     VStack,
 } from '@chakra-ui/react'
@@ -24,6 +23,7 @@ import {
 } from '../../constants'
 import { convertTimeString, reduceStringShowMediumLength } from '../../utils'
 import { GET_BLOCK_WITH_HASH } from '../../utils/queries'
+import Loader from '../../components/Loader'
 
 export default function Block() {
     // Component state
@@ -92,7 +92,6 @@ export default function Block() {
      * Error handling in the event the GQL query fails
      */
     if (error || showErrorAlert) {
-        console.log(error)
         return (
             <>
                 {window.innerWidth < 768 ? <Box p={4} /> : null}
@@ -115,19 +114,7 @@ export default function Block() {
     }
 
     return loading ? (
-        <>
-            <Box p={5} />
-            <Spinner
-                thickness="2px"
-                speed="0.65s"
-                emptyColor="gray.300"
-                color="brand.300"
-                size="xl"
-                ml={5}
-                mt={20}
-                label="Loading details for this block"
-            />
-        </>
+        <Loader label="Loading details for this block" />
     ) : (
         <Card
             mt={{ base: '120px', md: '75px' }}

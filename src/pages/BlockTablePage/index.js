@@ -8,31 +8,31 @@ import {
     Heading,
     IconButton,
     Link,
-    Spinner,
     Text,
+    useColorModeValue,
 } from '@chakra-ui/react'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import BlockTable from '../../components/BlockTable'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CardHeader from '../../components/Card/CardHeader'
 import { SHARDED_ADDRESS } from '../../constants'
 import { convertTimeString } from '../../utils'
 import { GET_BLOCKS } from '../../utils/queries'
+import ChakraTable from '../../components/ChakraTable'
+import { columns } from './constants'
 
 export default function BlockTablePage() {
     const navigateTo = useNavigate()
     const [currentPage, setCurrentPage] = useState(1)
-    const [limit, setLimit] = useState(10)
     const [totalPage, setTotalPage] = useState(1)
     const [blocks, setBlocks] = useState([])
     const [blocksCountLocal, setBlocksCountLocal] = useState(0)
     const [firstBlockNumber, setFirstBlockNumber] = useState('')
     const [lastBlockNumber, setLastBlockNumber] = useState('')
-
-    const spinnerLabel = 'Loading the blocks table'
+    const tableColor = useColorModeValue('gray.700', 'white')
+    const limit = 10
 
     const {
         loading,
@@ -112,7 +112,7 @@ export default function BlockTablePage() {
         )
     }
 
-    return !loading ? (
+    return (
         <Flex direction="column" pt={{ base: '120px', md: '75px' }}>
             <Card overflowX={{ sm: 'scroll', xl: 'hidden' }}>
                 <CardHeader p="6px 0px 22px 0px">
@@ -131,30 +131,24 @@ export default function BlockTablePage() {
                     </Flex>
                 </CardHeader>
                 <CardBody>
-                    <BlockTable
-                        blocks={blocks}
-                        limit={limit}
-                        totalPage={totalPage}
+                    <ChakraTable
+                        headerText={`Block ${firstBlockNumber} to Block ${lastBlockNumber} of ${blocksCountLocal} blocks`}
+                        tableColor={tableColor}
+                        columns={columns}
+                        data={blocks}
+                        rowProps={{ textColor: tableColor }}
                         currentPage={currentPage}
-                        blocksCountLocal={blocksCountLocal}
-                        firstBlockNumber={firstBlockNumber}
-                        lastBlockNumber={lastBlockNumber}
-                        setCurrentPage={setCurrentPage}
-                        setLimit={setLimit}
+                        totalCount={
+                            blocksCountLocal !== 0 ? blocksCountLocal : 0
+                        }
+                        pageSize={limit}
+                        onPageChange={(page) => setCurrentPage(page)}
+                        totalPage={totalPage}
+                        wireframe={loading}
+                        wireframeRows={10}
                     />
                 </CardBody>
             </Card>
         </Flex>
-    ) : (
-        <Spinner
-            thickness="2px"
-            speed="0.65s"
-            emptyColor="gray.300"
-            color="brand.300"
-            size="md"
-            ml={4}
-            mt={2}
-            label={spinnerLabel}
-        />
     )
 }

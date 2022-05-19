@@ -85,8 +85,6 @@ function Pagination(props) {
         siblingCount = 1,
         currentPage,
         pageSize,
-        // eslint-disable-next-line no-unused-vars
-        textColor,
     } = props
 
     const paginationRange = usePagination({

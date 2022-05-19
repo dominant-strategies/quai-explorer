@@ -8,25 +8,27 @@ import {
     Heading,
     IconButton,
     Link,
-    Spinner,
     Text,
+    useColorModeValue,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import CardBody from '../../components/Card/CardBody'
 import CardHeader from '../../components/Card/CardHeader'
-import TransactionsTable from '../../components/TransactionsTable'
 import { GET_TRANSACTIONS } from '../../utils/queries'
+import { columns } from './constants'
+import ChakraTable from '../../components/ChakraTable'
 
 export default function TransactionTablePage() {
     const navigateTo = useNavigate()
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [limit, setLimit] = useState(10)
+    const limit = 10
     const [totalPage, setTotalPage] = useState(1)
     const [transactions, setTransactions] = useState([])
     const [txCountLocal, setTxCountLocal] = useState(0)
+    const tableColor = useColorModeValue('gray.700', 'white')
     const {
         loading,
         error,
@@ -39,7 +41,6 @@ export default function TransactionTablePage() {
             offset: (currentPage - 1) * limit,
         },
     })
-    const spinnerLabel = 'Loading the transactions table'
 
     // When this component mounts, grab a reference to all transactions, set the transaction count, and set the totalPageCount to allow for pagination
     useEffect(() => {
@@ -91,7 +92,7 @@ export default function TransactionTablePage() {
         )
     }
 
-    return !loading ? (
+    return (
         <Flex direction="column" pt={{ base: '120px', md: '75px' }}>
             <Card overflowX={{ sm: 'scroll', xl: 'hidden' }}>
                 <CardHeader p="6px 0px 22px 0px">
@@ -110,28 +111,22 @@ export default function TransactionTablePage() {
                     </Flex>
                 </CardHeader>
                 <CardBody>
-                    <TransactionsTable
-                        transactions={transactions}
-                        txCountLocal={txCountLocal}
-                        totalPage={totalPage}
+                    <ChakraTable
+                        headerText={`${txCountLocal} total transactions`}
+                        tableColor={tableColor}
+                        columns={columns}
+                        data={transactions}
+                        rowProps={{ textColor: tableColor }}
                         currentPage={currentPage}
-                        limit={limit}
-                        setCurrentPage={setCurrentPage}
-                        setLimit={setLimit}
+                        totalCount={txCountLocal !== 0 ? txCountLocal : 0}
+                        pageSize={limit}
+                        onPageChange={(page) => setCurrentPage(page)}
+                        totalPage={totalPage}
+                        wireframe={loading}
+                        wireframeRows={10}
                     />
                 </CardBody>
             </Card>
         </Flex>
-    ) : (
-        <Spinner
-            thickness="2px"
-            speed="0.65s"
-            emptyColor="gray.300"
-            color="brand.300"
-            size="md"
-            ml={4}
-            mt={2}
-            label={spinnerLabel}
-        />
     )
 }

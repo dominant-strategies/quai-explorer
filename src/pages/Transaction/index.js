@@ -10,7 +10,6 @@ import {
     IconButton,
     Link,
     Spacer,
-    Spinner,
     Text,
     VStack,
 } from '@chakra-ui/react'
@@ -31,6 +30,7 @@ import {
     toQuai,
 } from '../../utils'
 import { GET_TRANSACTION_WITH_HASH } from '../../utils/queries'
+import Loader from '../../components/Loader'
 
 export default function Transaction() {
     // Component state
@@ -116,19 +116,7 @@ export default function Transaction() {
         )
     }
     return loading ? (
-        <>
-            <Box p={5} />
-            <Spinner
-                thickness="2px"
-                speed="0.65s"
-                emptyColor="gray.300"
-                color="brand.300"
-                size="xl"
-                ml={5}
-                mt={20}
-                label="Loading details for this transaction"
-            />
-        </>
+        <Loader label="Loading details for this transaction" />
     ) : (
         <Card
             mt={{ base: '120px', md: '75px' }}
