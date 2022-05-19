@@ -22,13 +22,13 @@ import {
     useColorMode,
     useColorModeValue,
 } from '@chakra-ui/react'
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 import { BiHomeAlt } from 'react-icons/bi'
 import { BsBox } from 'react-icons/bs'
 import { GiMoneyStack } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
-import LogoBanner from '../../assets/images/QuaiLogoBanner.svg'
-import LogoBannerGray from '../../assets/images/quaiLogoBannerGray.svg'
+import LogoBanner from '../../assets/images/logoandText.png'
+// import LogoBannerGray from '../../assets/images/logoandText.png'
 import {
     GET_BLOCK_WITH_HASH,
     GET_TRANSACTIONS_FOR_FROM_ADDRESS,
@@ -231,7 +231,7 @@ export default function NavBar() {
             justifyContent={{ xl: 'center' }}
             lineHeight="25.6px"
             mx="auto"
-            pb="8px"
+            pb="12px"
             right="30px"
             px={{
                 sm: '15px',
@@ -240,7 +240,7 @@ export default function NavBar() {
             ps={{
                 xl: '12px',
             }}
-            pt="8px"
+            pt="12px"
             top="10px"
             w={{ sm: 'calc(100vw - 60px)', xl: 'calc(100vw - 110px)' }}
         >
@@ -258,22 +258,15 @@ export default function NavBar() {
                         cursor="pointer"
                         src={LogoBanner}
                         w={{
-                            sm: '100px',
-                            md: '100px',
-                            lg: '100px',
-                            xl: '100px',
-                        }}
-                        // eslint-disable-next-line react/jsx-no-duplicate-props
-                        w={{
-                            sm: '50px',
-                            md: '50px',
-                            lg: '50px',
-                            xl: '50px',
+                            sm: '125px',
+                            md: '125px',
+                            lg: '125px',
+                            xl: '125px',
                         }}
                         ml={2}
                         mt={{
-                            sm: '5px',
-                            md: '5px',
+                            sm: '12px',
+                            md: '12px',
                         }}
                         mb={1}
                         alt="logo"
@@ -282,24 +275,17 @@ export default function NavBar() {
                     <Image
                         onClick={() => navigateTo(`/`)}
                         cursor="pointer"
-                        src={LogoBannerGray}
+                        src={LogoBanner}
                         w={{
-                            sm: '100px',
-                            md: '100px',
-                            lg: '100px',
-                            xl: '100px',
-                        }}
-                        // eslint-disable-next-line react/jsx-no-duplicate-props
-                        w={{
-                            sm: '50px',
-                            md: '50px',
-                            lg: '50px',
-                            xl: '50px',
+                            sm: '125px',
+                            md: '125px',
+                            lg: '125px',
+                            xl: '125px',
                         }}
                         ml={2}
                         mt={{
-                            sm: '5px',
-                            md: '5px',
+                            sm: '12px',
+                            md: '12px',
                         }}
                         mb={2}
                         alt="logo"
@@ -325,9 +311,9 @@ export default function NavBar() {
                             borderRadius="15px"
                             w={{
                                 sm: '100vw',
-                                md: 'calc(100vw - 250px)',
-                                lg: 'calc(100vw - 300px)',
-                                xl: 'calc(100vw - 300px)',
+                                md: 'calc(100vw - 200px)',
+                                lg: 'calc(100vw - 250px)',
+                                xl: 'calc(100vw - 375px)',
                             }}
                             me={{ sm: 'auto', md: '20px' }}
                             _focus={{
